@@ -1,0 +1,176 @@
+<section class="main-content">
+
+  <div class="section-body" style="margin-top: 20px;">
+    <div class="row clearfix">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+          <div class="p-10" style="margin-right: 20px; margin-left: 20px;">
+            
+            <div class="row" style="margin-right: 10px; margin-left: 10px;">
+              <div class="col-lg-12" >
+                <div class="row m-0">
+                  <div class="col-lg-2 p-0">
+                    <div class="ngxTableHeader">
+                      <div class="table-title">
+                        <h5><strong>ShowCase</strong></h5>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- <div class="col-lg-1 p-0">
+                    <div class="ngxTableHeader">
+                        <div class="header-buttons-left">
+                            <div class="icon-button-demo buttons">
+                              <button class="btn btn-icon icon-left btn-primary rounded-button" (click)=' pendinghistory(pendingRecord)' >
+                                <i class="material-icons">av_timer</i>
+                              </button>
+                              
+                            </div>
+                          </div>
+                      </div> 
+                  </div> -->
+                  <div class="col-lg-2 p-0">
+                    <div class="ngxTableHeader" >
+                      <div class="header-buttons-left">
+                        <div class="icon-button-demo buttons">
+                          <button class="btn btn-icon icon-left btn-success" (click)=' addRow(addRecord)' >
+                            <i class="fas fa-plus"></i> Add ShowCase</button>
+                          
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- row end -->
+            <hr>
+
+
+            <ngx-datatable #table class="material" [rows]="Customers" [loadingIndicator]="loadingIndicator"
+                  columnMode="force" [headerHeight]="60" rowHeight="auto" [limit]="10" [reorderable]="reorderable"
+                  [selected]="selected" [selectionType]="'checkbox'" (select)='onSelect($event)'>
+
+                  <ngx-datatable-column name="Date">
+                    <!-- <ng-template let-row="row" ngx-datatable-cell-template>
+              {{row.phone}}
+            </ng-template> -->
+                  </ngx-datatable-column>
+
+
+                  <ngx-datatable-column [width]="200" name="Mode">
+                    <ng-template let-row="row" let-value="value" let-i="index" ngx-datatable-cell-template>
+                      <div class="name-col-style">
+                        <div>{{row.username}}</div>
+                      </div>
+                    </ng-template>
+                  </ngx-datatable-column>
+
+                  <ngx-datatable-column name="Title">
+                    <!-- <ng-template let-row="row" ngx-datatable-cell-template>
+              {{row.phone}}
+            </ng-template> -->
+                  </ngx-datatable-column>
+
+
+                </ngx-datatable>
+
+            
+
+        <!--  add Modal Window -->
+
+            <ng-template #addRecord let-modal>
+              <div class="modal-header editRowModal">
+                <h4 class="modal-title" id="modal-basic-title">
+                  <div class="table-modal-header">
+                    <img src="assets/images/JCOM logo 4.jpg" alt="avatar">
+                    <div class="modal-about">
+                      <div class="font-weight-bold p-t-10 font-17">
+                       Add Showcase </div>
+                    </div>
+                  </div>
+                </h4>
+                <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+                  <span aria-hidden="true"><i class="material-icons">close</i></span>
+                </button>
+              </div>
+
+              <div class="modal-body">
+
+
+                <form class="register-form" [formGroup]="register" (ngSubmit)="onAddRowSave(register)"
+              style="margin-top: 50px; border-color: rgb(20, 20, 20); border: black; ">
+              <div class="row" style="margin-left: 50px;margin-right: 50px;  border: black;">
+
+              
+
+                <div class="col-md-12">
+                  <div class="form-group position-relative">
+                    <label>Date<span class="text-danger">*</span></label>
+                    <i-feather name="calendar" class="login-icons" style="color: rgb(63, 89, 241);"></i-feather>
+                    <input type="date" class="form-control pl-5"  placeholder="date" required>
+                  </div>
+                </div>
+
+
+
+                <div class="col-md-12">
+                  <div class="form-group position-relative">
+                    <label>Title<span class="text-danger">*</span></label>
+                    <i-feather name="more-horizontal" class="login-icons" style="color: rgb(63, 89, 241);"></i-feather>
+                    <input type="text" class="form-control pl-5"  placeholder="Enter the title "
+                      required>
+                  </div>
+                </div>
+
+
+
+                <div class="col-md-12">
+                  <div class="form-group position-relative">
+                    <label>Mode</label>
+                    <i-feather name="airplay" class="login-icons" style="color: rgb(63, 89, 241);"></i-feather>
+                    <select class="form-control pl-5"  required (change)="selectInput1($event)">
+                      <option value="" selected disabled></option>
+                      <option *ngFor="let mode of modes" [value]="mode.id">
+                        {{mode.value}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+               
+           
+  
+     
+
+     
+     
+  
+      
+
+                <div class="col-md-12" style="text-align: center;"><br>
+                  <button type="submit" class="btn btn-primary" [disabled]="!register.valid">SAVE</button>
+                  <br><br><br>
+                </div>
+                <!-- <button (click)="toggleShow()" type="checkbox" >show/hide</button> -->
+
+                <!-- row end -->
+              </div>
+            </form>
+
+                
+              </div>
+            </ng-template>
+
+
+
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,48 @@
+<main class="d-flex align-items-center min-vh-100 py-3 py-md-0">
+  <div class="container">
+    <div class="row">
+      <div class="auth-card">
+        <div class="col-12">
+          <div class="card card-primary">
+            <div class="card-header">
+              <h4>Forgot Password</h4>
+            </div>
+            <div class="card-body">
+              <p class="text-muted">We will send a link to reset your password</p>
+              <form method="POST">
+                <div class="form-group">
+                  <div class="form-group position-relative">
+                  <label>Mobile No</label>
+                  <i-feather name="Phone" class="login-icons"></i-feather> 
+                  <input type="number" class="form-control pl-5" formControlName="Mobile" placeholder="Mobile No " tabindex="1" required autofocus>
+                </div>
+                  
+                  
+                </div>
+
+                
+                <div class="form-group position-relative">
+                  <label>MettingType<span class="text-danger">*</span></label>
+                   <i-feather name="users" class="login-icons"></i-feather> 
+                  <select class="form-control pl-5" formControlName="MettingType"
+                    placeholder="Select ">
+                    <option value="" selected disabled>Please select</option>
+                    <option *ngFor="let meet of meetings" [value]="meet.id">
+                      {{meet.value}}
+                    </option>
+                  </select>
+                </div>
+               
+                <div class="form-group">
+                  <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
+                    Forgot Password
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
