@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\NEO-PROJECTS\JCOM-UI\JCOM-ui\src\polyfills.ts */"hN/g");
+module.exports = __webpack_require__(/*! D:\NEO-PROJECTS\jcom\JCOM-ui\src\polyfills.ts */"hN/g");
 
 
 /***/ }),

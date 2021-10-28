@@ -292,7 +292,7 @@
     /***/
     function _(module, exports, __webpack_require__) {
       __webpack_require__(
-      /*! D:\NEO-PROJECTS\JCOM-UI\JCOM-ui\node_modules\@angular-devkit\build-angular\src\webpack\es5-polyfills.js */
+      /*! D:\NEO-PROJECTS\jcom\JCOM-ui\node_modules\@angular-devkit\build-angular\src\webpack\es5-polyfills.js */
       "voQr");
 
       __webpack_require__(
@@ -300,7 +300,7 @@
       "R0gw");
 
       module.exports = __webpack_require__(
-      /*! D:\NEO-PROJECTS\JCOM-UI\JCOM-ui\src\polyfills.ts */
+      /*! D:\NEO-PROJECTS\jcom\JCOM-ui\src\polyfills.ts */
       "hN/g");
       /***/
     },
