@@ -23,11 +23,12 @@ export class AuthService {
     return this.currentUserSubject.value;
   }
 
-  login(username: string, password: string) {
+  login(username: string, password: string,meeting_type:number) {
     return this.http
-      .post<any>('https://tranzporter.herokuapp.com/users/login', {
+      .post<any>('https://admin.jcombiz.com/jcomweb/login.php', {
         username,
         password,
+        meeting_type
       })
       .pipe(
         map((user) => {
@@ -35,13 +36,12 @@ export class AuthService {
           // console.log(JSON.stringify(user));
           localStorage.setItem('currentUser', JSON.stringify(user));
           this.currentUserSubject.next(user);
+          console.log("currentuser:",user);
           return user;
+         
         })
       );
   }
-
-
-
 
   logout() {
     // remove user from local storage to log user out

@@ -1,0 +1,303 @@
+<section class="main-content">
+
+    <div class="section-body" style="margin-top: 20px;">
+      <div class="row clearfix">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <div class="card">
+            <div class="p-10" style="margin-right: 20px; margin-left: 20px;">
+              <div class="row" style="margin-right: 10px; ">
+                <div class="col-lg-12">
+                  <div class="row m-0">
+                    <div class="col-lg-3 p-0">
+                      <div class="ngxTableHeader">
+                        <div class="table-title">
+                          <h5><strong>PendingConnect</strong></h5>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-5 p-0">
+                      <div class="ngxTableHeader">
+                        <div class="header-buttons-left">
+                          <div class="icon-button-demo buttons">
+                            <button class="btn btn-icon icon-left btn-info">
+                                <a routerLink="/connectentry" style="text-decoration: none; color: rgb(249, 252, 252);" > <i class="fa fa-list"></i> ConnectHistory
+                            </a> </button>
+                            <!-- <button class="btn btn-icon icon-left btn-primary rounded-button"
+                              (click)=' pendinghistory(pendingRecord)'>
+                              <i class="material-icons">av_timer</i>
+                            </button> -->
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+  
+                    <div class="col-lg-4 p-0">
+                      <div class="ngxTableHeader" style="display: flex;  justify-content: flex-end;">
+                        <div class="table-search-area">
+                          <div>
+                            <label for="search-input"><i class="material-icons search-icon">search</i></label>
+                            <input placeholder="Search" type="text" class="browser-default search-field"
+                              (keyup)='filterDatatable($event)' aria-label="Search box">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+  
+  
+                  </div>
+                </div>
+              </div>
+              <!-- main table -->
+              <br>
+           
+               <ngx-datatable #table class="material" [rows]="Connects" [loadingIndicator]="loadingIndicator"
+              columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="10"
+              [reorderable]="reorderable" *ngIf="!loader" >
+
+              <ngx-datatable-column name="Date">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{row.created_on}}
+                </ng-template>
+              </ngx-datatable-column>
+
+              <ngx-datatable-column [width]="200" name="To/From">
+                <ng-template let-row="row" let-value="value" let-i="index" ngx-datatable-cell-template>
+               
+                  <div class="name-col-style">
+                    <div>{{row.to_name}}</div>
+                    <div class="font-12 text-muted">{{row.name}}</div>
+                  </div>
+                </ng-template>
+              </ngx-datatable-column>
+
+              
+              <ngx-datatable-column name="Connect name">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{row.connect_name}}
+                </ng-template>
+              </ngx-datatable-column>
+
+              <ngx-datatable-column name="Connect Type">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{row.connect_type}}
+                </ng-template>
+              </ngx-datatable-column>
+              <!-- <ngx-datatable-column name="Status">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <div *ngIf="row.status=='Active'" class="badge-outline col-green">{{row.status}}
+                  </div>
+                  <div *ngIf="row.status=='Completed'" class="badge-outline col-red">{{row.status}}
+                  </div>
+                  <div *ngIf="row.status=='Pending'" class="badge-outline col-indigo">{{row.status}}
+                  </div>
+                </ng-template>
+              </ngx-datatable-column> -->
+              <ngx-datatable-column  name="About Connect">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <h5 *ngIf="row.about_connect=='HOT'" ><span class="badge badge-danger">Hot</span></h5>
+                  <h5 *ngIf="row.about_connect=='MEDIUM'"><span class="badge badge-warning">Medium</span></h5>
+                  <h5 *ngIf="row.about_connect=='COLD'"><span class="badge badge-info">Cold</span></h5>                
+                </ng-template>
+              </ngx-datatable-column>
+              
+              <ngx-datatable-column  name="Status">
+                <ng-template let-row="row" ngx-datatable-cell-template>                
+                  <div *ngIf="row.connect_status=='Within JCOM'" class="badge-outline col-green">{{row.connect_status}}
+                  </div>
+                  <div *ngIf="row.connect_status=='Self'" class="badge-outline col-indigo">{{row.connect_status}}
+                  </div>
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column  name="Type"  >
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <!-- <div *ngIf="row.type=='1'" class="badge-outline col-green"><i class="material-icons">call_made</i>
+                  </div> -->
+                  <!-- <div *ngIf="row.type=='2'" class="badge-outline col-red"><i class="material-icons">call_received</i>
+                  </div> -->
+
+                  <h6 *ngIf="row.type=='1'"><span class="badge badge-danger"><i class="material-icons">call_made</i></span></h6> 
+                  <h6 *ngIf="row.type=='2'"><span class="badge badge-success"><i class="material-icons">call_received</i></span></h6>
+                  <!-- <a class="btn btn-icon btn-sm btn-danger" >
+                    <i class="material-icons">call_made</i>
+                  </a> -->
+                  <!-- <div *ngIf="row.type=='1'" ><h5 class="msr-2 h-auto tblEditBtn"><i class="fas fa-eye"></i></h5>
+                  </div> -->
+                  <!-- <div *ngIf="row.type=='2'" ><h5 class="msr-2 h-auto tblEditBtn"><i class="fas fa-eye"></i></h5>
+                  </div> -->
+                  <!-- <button class="btn btn-icon btn-sm btn-danger" *ngIf="row.type=='1'"> <i-feather name="arrow-up-right"></i-feather></button>
+                  <button class="btn btn-icon btn-sm btn-success" *ngIf="row.type=='2'"> <i-feather name="arrow-down-left"></i-feather></i></button> -->
+                </ng-template>
+              </ngx-datatable-column>
+
+              <ngx-datatable-column name="Actions" sortable="false">
+                <ng-template let-value="value" let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                  <a class="msr-2 h-auto tblEditBtn" (click)='openprofile(row ,rowIndex, connectRecord)'>
+                    <i class="fas fa-eye"></i>
+                  </a>
+
+                </ng-template>
+              </ngx-datatable-column>
+            </ngx-datatable>
+            
+                <!-- skleton -->
+                  <div id="tit" style="width: 100%;">
+                    <ngx-skeleton-loader count="1"
+                      [theme]="{  'border-radius': '4px',  height: '60px',  width:'100%', 'opacity':.6, 'background-color': '##b9b8b8',   border: '1px solid white'  }"
+                      *ngIf="loader"></ngx-skeleton-loader>
+                  </div>
+                  <div class="skle" style="width: 100%;">
+                    <ngx-skeleton-loader count="10"
+                      [theme]="{  'border-radius': '4px',  height: '30px', width:'100%', 'opacity':.6, 'background-color': '##b9b8b8',   border: '1px solid white'  }"
+                      appearance="line" *ngIf="loader"></ngx-skeleton-loader>
+                  </div> 
+         
+            </div>
+            
+   
+  
+              <!-- pending details -->
+              <ng-template #connectRecord let-modal>
+  
+                <div class="modal-header editRowModal">
+                  <h4 class="modal-title" id="modal-basic-title">
+                    <div class="table-modal-header">
+                      <img src="assets/images/JCOM logo 4.jpg" alt="avatar">
+                      <div class="modal-about">
+                        <div class="font-weight-bold p-t-10 font-17">
+                          Connect Details</div>
+                      </div>
+                    </div>
+                  </h4>
+                  <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+                    <span aria-hidden="true"><i class="material-icons">close</i></span>
+                  </button>
+                </div>
+  
+                <div class="modal-body">
+                  <div class="section-body">
+                    <div class="row ">
+                      <div class="col-12 col-md-12 ">
+                        <div class="card author-box" style="margin-left: 75px; margin-right: 75px;">
+  
+                          <div class="card-body">
+                            <div class="card-header">
+                              <h4>Details</h4>
+                            </div>
+                            <div class="py-4" style="margin-left: 20px; margin-right: 20px;" >
+                              <p class="clearfix">
+                                <span class="float-start">
+                                 Connect Name :
+                                </span>
+                                <span class="float-right text-muted" style="width: 60%;">
+                                  {{Connectdtls.connect_name}}
+                                </span>
+                              </p>
+                              <p class="clearfix">
+                                <span class="float-start">
+                                  Connect Type :
+                                </span>
+                                <span class="float-right text-muted" style="width: 60%;">
+                                  {{Connectdtls.connect_type}}
+                                </span>
+                              </p>
+  
+                              <p class="clearfix">
+                                <span class="float-start">
+                                  Connect Status :
+                                </span>
+                                <span class="float-right text-muted" style="width: 60%;">
+                                  {{Connectdtls.connect_status}}
+                                </span>
+                              </p>
+  
+                              <p class="clearfix">
+                                <span class="float-start">
+                                  Business Category :
+                                </span>
+  
+                                <span class="float-right text-muted" style="width: 60%;">
+                                  {{Connectdtls.business_category}}
+                                </span>
+  
+                              </p>
+                              <p class="clearfix">
+                                <span class="float-start">
+                                  Email :
+                                </span>
+  
+                                <span class="float-end text-muted" class="float-right text-muted" style="width: 60%;">
+                                  {{Connectdtls.email_id}}
+  
+                                </span>
+                              </p>
+  
+                              <p class="clearfix">
+                                <span class="float-start">
+                                  Mobile :
+                                </span>
+  
+                                <span class="float-end text-muted" class="float-right text-muted" style="width: 60%;">
+                                  {{Connectdtls.mobile_no}}
+                                </span>
+  
+                              </p>
+                              <p class="clearfix">
+                                <span class="float-start">
+                                  Comment :
+                                </span>
+  
+                                <span class="float-end text-muted" class="float-right text-muted" style="width: 60%;">
+                                  {{Connectdtls.comments}}
+                                </span>
+  
+                              </p>
+  
+                              <p class="clearfix">
+                                <span class="float-start">
+                                  Table Name:
+                                </span>
+  
+                                <span class="float-end text-muted" class="float-right text-muted" style="width: 60%;">
+                                  {{Connectdtls.table_name}}
+  
+                                </span>
+                              </p>
+  
+                              <p class="clearfix">
+                                <span class="float-start">
+                                  Metting Type :
+                                </span>
+                                <span class="float-end text-muted" class="float-right text-muted" style="width: 60%;">
+                                  {{Connectdtls.meeting_type}}
+                                </span>
+                              </p>
+                              <p class="clearfix">
+                                <span class="float-start">
+                                  How About Connect :
+                                </span>
+                                <span class="float-end text-muted" class="float-right text-muted" style="width: 60%;">
+                                  {{Connectdtls.about_connect}} 
+                                </span>
+                              </p>
+                              <div class="flo"   *ngIf="Connectdtls.type=='1'" style=" display: flex; align-items: center; justify-content: center;">
+                                <button type="button" class="btn btn-danger" (click)='unsuccess(Connectdtls.connect_id)'>
+                                  Mark as Unsuccessfull
+                                </button>
+                              </div>
+                             </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- col end -->
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+  
+            </div>
+          </div>
+        </div>
+      </div>
+   
+  </section>

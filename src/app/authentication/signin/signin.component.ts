@@ -26,18 +26,25 @@ export class SigninComponent implements OnInit {
     { id: '2', value: 'female' },
   ];
 
-  meetings = [
+  // meetings = [
    
-    { id: '1', value: 'Live' },
-    { id: '2', value: 'Virtual' },
-    { id: '3', value: 'Virtual International' },
-    { id: '4', value: 'Association' },
-  ];
+  //   { id: '1', value: 'Live' },
+  //   { id: '2', value: 'Virtual' },
+  //   { id: '3', value: 'Virtual International' },
+  //   { id: '4', value: 'Association' },
+  // ];
 
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
   error2='';
   error1='';
+  data: any;
+ 
+  Meetings:any;
+  loadingIndicator: boolean;
+  filteredData: any;
+  loader: boolean;
+  disable: boolean;
   constructor(private request: RequestService,
     private fb: FormBuilder,
     private formBuilder: FormBuilder,
@@ -50,15 +57,19 @@ export class SigninComponent implements OnInit {
       JSON.parse(localStorage.getItem('currentUser'))
     );
     this.currentUser = this.currentUserSubject.asObservable();
+    
     window.onresize = () => {
       this.scrollBarHorizontal = window.innerWidth < 1200;
     };
   
   }
   ngOnInit() {
+    this.viewdata();
+ 
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', Validators.required],
+      meeting_type:['', Validators.required]
     });
  
   }
@@ -66,6 +77,33 @@ export class SigninComponent implements OnInit {
     return this.loginForm.controls;
   }
 
+
+
+viewdata(){
+  this.fetch((data) => {
+    this.data = data;
+    // this.filteredData = data;
+    this.Meetings=data;
+    // this.filteredData=data.response;
+   
+    setTimeout(() => {
+      this.loadingIndicator = false;
+    }, 500);
+  });
+}
+
+fetch(cb) {
+
+  this.request.getmeetingtype().subscribe((response) => {
+   console.log(response);
+   
+            cb(response);
+            this.loader=false;
+  }, (error) => {
+    console.log(error);
+  });
+
+}
 
 //   addRow(content) {
   
@@ -158,27 +196,31 @@ export class SigninComponent implements OnInit {
 //   }
   onSubmit() {
     this.submitted = true;
+    this.disable=true;
     this.error2 = '';
-
+    // console.log("submited");  
     if (this.loginForm.invalid) {
-      this.error2 = 'Username and Password not valid !';
+      this.error2 = 'Enter all Credential';
+      console.log("err2", this.error2);
       return;
+     
     } else {
       this.authService
-        .login(this.f.username.value,this.f.password.value)
+        .login(this.f.username.value,this.f.password.value,this.f.meeting_type.value)
         .subscribe(
-          (res) => {
+          (res) => {          
+            // console.log(res[0]);
             if (res) {
-              console.log("res",""+res.msg)
-              if (res.msg == "username or password invalid") {
+              // console.log("res",""+res[0].message)
+              if (res[0].message == "Invalid Login Credentials !!Please try again!!") {
                 console.log("something went wrong");
-                this.error2 = 'Invalid Username And Password';
+                this.error2 = 'Invalid Login Credentials';
                 return;
               }
-              if (res.status == "0") {   
+              if (res[0].message == "Invalid Login Credentials !!Please try again!!") {   
                 this.error2 = 'Invalid Login';
               }
-              if (res.status == "1") {
+              if (res[0].message == "Welcome !!") {
                 this.router.navigate(['/dashboard/main']);
               }
             } else {

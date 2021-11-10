@@ -1,16 +1,5 @@
 <section class="main-content">
 
-    <ul class="breadcrumb breadcrumb-style ">
-        <li class="breadcrumb-item">
-            <h5 class="page-title m-b-0">JCOM-Table</h5>
-        </li>
-        <li class="breadcrumb-item bcrumb-1">
-            <a routerLink="/dashboard/main">
-                <i class="fas fa-home font-17"></i></a>
-        </li>
-        <li class="breadcrumb-item">Table</li>
-
-    </ul>
     <div class="section-body" style="margin-top: 20px;">
         <div class="row clearfix">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -22,7 +11,7 @@
                                     <div class="col-lg-3 p-0">
                                         <div class="ngxTableHeader">
                                             <div class="table-title">
-                                                <h2><strong>JCOM-Table</strong></h2>
+                                                <h2><strong>JCOM Table</strong></h2>
                                             </div>
                                         </div>
                                     </div>
@@ -58,22 +47,24 @@
                             </div>
                         </div>
                         <!-- row end -->
+                        <br>
+                        <br>
 
-                        <br>
-                        <br>
+                        <!-- main page -->
                         <div class="row" style="margin-left: 20px; margin-right: 20px;">
-                            <div class="col-12 col-md-6 col-lg-6" *ngFor="let table of Customers">
+                            <div class="col-12 col-md-6 col-lg-6"
+                                *ngFor="let table of Tables| paginate: {id: 'pagination1', itemsPerPage:12 , currentPage: p } ">
                                 <div class="card card-primary">
                                     <div class="card-header">
-                                        <h4>{{table.username}}</h4>
+                                        <h4>{{table.table_name}}</h4>
                                         <div class="card-header-action">
                                             <!-- <a href="#" onClick="return false;" class="btn btn-primary">
-                View 
-              </a> -->
+                                                 View 
+                                                 </a> -->
                                             <a class="msr-2 h-auto tblEditBtn"
-                                                (click)='editRow(row, rowIndex, historyRecord)'>
+                                                (click)='openRow(table.table, historyRecord)'>
                                                 <i class="fas fa-eye"></i>
-                                            </a>
+                                            </a> 
                                         </div>
                                     </div>
                                     <!-- <div class="card-body">  </div> -->
@@ -81,6 +72,28 @@
 
                             </div>
                         </div>
+
+                        <!-- <ngx-skeleton-loader count="3" appearance="line" *ngIf="loader"></ngx-skeleton-loader> -->
+                        <div class=" row" style="  opacity: 1; margin-left: 5px;   margin-right: 10px;   height:500px;"
+                            *ngIf='loader'>
+
+                            <div class="col-lg-6">
+                                <ngx-skeleton-loader count="7" *ngIf="loader"
+                                    [theme]="{  'border-radius': '5px',  height: '10%',  width:'100%', 'opacity':.6, 'background-color': '##b9b8b8',   border: '1px solid white' }">
+                                </ngx-skeleton-loader>
+                            </div>
+                            <div class="col-lg-6">
+                                <ngx-skeleton-loader count="7" *ngIf="loader"
+                                    [theme]="{  'border-radius': '5px',  height: '10%',  width:'100%', 'opacity':.6,  'background-color': '##b9b8b8',   border: '1px solid white' }">
+                                </ngx-skeleton-loader>
+                            </div>
+                        </div>
+
+                        <div id="pagination1" style="text-align: center;">
+
+                            <pagination-controls (pageChange)=" p = $event"></pagination-controls>
+                        </div>
+
 
 
                         <!-- <div class="tbl" style="width: 75%; margin-left: 120px; margin-right: 120px;">
@@ -135,44 +148,57 @@
                             <div class="modal-body">
                                 <div class="row" style="margin-left: 20px; margin-right: 20px;">
                                     <div class="col-lg-12 p-0">
-                                        <div class="ngxTableHeader" style="margin-left: 20px;" >
-                                            
-                                                <div class="table-search-area">
-                                                    <label for=""><h6>Search Members  </h6></label> &nbsp;
-                                                    <label for="search-input"><i
-                                                            class="material-icons search-icon">search</i></label>
-                                                    <input placeholder="Search" type="text"
-                                                        class="browser-default search-field"
-                                                        (keyup)='filterDatatable($event)' aria-label="Search box">
-                                                </div>
-                                            
-                                        </div>
-                                      <br>
-                                    </div>
+                                        <div class="ngxTableHeader" style="margin-left: 20px;">
 
-                                    <div class="col-12 col-md-6 col-lg-6" *ngFor="let table of Customers">
+                                            <div class="table-search-area">
+                                                <label for="">
+                                                    <h6>Search Members </h6>
+                                                </label> &nbsp;
+                                                <label for="search-input"><i
+                                                        class="material-icons search-icon">search</i></label>
+                                                <input placeholder="Search" type="text"
+                                                    class="browser-default search-field"
+                                                    (keyup)='filterDatatable1($event)' aria-label="Search box">
+                                          </div>
+                                        </div>
+                                        <br>
+                                    </div>
+                                    <div class="row">
+                                    <div class="col-12 col-md-6 col-lg-6" *ngFor="let mem of Members| paginate: { id:'pagination2', itemsPerPage:10 , currentPage: m }">
                                         <div class="card card-primary">
                                             <div class="card-header">
-                                                <h4>{{table.username}}</h4>
-                                                <div class="card-header-action">
-                                                    <!-- <a href="#" onClick="return false;" class="btn btn-primary">
-                                              View 
-                                            </a> -->
+                                                <h4>{{mem.name}}</h4>
+                                                <div class="card-header-action">                                              
                                                     <a class="msr-2 h-auto tblEditBtn"
-                                                        (click)='editRow(row, rowIndex, openprofileRecord)'>
+                                                        (click)='openprofile(mem.name,openprofileRecord)'>
                                                         <i class="fas fa-eye"></i>
                                                     </a>
                                                 </div>
-                                            </div>
-                                            <!-- <div class="card-body">  </div> -->
+                                            </div>                                 
                                         </div>
-
-
-                                    </div>
+                                    </div>  </div>  
+                                                
                                 </div>
+                                      <!-- <ngx-skeleton-loader count="3" appearance="line" *ngIf="loader"></ngx-skeleton-loader> -->
+                         <div class=" row" style="  opacity: 1; margin-left: 5px;   margin-right: 10px;   height:400px;"
+                        *ngIf='loader1'>
 
+                        <div class="col-lg-6">
+                            <ngx-skeleton-loader count="5" *ngIf="loader1"
+                                [theme]="{  'border-radius': '5px',  height: '15%',  width:'100%', 'opacity':.6, 'background-color': '##b9b8b8',   border: '1px solid white' }">
+                            </ngx-skeleton-loader>
+                        </div>
+                        <div class="col-lg-6">
+                            <ngx-skeleton-loader count="5" *ngIf="loader1"
+                                [theme]="{  'border-radius': '5px',  height: '15%',  width:'100%', 'opacity':.6,  'background-color': '##b9b8b8',   border: '1px solid white' }">
+                            </ngx-skeleton-loader> 
+                        </div>
+                    </div> 
 
-                            </div>
+                                <div id="pagination2" style="text-align: end;">
+                                    <pagination-controls (pageChange)=" m = $event"></pagination-controls>
+                                </div>         
+                            </div>                         
                         </ng-template>
 
 
@@ -318,9 +344,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-
                                             <!-- business info -->
-
                                             <div class="card"
                                                 style="margin-left: 75px; margin-right: 75px; border-color: rgb(187, 218, 236);">
                                                 <div class="card-header">
@@ -416,9 +440,99 @@
                                                     </div>
                                                 </div>
                                             </div>
-
-                                            <!-- col end -->
+                                                <!-- col end -->
                                         </div>
+
+                                         <!-- skleton -->
+                    <div class="col-12 col-md-12 " *ngIf='loader'>
+                        <div class="card author-box" style="margin-left: 75px; margin-right: 75px;">
+                          <div class="card-body" style="margin-left: 75px; margin-right: 75px;">
+                            <div class="author-box-center">
+  
+                              <div class="col-lg-12" style="width: 100%; height: 100%;" style="align-content: center;">
+                                <ngx-skeleton-loader count="1"
+                                  [theme]="{  'border-radius': '40px',  height: '80px',  width:'80px', 'opacity':.6, 'background-color': '##b9b8b8',   border: '1px solid white'  }">
+                                </ngx-skeleton-loader>
+                              </div>
+  
+                              <div class="col-lg-12" style="width: 100%; height: 10px;" style="align-content: center;">
+                                <ngx-skeleton-loader count="1"
+                                  [theme]="{  'border-radius': '4px',  height: '15px',  width:'30%', 'opacity':.6, 'background-color': '##b9b8b8',   border: '1px solid white'  }">
+                                </ngx-skeleton-loader>
+                              </div>
+                              <div class="col-lg-12" style="width: 100%; height: 10px; " style="align-content: center;">
+                                <ngx-skeleton-loader count="1"
+                                  [theme]="{  'border-radius': '4px',  height: '15px',  width:'37%', 'opacity':.6, 'background-color': '##b9b8b8',   border: '1px solid white'  }">
+                                </ngx-skeleton-loader>
+                              </div>
+                            </div>
+                          </div>
+  
+                          <div class="card-body">
+                            <div class="py-0" style="margin-left: 20px; margin-right: 20px;">
+                              <div class="col-lg-10" style="width: 30%; height: 30px;">
+                                <ngx-skeleton-loader count="1"
+                                  [theme]="{  'border-radius': '4px',  height: '30px',  width:'100%', 'opacity':.6, 'background-color': '##b9b8b8',   border: '1px solid white'  }">
+                                </ngx-skeleton-loader>
+  
+                              </div>
+                              <br><br>
+  
+                              <div class="row" style="  opacity: 1;  height:400px;">
+  
+                                <div class="col-lg-4">
+                                  <ngx-skeleton-loader count="10"
+                                    [theme]="{  'border-radius': '5px',  height: '5%',  width:'100%', 'opacity':.6, 'background-color': '##b9b8b8',   border: '1px solid white' }">
+                                  </ngx-skeleton-loader>
+  
+                                </div>
+                                <div class="col-lg-8">
+                                  <ngx-skeleton-loader count="10"
+                                    [theme]="{  'border-radius': '5px',  height: '5%',  width:'100%', 'opacity':.6,  'background-color': '##b9b8b8',   border: '1px solid white' }">
+                                  </ngx-skeleton-loader>
+  
+                                </div>
+                              </div>
+  
+                            </div>
+                          </div>
+                        </div>
+  
+                        <div class="card" style="margin-left: 75px; margin-right: 75px; border-color: rgb(187, 218, 236);"
+                          *ngIf='!loader'>
+  
+                          <div class="card-body">
+                            <div class="py-4" style="margin-left: 10px; margin-right: 10px;">
+  
+                              <div class="col-lg-10" style="width: 30%; height: 30px;">
+                                <ngx-skeleton-loader count="1"
+                                  [theme]="{  'border-radius': '4px',  height: '30px',  width:'100%', 'opacity':.6, 'background-color': '##b9b8b8',   border: '1px solid white'  }">
+                                </ngx-skeleton-loader>
+  
+                              </div>
+                              <br><br>
+  
+                              <div class="row" style="  opacity: 1;  height:400px;">
+  
+                                <div class="col-lg-4">
+                                  <ngx-skeleton-loader count="10"
+                                    [theme]="{  'border-radius': '5px',  height: '5%',  width:'100%', 'opacity':.6, 'background-color': '##b9b8b8',   border: '1px solid white' }">
+                                  </ngx-skeleton-loader>
+  
+                                </div>
+                                <div class="col-lg-8">
+                                  <ngx-skeleton-loader count="10"
+                                    [theme]="{  'border-radius': '5px',  height: '5%',  width:'100%', 'opacity':.6,  'background-color': '##b9b8b8',   border: '1px solid white' }">
+                                  </ngx-skeleton-loader>
+  
+                                </div>
+                              </div>
+                           </div>
+                          </div>
+                        </div>
+      
+                      </div>
+                      <!-- skleton end -->
 
                                     </div>
                                 </div>

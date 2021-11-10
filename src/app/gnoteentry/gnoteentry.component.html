@@ -1,136 +1,123 @@
 <section class="main-content">
-  <ul class="breadcrumb breadcrumb-style ">
-    <li class="breadcrumb-item">
-      <h5 class="page-title m-b-0">GNote Entry</h5>
-    </li>
-    <li class="breadcrumb-item bcrumb-1">
-      <a routerLink="/dashboard/main">
-        <i class="fas fa-home font-17"></i></a>
-    </li>
-    <li class="breadcrumb-item">Connect History</li>
-    
-  </ul>
   <div class="section-body" style="margin-top: 20px;">
     <div class="row clearfix">
       <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="card">
-          <div class="p-10">
-            <div class="row" style="margin-right: 10px; margin-left: 10px;">
+          <div class="p-10"  style="margin-right: 20px; margin-left: 20px;">
+            <div class="row">
               <div class="col-lg-12">
                 <div class="row m-0">
                   <div class="col-lg-2 p-0">
                     <div class="ngxTableHeader">
                       <div class="table-title">
-                        <h5><strong>GNote History</strong></h5>
+                        <h5><strong> GNote</strong></h5>
                       </div>
                     </div>
                   </div>
 
                   <div class="col-lg-2 p-0">
-                    <div class="ngxTableHeader" >
+                    <div class="ngxTableHeader">
                       <div class="header-buttons-left">
                         <div class="icon-button-demo buttons">
-                          <button class="btn btn-icon icon-left btn-success" (click)=' addRow(addRecord)' >
-                            <i class="fas fa-plus"></i> Entry GNote</button>
-                          
-
+                          <button class="btn btn-icon icon-left btn-success" (click)='addRow(addRecord)'>
+                            <i class="fas fa-plus"></i> Add GNote</button>
                         </div>
                       </div>
                     </div>
                   </div>
 
                   <div class="col-lg-8 p-0">
-                    <div class="ngxTableHeader" style="display: flex;  justify-content: flex-end;" >
-                        <div class="table-search-area">
-                            <div>
-                                <label for="search-input"><i
-                                        class="material-icons search-icon">search</i></label>
-                                <input placeholder="Search" type="text"
-                                    class="browser-default search-field"
-                                    (keyup)='filterDatatable($event)' aria-label="Search box">
-                            </div>
+                    <div class="ngxTableHeader" style="display: flex;  justify-content: flex-end;">
+                      <div class="table-search-area">
+                        <div>
+                          <label for="search-input"><i class="material-icons search-icon">search</i></label>
+                          <input placeholder="Search" type="text" class="browser-default search-field"
+                            (keyup)='filterDatatable($event)' aria-label="Search box">
                         </div>
+                      </div>
                     </div>
-                </div>
-
-                  <!-- <div class="col-lg-1 p-0">
-                    <div class="ngxTableHeader">
-                        <div class="header-buttons-left">
-                            <div class="icon-button-demo buttons">
-                              <button class="btn btn-icon icon-left btn-primary rounded-button" (click)=' pendinghistory(pendingRecord)' >
-                                <i class="material-icons">av_timer</i>
-                              </button>
-                              
-                            </div>
-                          </div>
-                      </div> 
-                  </div> -->
-              
+                  </div>
+             
                 </div>
               </div>
             </div>
             <!-- row end -->
-           <br>
-<!-- enter form control name after ts !!!!!!!!!!!!-->
-    
-<div class="col-sm-12">
-  <ngx-datatable #table class="material" [rows]="Customers" [loadingIndicator]="loadingIndicator"
-    columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="10"
-     [reorderable]="reorderable">
+            <br>
+            <!-- enter form control name after ts !!!!!!!!!!!!-->
 
-    <ngx-datatable-column name="Date">
-      <ng-template let-row="row" ngx-datatable-cell-template>
-        {{row.phone}}
-      </ng-template>
-    </ngx-datatable-column>
+      
+              <ngx-datatable #table class="material" [rows]="Gnotes" [loadingIndicator]="loadingIndicator"
+                columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="10"
+                [reorderable]="reorderable" *ngIf="!loader">
 
-    <ngx-datatable-column [width]="200" name="To/From">
-      <ng-template let-row="row" let-value="value" let-i="index" ngx-datatable-cell-template>
-        <!-- <img src="{{ row.img }}" class="data-table-img" /> -->
-        <div class="name-col-style">
-          <div>{{row.name}}</div>
-          <div class="font-12 text-muted">{{row.name}}</div>
-        </div>
-      </ng-template>
-    </ngx-datatable-column>
-    
-    
-    <ngx-datatable-column name="Amount">
-      <ng-template let-row="row" ngx-datatable-cell-template>
-        {{row.phone}}
-      </ng-template>
-    </ngx-datatable-column>
-    <ngx-datatable-column name="Business Category">
-      <ng-template let-row="row" ngx-datatable-cell-template>
-        {{row.email}}
-      </ng-template>
-    </ngx-datatable-column>
-    <ngx-datatable-column name="Status">
-      <ng-template let-row="row" ngx-datatable-cell-template>
-        <div *ngIf="row.status=='Active'" class="badge-outline col-green">{{row.status}}
-        </div>
-        <div *ngIf="row.status=='Completed'" class="badge-outline col-red">{{row.status}}
-        </div>
-        <div *ngIf="row.status=='Pending'" class="badge-outline col-indigo">{{row.status}}
-        </div>
-      </ng-template>
-    </ngx-datatable-column>
-    <ngx-datatable-column name="Connect Type">
-      <ng-template let-row="row" ngx-datatable-cell-template>
-        {{row.address}}
-      </ng-template>
-    </ngx-datatable-column>
-    <ngx-datatable-column name="Actions" sortable="false">
-      <ng-template let-value="value" let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
-        <a class="msr-2 h-auto tblEditBtn" (click)='opendetails( profileRecord)'>
-          <i class="fas fa-eye"></i>
-        </a>
-       
-      </ng-template>
-    </ngx-datatable-column>
-  </ngx-datatable>
-</div>
-          
+                <ngx-datatable-column name="Date">
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{row.created_on}}
+                  </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column [width]="200" name="Name">
+                  <ng-template let-row="row" let-value="value" let-i="index" ngx-datatable-cell-template>     
+                    <div class="name-col-style">
+                      <div>{{row.name}}</div>                     
+                    </div>
+                  </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="Amount">
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{row.amount}}
+                  </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="Business Category">
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{row.business_category}}
+                  </ng-template>
+                </ngx-datatable-column>
+               
+                 <ngx-datatable-column name="Type">
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    <div *ngIf="row.type=='1'" class="badge-outline col-green">First Business
+                    </div>
+                    <div *ngIf="row.type=='2'" class="badge-outline col-indigo">Regular Business
+                    </div>
+                   
+                   
+                  </ng-template>
+                </ngx-datatable-column> 
+                <ngx-datatable-column name="Connect Type">
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{row.connect_type}}
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Actions" sortable="false">
+                  <ng-template let-value="value" let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                    <a class="msr-2 h-auto tblEditBtn" (click)='opendetails(row , rowIndex ,profileRecord)'>
+                      <i class="fas fa-eye"></i>
+                    </a>
+
+                  </ng-template>
+                </ngx-datatable-column>
+              </ngx-datatable>
+
+           
+
+           
+              <!-- <ngx-skeleton-loader count="3" appearance="line" *ngIf="loader"></ngx-skeleton-loader> -->
+              <div id="tit" style="width: 100%;">
+                <ngx-skeleton-loader count="1"
+                  [theme]="{  'border-radius': '4px',  height: '60px',  width:'100%', 'opacity':.6, 'background-color': '##b9b8b8',   border: '1px solid white'  }"
+                  *ngIf="loader"></ngx-skeleton-loader>
+              </div>
+              <div class="skle" style="width: 100%;">
+                <ngx-skeleton-loader count="10"
+                  [theme]="{  'border-radius': '4px',  height: '30px', width:'100%', 'opacity':.6, 'background-color': '##b9b8b8',   border: '1px solid white'  }"
+                  appearance="line" *ngIf="loader"></ngx-skeleton-loader>
+
+              </div>
+           
+
 
 
             <!--  add Modal Window -->
@@ -153,225 +140,219 @@
               <div class="modal-body">
 
                 <form class="register-form" [formGroup]="register" (ngSubmit)="onAddRowSave(register)"
-                style="margin-top: 50px; border-color: rgb(20, 20, 20); border: black; ">
-                <div class="row" style="margin-left: 30px;margin-right: 40px;  border: black; ">
-  
-  
-  
-                  <div class="col-md-6">
+                  style="margin-top: 50px; border-color: rgb(20, 20, 20); border: black; ">
+                  <div class="row" style="margin-left: 30px;margin-right: 40px;  border: black; ">
+
+
+                    <div class="col-md-6">
                     <div class="form-group position-relative">
-                      <label>Table<span class="text-danger">*</span></label>
-                      <i-feather name="Columns" class="login-icons" style="color: rgb(63, 89, 241);"></i-feather>
-                      <select class="form-control pl-5"required>
-                        <option value="" selected disabled>Please select</option>
-                        <option *ngFor="let country of countries" [value]="country.id">
-                          {{country.na}}
-                        </option>
-                      </select>
+                      <label>LOM <span class="text-danger">*</span></label>
+                      <i-feather name="Flag" class="login-icons" style="color: rgb(63, 89, 241);"></i-feather>
+                      <ng-select (change)="ontableChange($event)" placeholder="please select" >
+                        <ng-option [value]="Mtable_id" selected ></ng-option>
+                        <ng-option *ngFor="let tab of Tables" [value]="tab.table" >
+                          {{tab.table_name}}
+                        </ng-option>                        
+                      </ng-select>
+                      
                     </div>
-                  </div>
-  
-                  <div class="col-md-6">
-                    <div class="form-group position-relative">
-                      <label>Amount<span class="text-danger">*</span></label>
-                      <i-feather name="credit-card" class="login-icons" style="color: rgb(63, 89, 241);"></i-feather>
-                      <input type="text" class="form-control pl-5"
-                        placeholder="Enter the amount " required>
-                    </div>
-                  </div>
-  
-                  <div class="col-md-6">
-                    <div class="form-group position-relative">
-                      <label>GNote To</label>
-                      <i-feather name="user-plus" class="login-icons" style="color: rgb(63, 89, 241);"></i-feather>
-                      <select class="form-control pl-5"  required
-                        (change)="selectInput1($event)">
-                        <option value="" selected disabled>select</option>
-                        <option *ngFor="let connect of connects" [value]="connect.id">
-                          {{connect.value}}
-                        </option>
-                      </select>
-                    </div>
-                  </div>
-  
-                  <div class="col-md-6">
-                    <div class="form-group position-relative" *ngIf="isdisable">
-                      <label>Connect</label>
-                      <i-feather name="link2" class="login-icons" style="color: rgb(63, 89, 241);"></i-feather>
-                      <select class="form-control pl-5" >
-                        <option value="" selected disabled>select</option>
-                        <option *ngFor="let connect of connectssts" [value]="connect.id">
-                          {{connect.value}}
-                        </option>
-                      </select>
-                    </div>
-                  </div>
-  
-                  <div class="col-md-6">
-                    <div class="form-group position-relative">
-                      <label>Connect Type</label>
-                      <i-feather name="airplay" class="login-icons" style="color: rgb(63, 89, 241);"></i-feather>
-                      <select class="form-control pl-5"  required
-                        (change)="selectInput1($event)">
-                        <option value="" selected disabled>select</option>
-                        <option *ngFor="let connect of connects" [value]="connect.id">
-                          {{connect.value}}
-                        </option>
-                      </select>
-                    </div>
-                  </div>
-  
-                  <div class="col-md-12">
-                    <div id="df" style="height: 50px;">
-                      <label>
-                        <h6>Business Type :</h6>
-                      </label> &nbsp;&nbsp;
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
-                          value="option1">
-                        <label class="form-check-label" for="inlineRadio1">First Business</label>
+                  </div>    
+
+                    <div class="col-md-6">
+                      <div class="form-group position-relative">
+                        <label>GNote To<span class="text-danger">*</span></label>
+                        <i-feather name="user-plus" class="login-icons"  style="color: rgb(63, 89, 241);"></i-feather>
+                        <ng-select formControlName="to_member_id" (change)="selectInput1($event)" [items]="Members" bindLabel="name" bindValue="id" required placeholder="please select">
+                        </ng-select>
+                        <!-- <select class="form-control pl-5" formControlName="to_member_id" (change)="selectInput1($event)" required>
+                          <option value="" selected disabled>Please select</option>
+                          <option *ngFor="let mem of Members" [value]="mem.id">
+                            {{mem.name}}
+                          </option>
+                        </select> -->
                       </div>
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
-                          value="option2">
-                        <label class="form-check-label" for="inlineRadio2">Regular Business</label>
+                    </div>
+
+                    <div class="col-md-6">
+                      <div class="form-group position-relative">
+                        <label>Amount<span class="text-danger">*</span></label>
+                        <i-feather name="credit-card" class="login-icons" style="color: rgb(63, 89, 241);"></i-feather>
+                        <input type="text" class="form-control pl-5" formControlName="amount" placeholder="Enter the amount " required>
                       </div>
-  
                     </div>
-  
-                  </div>
-  
-  
-                  <div class="col-md-6">
-                    <div class="form-group position-relative">
-                      <label>Business Category <span class="text-danger">*</span></label>
-                      <i-feather name="Briefcase" class="login-icons" style="color: rgb(63, 89, 241);"></i-feather>
-                      <select class="form-control pl-5"  required>
-                        <option value="" selected disabled>select</option>
-                        <option *ngFor="let country of countries" [value]="country.id">
-                          {{country.name}}
-                        </option>
-                      </select>
+
+                    <div class="col-md-6">
+                      <div class="form-group position-relative" *ngIf="isdisable">
+                        <label>Connect</label>
+                        <i-feather name="link2" class="login-icons" style="color: rgb(63, 89, 241);"></i-feather>
+                        <ng-select  formControlName="connect_id"  required placeholder="please select">
+                          <ng-option [value]="" selected ></ng-option>
+                          <ng-option *ngFor="let tab of Connectmem" [value]="tab.connect_id" >
+                            <span >
+                              {{tab.connect_name}}
+                              </span> &nbsp; <span >({{tab.created_on}})</span>
+                          </ng-option>
+                        </ng-select>
+
+                        <!-- <select class="form-control pl-5" formControlName="connect_id" required>        
+                          <option value="" selected disabled>select</option>
+                          <option *ngFor="let connect of Connectmem" [value]="connect.connect_id">                        
+                            <span >
+                            {{connect.connect_name}}
+                            </span> &nbsp; <span style="text-decoration: dotted;">({{connect.created_on}})</span>
+                          </option>
+                        </select> -->
+                      </div>
                     </div>
-                  </div>
-  
-                  <div class="col-md-8">
-                    <div class="form-group position-relative">
-                      <label> comments </label>
-                      <textarea name="" class="form-control pl-2 " cols="30" rows="3 "
-                       ></textarea>
-  
+
+                    <div class="col-md-6">
+                      <div class="form-group position-relative">
+                        <label>Connect Type</label>
+                        <i-feather name="airplay" class="login-icons" style="color: rgb(63, 89, 241);"></i-feather>
+                        <select class="form-control pl-5" formControlName="connect_status" required >
+                          <option value="" selected disabled>select</option>
+                          <option *ngFor="let connect of connects" [value]="connect.id">
+                            {{connect.value}}
+                          </option>
+                        </select>
+                      </div>
                     </div>
+                 
+                    
+                    <div class="col-md-6">
+                      <div class="form-group position-relative">
+                        <label>Business Category <span class="text-danger">*</span></label>
+                        <i-feather name="Briefcase" class="login-icons" style="color: rgb(63, 89, 241);"></i-feather>                  
+                        <ng-select  [items]="Business" bindLabel="category" bindValue="id"  formControlName="business_category" required>
+                        </ng-select>
+                      </div>
+                    </div>
+
+                    <div class="col-md-12">
+                      <div id="df" style="height: 50px;">
+                        <label>
+                          <h6>Business Type :</h6>
+                        </label> &nbsp;&nbsp;
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="radio" formControlName="business_type" id="inlineRadio1"
+                            value="1">
+                          <label class="form-check-label" for="inlineRadio1">First Business</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="radio" formControlName="business_type" id="inlineRadio2"
+                            value="2">
+                          <label class="form-check-label" for="inlineRadio2">Regular Business</label>
+                        </div>
+
+                      </div>
+
+                    </div>
+
+                    <div class="col-md-12">
+                      <div class="form-group position-relative">
+                        <label> comments </label>
+                        <textarea name="" class="form-control pl-2 " formControlName="comments" cols="30" rows="3 " ></textarea>
+
+                      </div>
+                    </div>
+                    <div class="col-md-12" style="text-align: center;"><br>
+                      <button type="submit" class="btn btn-primary" [disabled]="!register.valid">CONFIRM</button>
+                      <br><br><br>
+                    </div>
+                    <!-- <button (click)="toggleShow()" type="checkbox" >show/hide</button> -->
+
+                    <!-- row end -->
                   </div>
-  
-  
-  
-                  <div class="col-md-12" style="text-align: center;"><br>
-                    <button type="submit" class="btn btn-primary" [disabled]="!register.valid">CONFIRM</button>
-                    <br><br><br>
-                  </div>
-                  <!-- <button (click)="toggleShow()" type="checkbox" >show/hide</button> -->
-  
-                  <!-- row end -->
-                </div>
-              </form>
-
-
-               
-
+                </form>
               </div>
             </ng-template>
 
             <ng-template #profileRecord let-modal>
               <div class="modal-header editRowModal">
-                  <h4 class="modal-title" id="modal-basic-title">
-                      <div class="table-modal-header">
-                          <img src="assets/images/JCOM logo 4.jpg" alt="avatar">
-                          <div class="modal-about">
-                              <div class="font-weight-bold p-t-10 font-17">
-                                  GNote Details</div>
-                          </div>
-                      </div>
-                  </h4>
-                  <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
-                      <span aria-hidden="true"><i class="material-icons">close</i></span>
-                  </button>
+                <h4 class="modal-title" id="modal-basic-title">
+                  <div class="table-modal-header">
+                    <img src="assets/images/JCOM logo 4.jpg" alt="avatar">
+                    <div class="modal-about">
+                      <div class="font-weight-bold p-t-10 font-17">
+                        GNote Details</div>
+                    </div>
+                  </div>
+                </h4>
+                <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+                  <span aria-hidden="true"><i class="material-icons">close</i></span>
+                </button>
               </div>
 
               <div class="modal-body">
 
-                  <div class="section-body">
-                      <div class="row ">
-                          <div class="col-12 col-md-12 ">
-                              <div class="card author-box" style="margin-left: 75px; margin-right: 75px;">
-                      
-                                  <div class="card-body">
-                                      <div class="card-header">
-                                          <h4>Details</h4>
-                                      </div>
-                                      <div class="py-4" style="margin-left: 30px;">
-                                          <p class="clearfix">
-                                              <span class="float-start">
-                                                  Name :
-                                              </span>
-                                              <span class="float-right text-muted"  style="width: 60%;">
-                                                  santhosh
-                                              </span>
-                                          </p>
-                                          <p class="clearfix">
-                                              <span class="float-start">
-                                                Amount :
-                                              </span>
-                                              <span class="float-right text-muted"  style="width: 60%;">
-                                                     4000
-                                              </span>
-                                          </p>
-                                          <p class="clearfix">
-                                              <span class="float-start">
-                                                Connect Type :
-                                              </span>
-                                              <span class="float-right text-muted"  style="width: 60%;">
-                                                  test@example.com
-                                              </span>
-                                          </p>
-                                          <p class="clearfix">
-                                              <span class="float-start">
-                                                 Business Category :
-                                              </span>
-                                              <span class="float-right text-muted"  style="width: 60%;">
-                                                  
-                                                      accountant
-                                                  
-                                              </span>
-                                          </p>
-                                          
-                                          
-                                          
-                                          
-                                          <p class="clearfix">
-                                              <span class="float-start">
-                                                  Comment :
-                                              </span>
-                                              <span class="float-end text-muted" class="float-right text-muted"  style="width: 60%;">
-                                                 
-                                                      Thank youuuuu
-                                                 
-                                              </span>
-                                          </p>
-                                      </div>
-                                  </div>
-                              </div>
+                <div class="section-body">
+                  <div class="row ">
+                    <div class="col-12 col-md-12 ">
+                      <div class="card author-box" style="margin-left: 75px; margin-right: 75px;">
 
+                        <div class="card-body">
+                          <div class="card-header">
+                            <h4>Details</h4>
+                          </div>
+                          <div class="py-4" style="margin-left: 30px;">
+                            <p class="clearfix">
+                              <span class="float-start">
+                                Name :
+                              </span>
+                              <span class="float-right text-muted" style="width: 60%;">
+                                {{Gnotedtls.name}}
+                              </span>
+                            </p>
+                            <p class="clearfix">
+                              <span class="float-start">
+                                Amount :
+                              </span>
+                              <span class="float-right text-muted" style="width: 60%;">
+                                {{Gnotedtls.amount}}
+                              </span>
+                            </p>
+                            <p class="clearfix">
+                              <span class="float-start">
+                                Connect Type :
+                              </span>
+                              <span class="float-right text-muted" style="width: 60%;">
+                                {{Gnotedtls.connect_type}}
+                              </span>
+                            </p>
+                            <p class="clearfix">
+                              <span class="float-start">
+                                Business Category :
+                              </span>
+                              <span class="float-right text-muted" style="width: 60%;">
 
-                              <!-- col end -->
+                                {{Gnotedtls.business_category}}
+
+                              </span>
+                            </p>
+                            <p class="clearfix">
+                              <span class="float-start">
+                                Comment :
+                              </span>
+                              <span class="float-end text-muted" class="float-right text-muted" style="width: 60%;">
+                                {{Gnotedtls.comments}}                                
+                              </span>
+                            </p>
                           </div>
 
+                            
+                        </div>
                       </div>
+
+
+                      <!-- col end -->
+                    </div>
+
                   </div>
+                </div>
 
 
               </div>
-          </ng-template>
+            </ng-template>
 
 
           </div>

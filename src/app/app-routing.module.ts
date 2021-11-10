@@ -33,6 +33,9 @@ const routes: Routes = [
          loadChildren: () =>
          import('./profile/profile.module').then(m => m.ProfileModule)
        },
+       { path: 'changepassword', 
+         loadChildren: () =>
+         import('./changepassword/changepassword.module').then(m => m.ChangepasswordModule) },
 
       {
         path: 'connectentry',
@@ -62,6 +65,10 @@ const routes: Routes = [
            path: 'searchmembers',
           loadChildren: () => 
           import('./searchmembers/searchmembers.module').then(m => m.SearchmembersModule) },
+         
+          { path: 'connectpending',
+           loadChildren: () =>
+           import('./connectpending/connectpending.module').then(m => m.ConnectpendingModule) },
       {
         path: 'Customer',
         loadChildren: () =>
@@ -142,6 +149,8 @@ const routes: Routes = [
       ),
   },
   { path: 'currentstatus', loadChildren: () => import('./currentstatus/currentstatus.module').then(m => m.CurrentstatusModule) },
+  
+ 
   
  
   

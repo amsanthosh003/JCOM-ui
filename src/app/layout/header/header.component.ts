@@ -12,12 +12,20 @@ import {
 import { Router } from '@angular/router';
 import { ConfigService } from 'src/app/config/config.service';
 import { LanguageService } from 'src/app/core/service/language.service';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { User } from '../../core/models/user';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { ConfirmedValidator } from '../../layout/confirmed.validator';
+import { RequestService } from "../../services/request.service";
 const document: any = window.document;
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.sass'],
+  providers: [ToastrService],
 })
 export class HeaderComponent implements OnInit, AfterViewInit {
   public config: any = {};
@@ -26,16 +34,54 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   countryName;
   langStoreValue: string;
   defaultFlag: string;
+
+  currentUserSubject: BehaviorSubject<User>;
+  currentUser: Observable<User>;
+  memberid: any;
+  scrollBarHorizontal = window.innerWidth < 1200;
+  form: FormGroup;
+  editForm: FormGroup;
+
+  error2 = '';
   constructor(
+    private toastr: ToastrService,
     @Inject(DOCUMENT) private document: Document,
     private renderer: Renderer2,
     public elementRef: ElementRef,
+    private modalService: NgbModal,
     private dataService: RightSidebarService,
     private configService: ConfigService,
     private authService: AuthService,
     private router: Router,
-    public languageService: LanguageService
-  ) {}
+    public languageService: LanguageService,
+    private fb: FormBuilder,
+    private request: RequestService
+    //
+  ) {
+    this.currentUserSubject = new BehaviorSubject<User>(
+      JSON.parse(localStorage.getItem('currentUser'))
+    );
+    this.currentUser = this.currentUserSubject.asObservable();
+    this.memberid = this.currentUserSubject.value[0]
+    console.log("userrridd", this.memberid.m_id)
+    window.onresize = () => {
+      this.scrollBarHorizontal = window.innerWidth < 1200;
+    };
+
+    this.editForm = this.fb.group({
+      password: ['', [Validators.required]],
+      confirm_password: ['', [Validators.required]],
+    },
+      {
+        validator: ConfirmedValidator('password', 'confirm_password')
+      });
+
+    window.onresize = () => {
+      this.scrollBarHorizontal = window.innerWidth < 1200;
+    };
+
+
+  }
 
   listLang = [
     { text: 'English', flag: 'assets/images/flags/us.jpg', lang: 'en' },
@@ -57,6 +103,46 @@ export class HeaderComponent implements OnInit, AfterViewInit {
       this.flagvalue = val.map((element) => element.flag);
     }
   }
+
+
+  onEditSave(form: FormGroup) {   
+    if (this.editForm.invalid) {
+      this.error2 = 'Password and Confirm Password must be match.';
+      console.log("err2", this.error2);
+      // form.reset();
+      return;
+    }
+     else {
+      const edata = {
+        m_id: this.memberid.m_id,
+        password: form.value.password,
+      }
+
+      this.request.updatePassword(edata).subscribe((res: any) => {
+        if (res[0].status == 'success') {
+          this.modalService.dismissAll();
+          this.changeRecordSuccess();
+          form.reset();
+          this.error2='';
+          return true;
+        }
+        else if (res[0].status == 'error') {
+          this.modalService.dismissAll();
+        }
+
+      }, (error) => {
+        console.log(error);
+        this.modalService.dismissAll();
+      });
+
+    }
+  }
+
+  changeRecordSuccess() {
+    this.toastr.success('Password Chnged Successfully', '');
+    console.log("changed status");
+  }
+
   ngAfterViewInit() {
     // set theme on startup
     if (localStorage.getItem('theme')) {
@@ -159,6 +245,13 @@ export class HeaderComponent implements OnInit, AfterViewInit {
       if (!res.success) {
         this.router.navigate(['/authentication/signin']);
       }
+    });
+  }
+
+  ChangePassword(content) {
+    this.modalService.open(content, {
+      ariaLabelledBy: 'modal-basic-title',
+      size: 'lg',
     });
   }
 }

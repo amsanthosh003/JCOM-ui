@@ -11,6 +11,9 @@ import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { RequestService } from "../services/request.service";
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { User } from '../core/models/user';
+
 
 
 @Component({
@@ -24,6 +27,10 @@ export class JcomtablesComponent implements OnInit {
   active;
   // public Editor = ClassicEditor;
   @ViewChild(DatatableComponent, { static: false }) table: DatatableComponent;
+  
+  p: number = 1;
+ 
+  loader =true;
   rows = [];
   scrollBarHorizontal = window.innerWidth < 1200;
   selectedRowData: selectRowInterface;
@@ -36,13 +43,9 @@ export class JcomtablesComponent implements OnInit {
   loadingIndicator = true;
   isRowSelected = false;
   selectedOption: string;
-  reorderable = true;
-  editcustmergroup: any;
-  public selected: any[] = [];
-  custmernamevalue:any;
-  custmerphonevalue:any;
-  custmeremailvalue:any;
-  custmerpasswordvalue:any;
+  reorderable = true; 
+  public selected: any[] = []; 
+  filteredData1: any[];
 
   isdisable: boolean;
 
@@ -86,27 +89,35 @@ export class JcomtablesComponent implements OnInit {
   IdValue: any;
   designations: any;
   custmerdesignationvalue: any;
+  Members: Object;
+  currentUserSubject: BehaviorSubject<User>;
+  currentUser: Observable<User>;
+  memberid: any;
+  public Tables: any;
+  Mtable_id: any;
+  tableid: any;
+  loader1:boolean;
+  m: number = 1;
+  data1: Object;
+  // filteredData1: Object;
+
+  
   constructor(
     private fb: FormBuilder,
     private modalService: NgbModal,
     private toastr: ToastrService,private request: RequestService
   ) {
-    this.editForm = this.fb.group({
-      username: ['', [Validators.required, Validators.pattern('[a-zA-Z]+')]],
-      phone: ['', [Validators.required]],
-      email: [
-        '',
-        [Validators.required, Validators.email, Validators.minLength(5)],
-      ],
-      password: ['', [Validators.required]],
-      Designation: ['', [Validators.required]]
-    });
+    this.currentUserSubject = new BehaviorSubject<User>(
+      JSON.parse(localStorage.getItem('currentUser'))
+    );
+    this.currentUser = this.currentUserSubject.asObservable();
+    this.memberid = this.currentUserSubject.value[0]
+    this.Mtable_id = this.memberid.jib_table;
     window.onresize = () => {
       this.scrollBarHorizontal = window.innerWidth < 1200;
     };
-  }
 
-  
+  }
   selectInput1(event) {
     let selected = event.target.value;
     if (selected == "1") {
@@ -115,7 +126,6 @@ export class JcomtablesComponent implements OnInit {
       this.isdisable =  false;
     }
   }
-
   // select record using check box
   onSelect({ selected }) {
     this.selected.splice(0, this.selected.length);
@@ -127,27 +137,9 @@ export class JcomtablesComponent implements OnInit {
       this.isRowSelected = true;
     }
   }
-  deleteSelected() {
-    Swal.fire({
-      title: 'Are you sure?',
-      showCancelButton: true,
-      confirmButtonColor: '#8963ff',
-      cancelButtonColor: '#fb7823',
-      confirmButtonText: 'Yes',
-    }).then((result) => {
-      if (result.value) {
-        this.selected.forEach((row) => {
-          this.deleteRecord(row);
-        });
-        this.deleteRecordSuccess(this.selected.length);
-        this.selected = [];
-        this.isRowSelected = false;
-      }
-    });
-  }
   ngOnInit() {
     this.viewdata();
-    this.designation();
+    // this.designation();
     this.register = this.fb.group({
       username: ['', [Validators.required, Validators.pattern('[a-zA-Z]+')]],
       phone: ['', [Validators.required]],
@@ -159,38 +151,49 @@ export class JcomtablesComponent implements OnInit {
       Designation: ['', [Validators.required]]
     });
   }
+
+  viewdata(){
+    this.fetch((data) => {
+      this.data = data;
+      // this.filteredData = data;
+      this.Tables=data;
+      console.log("tab",this.Tables)
+      this.filteredData=data;
+      setTimeout(() => {
+        this.loadingIndicator = false;
+      }, 500);
+    });
+  }
+  
   // fetch data
   fetch(cb) {
 
-    this.request.getuser().subscribe((response) => {
-     console.log(response);
-     
+    this.request.gettables().subscribe((response) => {
+     console.log(response);    
               cb(response);
+              this.loader=false;
     }, (error) => {
       console.log(error);
     });
 
   }
 
-  designation() {
-    this.request.getdesignation().subscribe((response) => {
-  this.designations=response;
-  console.log(this.designations);
-    }, (error) => {
-      console.log(error);
-    });
+  // designation() {
+  //   this.request.getdesignation().subscribe((response) => {
+  // this.designations=response;
+  // console.log(this.designations);
+  //   }, (error) => {
+  //     console.log(error);
+  //   });
 
-  }
-
-
-  
+  // }
+ 
   openhistory(content) {
     this.modalService.open(content, {
       ariaLabelledBy: 'modal-basic-title',
       size: 'lg',
     });
   }
-
   
   pendinghistory(content) {
     this.modalService.open(content, {
@@ -199,11 +202,13 @@ export class JcomtablesComponent implements OnInit {
     });
   }
 
-  openprofile(content) {
+  openprofile(column,content) {
     this.modalService.open(content, {
       ariaLabelledBy: 'modal-basic-title',
       size: 'lg',
     });
+    console.log(column);
+   
   }
 
 
@@ -219,73 +224,33 @@ export class JcomtablesComponent implements OnInit {
     });
 
   }
-  // edit record
-  editRow(row, rowIndex, content) {
+
+  openRow(row, content) {  
+    this.Members="";
     this.modalService.open(content, {
       ariaLabelledBy: 'modal-basic-title',
       size: 'lg',
     });
-
-
-
-    this.request.fetchuserById(row._id).subscribe((response) => {
-      this.editcustmergroup=response[0];
-      console.log(response);
-        this.custmernamevalue=this.editcustmergroup.username;
-        this.custmerphonevalue=this.editcustmergroup.phone;
-        this.custmeremailvalue=this.editcustmergroup.email;
-        this.custmerpasswordvalue=this.editcustmergroup.password;
-        this.custmerdesignationvalue=this.editcustmergroup.Designation;
-        this.IdValue=this.editcustmergroup._id;
-
-      //   this.editForm = this.formBuilder.group({
-      //     CountryName2:[this.CountryValue, Validators.required],
-      //     Countrycode2:[this.CountrycodeValue, Validators.required]
-      // });
-      // console.log(this.editForm.value);
-
-
-
-      this.editForm.setValue({
-        username: this.custmernamevalue,
-        phone: this.custmerphonevalue,
-        email: this.custmeremailvalue,
-        password: this.custmerpasswordvalue,
-        Designation: this.custmerdesignationvalue,
-      });
-      this.selectedRowData = row;
-
+    this.loader1=true;
+    // console.log("table id",row);
+    this.tableid =row;      
+    this.request.gettablemembers(this.memberid.m_id, this.tableid).subscribe((response) => {
+      this.loader1=false;         
+           this.Members=response;     
+          //  this.filteredData1 =this.Members;      
+           console.log("res",this.Members); 
+    },
+     (error) => {
+      console.log(error);
     });
-
-
-
-
-  }
-  // delete single row
-  deleteSingleRow(row) {
-    Swal.fire({
-      title: 'Are you sure?',
-      showCancelButton: true,
-      confirmButtonColor: '#8963ff',
-      cancelButtonColor: '#fb7823',
-      confirmButtonText: 'Yes',
-    }).then((result) => {
-      if (result.value) {
-        this.deleteRecord(row);
-        this.deleteRecordSuccess(1);
-      }
-    });
+    
+    // this.request.fetchuserById(row.table).subscribe((response) => {
+    //   this.editcustmergroup=response[0];
+    //   console.log(response);
+ 
+    // });
   }
 
-  deleteRecord(row) {
-    console.log("row",row._id);
-    this.request.deleteuser(row._id).subscribe((response) => {
-      console.log(response);
-      this.viewdata();
-     }, (error) => {
-       console.log(error);
-     });
-  }
 
   arrayRemove(array, id) {
     return array.filter(function (element) {
@@ -319,20 +284,6 @@ export class JcomtablesComponent implements OnInit {
 
   }
 
-
-
-viewdata(){
-  this.fetch((data) => {
-    this.data = data;
-    // this.filteredData = data;
-    this.Customers=data.response;
-    this.filteredData=data.response;
-    setTimeout(() => {
-      this.loadingIndicator = false;
-    }, 500);
-  });
-}
-
   // save record on edit
   onEditSave(form: FormGroup) {
 
@@ -360,32 +311,62 @@ viewdata(){
   });
 
   }
-  // filter table data
-  filterDatatable(event) {
+  // filter table data for table
+  filterDatatable(event) {  
     // get the value of the key pressed and make it lowercase
     const val = event.target.value.toLowerCase();
+    
     // get the amount of columns in the table
     const colsAmt = this.columns.length;
+    
     // get the key names of each column in the dataset
-    const keys = Object.keys( this.filteredData[0]);
-    // console.log("keys",""+keys);
+    const keys = Object.keys(this.filteredData[0]);
+    console.log("keys",""+keys);
     // assign filtered matches to the active datatable
-    this.Customers = this.filteredData.filter(function (item) {
+    this.Tables= this.filteredData.filter(function (item) {
       // iterate through each row's column data
-      for (let i = 0; i < colsAmt; i++) {
+      console.log("item",item);
+
+      for (let i = 0; i < 2; i++) {
+        
         // check for a match
         if (
           item[keys[i]].toString().toLowerCase().indexOf(val) !== -1 ||
           !val
-        ) {
-           
-      
+        ) { 
           return true;
         }
       }
     });
     // whenever the filter changes, always go back to the first page
-    this.table.offset = 0;
+    // this.table.offset = 0;
+  }
+
+
+  //filter for members
+  filterDatatable1(event) {
+ 
+    const val = event.target.value.toLowerCase();
+    const colsAmt = this.columns.length;
+    console.log("keysertr",val);
+    // console.log("keysertr",colsAmt);
+    const keys = Object.keys( this.filteredData1[0] );
+    console.log("keys",""+keys);
+    this.Members= this.filteredData1.filter(function (item) {
+      // iterate through each row's column data
+      console.log("item",item);
+
+      for (let i = 0; i < 2; i++) {
+        if (
+          item[keys[i]].toString().toLowerCase().indexOf(val) !== -1 ||
+          !val
+        ) { 
+          return true;
+        }
+      }
+    });
+    // whenever the filter changes, always go back to the first page
+    // this.table.offset = 0;
   }
   // get random id
   getId(min, max) {

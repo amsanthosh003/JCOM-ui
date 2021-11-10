@@ -42,6 +42,7 @@ import { ArchwizardModule } from 'angular-archwizard';
 import { FormsModule } from '@angular/forms';
 import { MapviewComponent } from './mapview/mapview.component';
 import { AgmCoreModule } from '@agm/core';
+import { ToastrModule } from 'ngx-toastr';
 
 
 
@@ -76,6 +77,7 @@ export function createTranslateLoader(http: HttpClient): any {
     ReactiveFormsModule,
     PerfectScrollbarModule,
     ClickOutsideModule,FormsModule,
+    ToastrModule.forRoot(),ArchwizardModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

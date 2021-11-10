@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import{environment} from '../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
@@ -14,9 +15,9 @@ export class RequestService {
 
 
 
-  endPoint1 = 'https://tranzporter.herokuapp.com';
+  endPoint1 = environment.baseURL1;
 
-
+  endPoint2 = environment.baseURL2;
 
   public adminlogin(credentials) {
     console.log('credentials2',credentials);
@@ -76,11 +77,150 @@ export class RequestService {
   }
 
 
+ //meeting type
+ public getmeetingtype() {
+  this.url = `${this.endPoint2}/get_meeting_type.php`;
+  return this.http.get(this.url);
+}
+
+//profile
+public fetchuserBymId(id) {
+  this.url = `${this.endPoint2}/get_member_details.php?m_id=` + id;
+  return this.http.get(this.url);
+}
+public updateprofile(body) { 
+  this.url = `${this.endPoint2}/send_member_details.php`;
+  return this.http.put(this.url, body);
+}
+
+//pincode
+public fetchpinBy(id) {
+  this.url = `${this.endPoint2}/get_pincode.php?pincode=` + id;
+  return this.http.get(this.url);
+}
+
+//showcase
+public fetchshowcaseById(id) {
+  this.url = `${this.endPoint2}/get_showcase_history.php?m_id=` + id;
+  return this.http.get(this.url);
+}
+
+public addshowcase(newshow: {date: any; title: any; mode: any;}) {
+  this.url = `${this.endPoint2}/send_showcase.php`;
+  return this.http.post(this.url, newshow);
+}
+
+//guest reg
+public fetchguestById(id) {
+  this.url = `${this.endPoint2}/get_guest_history.php?m_id=` + id;
+  return this.http.get(this.url);
+}
+
+public addguest(newguest:{ m_id:any; guest_name: any; mobile_no: any;email_id: any;guest_city: any;business_category: any;type: any;}) {
+  this.url = `${this.endPoint2}/send_guest.php`;
+  return this.http.post(this.url, newguest);
+}
+
+//business category 
+public fetchbusiness() {
+  this.url = `${this.endPoint2}/get_business_category.php`;
+  return this.http.get(this.url);
+}
 
 
+// connectentry
+public fetchconnectById(id) {
+  this.url = `${this.endPoint2}/get_connect_list.php?m_id=` + id;
+  return this.http.get(this.url);
+}
+
+public getconnectpending(id) {
+  this.url = `${this.endPoint2}/get_guest_history.php?m_id=` + id;
+  return this.http.get(this.url);
+}
+
+public fetchpersonById(id) {
+  this.url = `${this.endPoint2}/get_guest_history.php?m_id=` + id;
+  return this.http.get(this.url);
+}
+
+public addconnect(newconnect: {m_id:any; to_member_id:any; connect_type:any;
+   connect_status:any; business_category:any; connect_name:any; mobile_no:any;
+   email_id:any; address:any; about_connect:any; comments:any;}) {
+    
+  this.url = `${this.endPoint2}/send_connect.php`;
+  return this.http.post(this.url, newconnect);
+}
+// pendingconnect
+public fetchpendingconnectById(id) {
+  this.url = `${this.endPoint2}/get_pending_connect.php?m_id=` + id;
+  return this.http.get(this.url);
+}
+public poststatus(newconnect: {connect_id:any;}) {
+   
+ this.url = `${this.endPoint2}/send_marku.php`;
+ console.log("sts",newconnect)
+ return this.http.post(this.url, newconnect);
+}
+
+
+//gnoteentry
+public fetchgnoteById(id) {
+  this.url = `${this.endPoint2}/get_gnote_list.php?m_id=` + id;
+  return this.http.get(this.url);
+}
+//change password
+
+public updatePassword(body) {
+  this.url = `${this.endPoint2}/change_password.php`;
+  return this.http.put(this.url, body);
+}
+
+//tables
+public gettables() {
+  this.url = `${this.endPoint2}/get_jcom_table.php`;
+  return this.http.get(this.url);
+}
+//tablemembers
+public gettablemembers(id,id2) {
+  this.url = `${this.endPoint2}/get_member_list.php?m_id=` + id+'&table_id=' + id2;
+  return this.http.get(this.url);
+}
+// public fetchtableById(id) {
+//   this.url = `${this.endPoint2}/get_gnote_list.php?m_id=` + id;
+//   return this.http.get(this.url);
+// }
+
+//get member connect
+public getconnectmembers(id,id2) {
+  this.url = `${this.endPoint2}/get_connect_member.php?m_id=` + id+'&to_member_id=' + id2;
+  return this.http.get(this.url);
+}
+
+public addgnote(newgnote: {
+  m_id:any;
+  connect_id:any;
+  to_member_id:any;
+  business_type: any;
+  connect_status: any;
+  amount: any;
+  business_category: any;
+  comments:any;  }) {
+   
+ this.url = `${this.endPoint2}/send_gnote.php`;
+ return this.http.post(this.url, newgnote);
+}
+//search by key
+public getkeymembers(id,key) {
+  this.url = `${this.endPoint2}/get_keyword_search.php?m_id=` + id+'&keyword=' + key;
+  return this.http.get(this.url);
+}
+
+public getbusinessmembers(id,id2) {
+  this.url = `${this.endPoint2}/get_category_members.php?m_id=` + id+'&category_id=' + id2;
+  return this.http.get(this.url);
+}
   //customer
-
-
   public getcustomer() {
     this.url = `${this.endPoint1}/customer/`;
     return this.http.get(this.url);
@@ -108,8 +248,6 @@ export class RequestService {
     this.url = `${this.endPoint1}/customer/update?id=${id}`;
     return this.http.put(this.url, body);
   }
-
-
 
   public fetchpendingagreegationById(id) {
     this.url = `${this.endPoint1}/booking/acceptedaggregation?_id=` + id+'&Bookingstatus=Pending';

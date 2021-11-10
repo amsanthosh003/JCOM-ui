@@ -8,6 +8,8 @@ import { NgxEchartsModule } from 'ngx-echarts';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { NgxGaugeModule } from 'ngx-gauge';
 import { Dashboard2Component } from './dashboard2/dashboard2.component';
+import { ToastrModule } from 'ngx-toastr';
+import { ArchwizardModule } from 'angular-archwizard';
 @NgModule({
   declarations: [MainComponent, Dashboard2Component],
   imports: [
@@ -20,6 +22,7 @@ import { Dashboard2Component } from './dashboard2/dashboard2.component';
     PerfectScrollbarModule,
     NgApexchartsModule,
     NgxGaugeModule,
+    ToastrModule.forRoot(),ArchwizardModule,
   ],
 })
 export class DashboardModule {}

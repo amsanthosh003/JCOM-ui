@@ -11,7 +11,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ToastrModule } from 'ngx-toastr';
 import { ArchwizardModule } from 'angular-archwizard';
 
-
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { HttpClientModule } from '@angular/common/http';
 
 // import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
@@ -57,6 +57,7 @@ const icons = {
     NgxDatatableModule,
     HttpClientModule,
     ToastrModule.forRoot(),ArchwizardModule,
+    NgxSkeletonLoaderModule
    
    
     // NgxMatSelectSearchModule,

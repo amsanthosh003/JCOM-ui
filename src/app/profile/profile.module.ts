@@ -12,7 +12,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ToastrModule } from 'ngx-toastr';
 import { ArchwizardModule } from 'angular-archwizard';
-
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
 import { HttpClientModule } from '@angular/common/http';
 
@@ -47,7 +47,7 @@ const icons = {
     FeatherModule.pick(icons),
    
     ReactiveFormsModule,
-    
+    NgxSkeletonLoaderModule,
     NgxDatatableModule,
     HttpClientModule,
     ToastrModule.forRoot(),ArchwizardModule,

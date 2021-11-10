@@ -10,9 +10,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ToastrModule } from 'ngx-toastr';
 import { ArchwizardModule } from 'angular-archwizard';
-
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
 import { HttpClientModule } from '@angular/common/http';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 
 import {
@@ -48,7 +49,9 @@ const icons = {
     
     NgxDatatableModule,
     HttpClientModule,
-    ToastrModule.forRoot(),ArchwizardModule
+    ToastrModule.forRoot(),ArchwizardModule,
+    NgxSkeletonLoaderModule,
+    NgxPaginationModule
   ]
 })
 export class SearchmembersModule { }

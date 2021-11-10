@@ -33,19 +33,49 @@ export type ChartOptions = {
   plotOptions: ApexPlotOptions;
   responsive: ApexResponsive[];
 };
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { User } from '../../core/models/user';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss'],
+  providers: [ToastrService],
 })
 export class MainComponent implements OnInit {
   public lineChartOptions: Partial<ChartOptions>;
   public barChartOptions: Partial<ChartOptions>;
   public stackBarChart: Partial<ChartOptions>;
+
+  currentUserSubject: BehaviorSubject<User>;
+  currentUser: Observable<User>;
+  userstr: any;
+  scrollBarHorizontal: boolean;
+
+  constructor(private toastr: ToastrService){
+    this.currentUserSubject = new BehaviorSubject<User>(
+      JSON.parse(localStorage.getItem('currentUser'))
+    );
+    this.currentUser = this.currentUserSubject.asObservable();
+    this.userstr = this.currentUserSubject.value[0]
+    console.log("user name",this.userstr.m_name);
+   
+    window.onresize = () => {
+      this.scrollBarHorizontal = window.innerWidth < 1200;
+    };
+
+  }
+  
+ 
+
   ngOnInit() {
     this.chart1();
     this.chart2();
     this.chart3();
+    this.welcomeSuccess();
+  }
+  welcomeSuccess() {
+    this.toastr.success('welcome !!!  ' +this.userstr.m_name);
   }
   private chart1() {
     this.lineChartOptions = {

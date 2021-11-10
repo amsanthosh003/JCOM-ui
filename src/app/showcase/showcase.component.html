@@ -6,7 +6,7 @@
         <div class="card">
           <div class="p-10" style="margin-right: 20px; margin-left: 20px;">
             
-            <div class="row" style="margin-right: 10px; margin-left: 10px;">
+            <div class="row" >
               <div class="col-lg-12" >
                 <div class="row m-0">
                   <div class="col-lg-2 p-0">
@@ -29,7 +29,7 @@
                           </div>
                       </div> 
                   </div> -->
-                  <div class="col-lg-2 p-0">
+                  <div class="col-lg-4 p-0">
                     <div class="ngxTableHeader" >
                       <div class="header-buttons-left">
                         <div class="icon-button-demo buttons">
@@ -41,43 +41,65 @@
                       </div>
                     </div>
                   </div>
+
+                  <div class="col-lg-4 p-0">
+                    <div class="ngxTableHeader" style="display: flex;  justify-content: flex-end;">
+                      <div class="table-search-area">
+                        <div>
+                          <label for="search-input"><i class="material-icons search-icon">search</i></label>
+                          <input placeholder="Search" type="text" class="browser-default search-field"
+                            (keyup)='filterDatatable($event)' aria-label="Search box">
+                        </div>
+                      </div>
+                    </div>
+                  </div>                 
                 </div>
               </div>
             </div>
             <!-- row end -->
-            <hr>
+            <br>
 
 
-            <ngx-datatable #table class="material" [rows]="Customers" [loadingIndicator]="loadingIndicator"
-                  columnMode="force" [headerHeight]="60" rowHeight="auto" [limit]="10" [reorderable]="reorderable"
-                  [selected]="selected" [selectionType]="'checkbox'" (select)='onSelect($event)'>
+            <ngx-datatable #table class="material" [rows]="Showcases" [loadingIndicator]="loadingIndicator"
+                  columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="10"
+                  [reorderable]="reorderable" *ngIf="!loader">
 
+          
                   <ngx-datatable-column name="Date">
-                    <!-- <ng-template let-row="row" ngx-datatable-cell-template>
-              {{row.phone}}
-            </ng-template> -->
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                         {{row.date}}
+                          </ng-template>
                   </ngx-datatable-column>
 
-
-                  <ngx-datatable-column [width]="200" name="Mode">
+                   <ngx-datatable-column [width]="200" name="Title">
                     <ng-template let-row="row" let-value="value" let-i="index" ngx-datatable-cell-template>
                       <div class="name-col-style">
-                        <div>{{row.username}}</div>
+                        <div>{{row.title}}</div>
                       </div>
                     </ng-template>
+                  </ngx-datatable-column> 
+
+                  <ngx-datatable-column name="Mode">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                   {{row.mode}}
+                  </ng-template>
                   </ngx-datatable-column>
-
-                  <ngx-datatable-column name="Title">
-                    <!-- <ng-template let-row="row" ngx-datatable-cell-template>
-              {{row.phone}}
-            </ng-template> -->
-                  </ngx-datatable-column>
-
-
                 </ngx-datatable>
 
-            
+<!-- skleton -->
+                  <!-- <ngx-skeleton-loader count="3" appearance="line" *ngIf="loader"></ngx-skeleton-loader> -->
+              <div id="tit" style="width: 100%;">
+                <ngx-skeleton-loader count="1"
+                  [theme]="{  'border-radius': '4px',  height: '60px',  width:'100%', 'opacity':.6, 'background-color': '##b9b8b8',   border: '1px solid white'  }"
+                  *ngIf="loader"></ngx-skeleton-loader>
+              </div>
+              <div class="skle" style="width: 100%;">
+                <ngx-skeleton-loader count="10"
+                  [theme]="{  'border-radius': '4px',  height: '30px', width:'100%', 'opacity':.6, 'background-color': '##b9b8b8',   border: '1px solid white'  }"
+                  appearance="line" *ngIf="loader"></ngx-skeleton-loader>
 
+              </div>
+           
         <!--  add Modal Window -->
 
             <ng-template #addRecord let-modal>
@@ -100,7 +122,7 @@
 
 
                 <form class="register-form" [formGroup]="register" (ngSubmit)="onAddRowSave(register)"
-              style="margin-top: 50px; border-color: rgb(20, 20, 20); border: black; ">
+              style="margin-top: 50px; border-color: rgb(20, 20, 20); border: rgb(197, 55, 55); ">
               <div class="row" style="margin-left: 50px;margin-right: 50px;  border: black;">
 
               
@@ -109,7 +131,7 @@
                   <div class="form-group position-relative">
                     <label>Date<span class="text-danger">*</span></label>
                     <i-feather name="calendar" class="login-icons" style="color: rgb(63, 89, 241);"></i-feather>
-                    <input type="date" class="form-control pl-5"  placeholder="date" required>
+                    <input type="date" class="form-control pl-5" formControlName="date" placeholder="date" required>
                   </div>
                 </div>
 
@@ -119,7 +141,7 @@
                   <div class="form-group position-relative">
                     <label>Title<span class="text-danger">*</span></label>
                     <i-feather name="more-horizontal" class="login-icons" style="color: rgb(63, 89, 241);"></i-feather>
-                    <input type="text" class="form-control pl-5"  placeholder="Enter the title "
+                    <input type="text" class="form-control pl-5" formControlName="title" placeholder="Enter the title "
                       required>
                   </div>
                 </div>
@@ -130,7 +152,7 @@
                   <div class="form-group position-relative">
                     <label>Mode</label>
                     <i-feather name="airplay" class="login-icons" style="color: rgb(63, 89, 241);"></i-feather>
-                    <select class="form-control pl-5"  required (change)="selectInput1($event)">
+                    <select class="form-control pl-5" formControlName="mode" required (change)="selectInput1($event)">
                       <option value="" selected disabled></option>
                       <option *ngFor="let mode of modes" [value]="mode.id">
                         {{mode.value}}
@@ -138,16 +160,6 @@
                     </select>
                   </div>
                 </div>
-
-               
-           
-  
-     
-
-     
-     
-  
-      
 
                 <div class="col-md-12" style="text-align: center;"><br>
                   <button type="submit" class="btn btn-primary" [disabled]="!register.valid">SAVE</button>

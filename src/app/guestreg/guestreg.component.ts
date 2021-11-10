@@ -5,13 +5,18 @@ import {
   FormBuilder,
   FormControl,
   Validators,
-} from '@angular/forms';
+} from '@angular/forms'; 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { RequestService } from "../services/request.service";
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { User } from '../core/models/user';
 
+
+
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-guestreg',
@@ -22,12 +27,16 @@ import { RequestService } from "../services/request.service";
 export class GuestregComponent implements OnInit {
 
   @ViewChild(DatatableComponent, { static: false }) table: DatatableComponent;
+  
+  selectedCar: number;
+  loader =true;
   rows = [];
   scrollBarHorizontal = window.innerWidth < 1200;
   selectedRowData: selectRowInterface;
   newUserImg = 'assets/images/users/user-2.png';
   data = [];
-  public Customers: any;
+  public Guests: any;
+   Categorys: any;
   filteredData = [];
   editForm: FormGroup;
   register: FormGroup;
@@ -58,8 +67,7 @@ export class GuestregComponent implements OnInit {
     { id: '1', name: 'India' },
    
   ];
-  meetings = [
-   
+  meetings = [ 
     { id: '1', value: 'Live' },
     { id: '2', value: 'Virtual' },
     { id: '3', value: 'Virtual International' },
@@ -78,30 +86,40 @@ export class GuestregComponent implements OnInit {
     { id: '2', value: 'Within JCI-JCOM' },
 
   ];
+
+  // Categoryss = [ 
+  //   { id:'33', value:'Accountant' },
+  //   { id:'24', value:'Agriculture Machinery' },
+  //   { id:'11', value: 'developer' },
+  //   { id:'35', value:'Brick Making Machine' },
+  // ];
+  
+
  
   @ViewChild(DatatableComponent, { static: false }) table2: DatatableComponent;
   error: string;
   IdValue: any;
   designations: any;
   custmerdesignationvalue: any;
+  currentUserSubject: BehaviorSubject<User>;
+  currentUser: Observable<User>;
+  memberid: any;
   constructor(
     private fb: FormBuilder,
     private modalService: NgbModal,
-    private toastr: ToastrService,private request: RequestService
+    private toastr: ToastrService,private request: RequestService,
   ) {
-    this.editForm = this.fb.group({
-      username: ['', [Validators.required, Validators.pattern('[a-zA-Z]+')]],
-      phone: ['', [Validators.required]],
-      email: [
-        '',
-        [Validators.required, Validators.email, Validators.minLength(5)],
-      ],
-      password: ['', [Validators.required]],
-      Designation: ['', [Validators.required]]
-    });
+
+    this.currentUserSubject = new BehaviorSubject<User>(
+      JSON.parse(localStorage.getItem('currentUser'))
+    );
+    this.currentUser = this.currentUserSubject.asObservable();
+    this.memberid = this.currentUserSubject.value[0]
+
     window.onresize = () => {
       this.scrollBarHorizontal = window.innerWidth < 1200;
     };
+ 
   }
 
   
@@ -114,74 +132,54 @@ export class GuestregComponent implements OnInit {
     }
   }
 
-  // select record using check box
-  onSelect({ selected }) {
-    this.selected.splice(0, this.selected.length);
-    this.selected.push(...selected);
-
-    if (this.selected.length === 0) {
-      this.isRowSelected = false;
-    } else {
-      this.isRowSelected = true;
-    }
-  }
-  deleteSelected() {
-    Swal.fire({
-      title: 'Are you sure?',
-      showCancelButton: true,
-      confirmButtonColor: '#8963ff',
-      cancelButtonColor: '#fb7823',
-      confirmButtonText: 'Yes',
-    }).then((result) => {
-      if (result.value) {
-        this.selected.forEach((row) => {
-          this.deleteRecord(row);
-        });
-        this.deleteRecordSuccess(this.selected.length);
-        this.selected = [];
-        this.isRowSelected = false;
-      }
-    });
-  }
   ngOnInit() {
-    this.viewdata();
+    this.viewdata();    
     this.designation();
     this.register = this.fb.group({
-      username: ['', [Validators.required, Validators.pattern('[a-zA-Z]+')]],
-      phone: ['', [Validators.required]],
-      email: [
-        '',
-        [Validators.required, Validators.email, Validators.minLength(5)],
-      ],
-      password: ['', [Validators.required]],
-      Designation: ['', [Validators.required]]
+      m_id:this.memberid.m_id,
+      guest_name: ['', [Validators.required]],
+      mobile_no: ['', [Validators.required]],
+      email_id: ['', [Validators.required, Validators.email, Validators.minLength(5)],],
+      guest_city: ['', [Validators.required]],
+      business_category: ['', [Validators.required]],
+      type: ['', [Validators.required]],
     });
   }
   // fetch data
   fetch(cb) {
-
-    this.request.getuser().subscribe((response) => {
+    this.request.fetchguestById(this.memberid.m_id).subscribe((response) => {
+      console.log(this.memberid.m_id)
      console.log(response);
      
               cb(response);
+              this.loader=false;
     }, (error) => {
       console.log(error);
     });
-
   }
-
+  // business fetch
   designation() {
-    this.request.getdesignation().subscribe((response) => {
+    this.request.fetchbusiness().subscribe((response) => {
   this.designations=response;
-  console.log(this.designations);
+  // console.log(this.designations);
     }, (error) => {
       console.log(error);
     });
 
   }
+  // fetch2(cb) {
+  //   this.request.fetchbusinessById().subscribe((response) => {
+     
+  //    console.log(response);
+     
+  //             cb(response);
+  //             this.loader=false;
+  //   }, (error) => {
+  //     console.log(error);
+  //   });
 
+  // }
 
-  
   openhistory(content) {
     this.modalService.open(content, {
       ariaLabelledBy: 'modal-basic-title',
@@ -246,9 +244,6 @@ export class GuestregComponent implements OnInit {
 
     });
 
-
-
-
   }
   // delete single row
   deleteSingleRow(row) {
@@ -282,19 +277,19 @@ export class GuestregComponent implements OnInit {
     });
   }
   // save add new record
-  onAddRowSave(form: FormGroup) {
-  
+  onAddRowSave(form: FormGroup) { 
     console.log(form.value);
-    this.request.adduser(form.value).subscribe((res: any) => {
-      if (res.status == 'success') {
+    this.request.addguest(form.value).subscribe((res: any) => {
+      if (res[0].status == 'success') {
         console.log(res);
+        console.log("saved",res[0].status);
         form.reset();
     this.modalService.dismissAll();
     this.viewdata();
     this.addRecordSuccess();
 
       }
-      else if (res.status == 'error') {
+      else if (res[0].status == 'error') {
         console.log("res",res);
         form.reset();
     this.modalService.dismissAll();
@@ -305,22 +300,35 @@ export class GuestregComponent implements OnInit {
       this.modalService.dismissAll();
     });
 
-
   }
-
-
 
 viewdata(){
   this.fetch((data) => {
     this.data = data;
     // this.filteredData = data;
-    this.Customers=data.response;
-    this.filteredData=data.response;
+    this.Guests=data;
+    console.log(this.Guests);
+    // this.filteredData=data;
     setTimeout(() => {
       this.loadingIndicator = false;
     }, 500);
   });
 }
+
+// business category
+
+// viewdata2(){
+//   this.fetch2((data) => {
+//     this.data = data;
+//     // this.filteredData = data;
+//     this.Categorys=data;
+//     console.log(this.Categorys);
+//     // this.filteredData=data;
+//     setTimeout(() => {
+//       this.loadingIndicator = false;
+//     }, 500);
+//   });
+// }
 
   // save record on edit
   onEditSave(form: FormGroup) {
@@ -359,7 +367,7 @@ viewdata(){
     const keys = Object.keys( this.filteredData[0]);
     // console.log("keys",""+keys);
     // assign filtered matches to the active datatable
-    this.Customers = this.filteredData.filter(function (item) {
+    this.Guests = this.filteredData.filter(function (item) {
       // iterate through each row's column data
       for (let i = 0; i < colsAmt; i++) {
         // check for a match

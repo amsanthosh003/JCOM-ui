@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef, OnChanges, SimpleChanges} from '@angular/core';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import {
   FormGroup,
@@ -11,7 +11,8 @@ import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { RequestService } from "../services/request.service";
-
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { User } from '../core/models/user';
 
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
@@ -21,18 +22,20 @@ import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
   styleUrls: ['./profile.component.sass'],
   providers: [ToastrService],
 })
-export class ProfileComponent implements OnInit {
- 
+export class ProfileComponent implements OnInit{
+
   // public Editor = ClassicEditor;
   @ViewChild(DatatableComponent, { static: false }) table: DatatableComponent;
+  hide: boolean;
+  loader = true;
   active;
-  nav:any;
+  nav: any;
   rows = [];
   scrollBarHorizontal = window.innerWidth < 1200;
   selectedRowData: selectRowInterface;
   newUserImg = 'assets/images/users/user-2.png';
   data = [];
-  public Customers: any;
+  public Members: any;
   filteredData = [];
   editForm: FormGroup;
   register: FormGroup;
@@ -42,10 +45,10 @@ export class ProfileComponent implements OnInit {
   reorderable = true;
   editcustmergroup: any;
   public selected: any[] = [];
-  custmernamevalue:any;
-  custmerphonevalue:any;
-  custmeremailvalue:any;
-  custmerpasswordvalue:any;
+  custmernamevalue: any;
+  custmerphonevalue: any;
+  custmeremailvalue: any;
+  custmerpasswordvalue: any;
 
   isdisable: boolean;
 
@@ -61,132 +64,183 @@ export class ProfileComponent implements OnInit {
   ];
   countries = [
     { id: '1', name: 'India' },
-   
+
   ];
   meetings = [
-   
+
     { id: '1', value: 'Live' },
     { id: '2', value: 'Virtual' },
     { id: '3', value: 'Virtual International' },
     { id: '4', value: 'Association' },
   ];
   connects = [
-   
+
     { id: '1', value: 'JCOM' },
     { id: '2', value: 'JCI' },
     { id: '3', value: 'Non-JCI' },
-   
+
   ];
   connectssts = [
-   
+
     { id: '1', value: 'Self Connect' },
     { id: '2', value: 'Within JCI-JCOM' },
 
   ];
- 
+
   @ViewChild(DatatableComponent, { static: false }) table2: DatatableComponent;
   error: string;
   IdValue: any;
-  designations: any;
-  custmerdesignationvalue: any;
+  currentUserSubject: BehaviorSubject<User>;
+  currentUser: Observable<User>;
+  presentuser: any;
+  memberid: any;
+  Membersvalue: any;
+  Memberbusiness_name: any;
+  Membername: any;
+  Memberaddress: any;
+  Memberpincode: any;
+  Membercity: any;
+  Memberdistrict: any;
+  Memberstate: any;
+  Memberb_mobile_no: any;
+  Memberb_email_id: any;
+  Memberwebsite: any;
+  Memberbusiness_info: any;
+  Memberbusiness_keywords: any;
+  Memberproducts: any;
+  Memberneeded_contacts: any;
+  businessdetails: boolean;
+  // pin: string;
+  pindetails: any;
+  pincity: any;
+  pinstate: any;
+  pinco: string;
+  pinstr: any;
   constructor(
     private fb: FormBuilder,
     private modalService: NgbModal,
-    private toastr: ToastrService,private request: RequestService
+    private toastr: ToastrService, private request: RequestService
   ) {
+
+    this.currentUserSubject = new BehaviorSubject<User>(
+      JSON.parse(localStorage.getItem('currentUser'))
+    );
+    this.currentUser = this.currentUserSubject.asObservable();
+    this.memberid = this.currentUserSubject.value[0]
+
+    window.onresize = () => {
+      this.scrollBarHorizontal = window.innerWidth < 1200;
+    };
+
+
     this.editForm = this.fb.group({
-      username: ['', [Validators.required, Validators.pattern('[a-zA-Z]+')]],
-      phone: ['', [Validators.required]],
-      email: [
-        '',
-        [Validators.required, Validators.email, Validators.minLength(5)],
-      ],
-      password: ['', [Validators.required]],
-      Designation: ['', [Validators.required]]
+
+      // name: [''],
+      business_name: [''],
+      address: [''],
+      pin: [''],
+      city: [''],
+      district: [''],
+      state: [''],
+      b_mobile_no: [''],
+      b_email_id: [''],
+      website: [''],
+      business_info: [''],
+      business_keywords: [''],
+      products: [''],
+      needed_contacts: [''],
     });
     window.onresize = () => {
       this.scrollBarHorizontal = window.innerWidth < 1200;
     };
   }
-
-  
+ 
   selectInput1(event) {
     let selected = event.target.value;
     if (selected == "1") {
-      this.isdisable = true ;
+      this.isdisable = true;
     } else {
-      this.isdisable =  false;
+      this.isdisable = false;
     }
   }
 
-  // select record using check box
-  onSelect({ selected }) {
-    this.selected.splice(0, this.selected.length);
-    this.selected.push(...selected);
+  viewbusiness() {
+    this.businessdetails = true;
+  }
+  hidebusiness() {
+    this.businessdetails = false;
+    console.log("view",)
+  }
 
-    if (this.selected.length === 0) {
-      this.isRowSelected = false;
-    } else {
-      this.isRowSelected = true;
-    }
-  }
-  deleteSelected() {
-    Swal.fire({
-      title: 'Are you sure?',
-      showCancelButton: true,
-      confirmButtonColor: '#8963ff',
-      cancelButtonColor: '#fb7823',
-      confirmButtonText: 'Yes',
-    }).then((result) => {
-      if (result.value) {
-        this.selected.forEach((row) => {
-          this.deleteRecord(row);
-        });
-        this.deleteRecordSuccess(this.selected.length);
-        this.selected = [];
-        this.isRowSelected = false;
-      }
-    });
-  }
   ngOnInit() {
+
+    console.log("currentuser details=", this.currentUserSubject.value[0]);
+    // console.log("memberid=",this.memberid)
     this.viewdata();
-    this.designation();
-    this.register = this.fb.group({
-      username: ['', [Validators.required, Validators.pattern('[a-zA-Z]+')]],
-      phone: ['', [Validators.required]],
-      email: [
-        '',
-        [Validators.required, Validators.email, Validators.minLength(5)],
-      ],
-      password: ['', [Validators.required]],
-      Designation: ['', [Validators.required]]
-    });
+    // this.designation();
   }
+
+ 
+
   // fetch data
   fetch(cb) {
 
-    this.request.getuser().subscribe((response) => {
-     console.log(response);
+    this.request.fetchuserBymId(this.memberid.m_id).subscribe((response) => {
+      // console.log(response);
+
+      cb(response);
+      this.loader = false;
+    }, (error) => {
+      console.log(error);
+    });
+  }
+
+  // ngOnChanges(pin: SimpleChanges){ }
+
+  // pinchange.......
+  onPinChange(pin:string) {
+    console.log("hiii",pin);
+    this.pinco = pin;
+    console.log(this.pinco);
+     this.request.fetchpinBy(this.pinco).subscribe((response) => {
+      // console.log(response);
+      this.pindetails = response[0];
+      console.log(this.pindetails.city);
+      console.log(this.pindetails.pincode);
+
+      this.pinstr =this.pindetails.pincode;
+      this.pincity = this.pindetails.city;
+      this.pinstate = this.pindetails.state;
+
+      console.log(this.pincity);
+
+      this.editForm.setValue({
+        business_name: this.Memberbusiness_name,
+        address: this.Memberaddress ?? null,
+        pin:this.pinstr,
+        city:this.pincity,
+        district: this.Memberdistrict ?? null,
+        state: this.pinstate, 
+        b_mobile_no: this.Memberb_mobile_no ?? null,
+        b_email_id: this.Memberb_email_id ?? null,
+        website: this.Memberwebsite ?? null,
+        business_info: this.Memberbusiness_info ?? null,
+        business_keywords: this.Memberbusiness_keywords ?? null,
+        products: this.Memberproducts ?? null,
+        needed_contacts: this.Memberneeded_contacts ?? null,      
+      });
      
-              cb(response);
-    }, (error) => {
+    },
+     (error) => {
       console.log(error);
     });
-
   }
 
-  designation() {
-    this.request.getdesignation().subscribe((response) => {
-  this.designations=response;
-  console.log(this.designations);
-    }, (error) => {
-      console.log(error);
-    });
-
+  toggle() {
+    this.hide = !this.hide;
+    console.log(this.hide);
   }
 
-
-  
   openhistory(content) {
     this.modalService.open(content, {
       ariaLabelledBy: 'modal-basic-title',
@@ -194,164 +248,107 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  
+
   pendinghistory(content) {
     this.modalService.open(content, {
       ariaLabelledBy: 'modal-basic-title',
       size: 'lg',
     });
   }
-  // add new record
-  addRow(content) {
-    this.modalService.open(content, {
-      ariaLabelledBy: 'modal-basic-title',
-      size: 'lg',
-    });
-    this.register.patchValue({
-      id: this.getId(10, 100),
-      img: this.newUserImg,
-    });
+  
+  viewdata() {
+    this.fetch((data) => {
+      this.data = data;
 
-  }
-  // edit record
-  editRow(row, rowIndex, content) {
-    this.modalService.open(content, {
-      ariaLabelledBy: 'modal-basic-title',
-      size: 'lg',
-    });
+      // this.filteredData = data;
+      this.Members = this.data;
+      // console.log(this.Members)  
 
+      this.Membersvalue = this.Members[0];
+      // this.welcomeSuccess();
 
+      console.log(this.Membersvalue.pincode);
 
-    this.request.fetchuserById(row._id).subscribe((response) => {
-      this.editcustmergroup=response[0];
-      console.log(response);
-        this.custmernamevalue=this.editcustmergroup.username;
-        this.custmerphonevalue=this.editcustmergroup.phone;
-        this.custmeremailvalue=this.editcustmergroup.email;
-        this.custmerpasswordvalue=this.editcustmergroup.password;
-        this.custmerdesignationvalue=this.editcustmergroup.Designation;
-        this.IdValue=this.editcustmergroup._id;
-
-      //   this.editForm = this.formBuilder.group({
-      //     CountryName2:[this.CountryValue, Validators.required],
-      //     Countrycode2:[this.CountrycodeValue, Validators.required]
-      // });
-      // console.log(this.editForm.value);
-
+      // this.Membername = this.Membersvalue.name;
+      this.Memberbusiness_name = this.Membersvalue.business_name;
+      this.Memberaddress = this.Membersvalue.address;
+      this.Memberpincode = this.Membersvalue.pincode;
+      this.Membercity = this.Membersvalue.city;
+      this.Memberdistrict = this.Membersvalue.district;
+      this.Memberstate = this.Membersvalue.state;
+      this.Memberb_mobile_no = this.Membersvalue.b_mobile_no;
+      this.Memberb_email_id = this.Membersvalue.b_email_id;
+      this.Memberwebsite = this.Membersvalue.website;
+      this.Memberbusiness_info = this.Membersvalue.business_info;
+      this.Memberbusiness_keywords = this.Membersvalue.business_keywords;
+      this.Memberproducts = this.Membersvalue.products;
+      this.Memberneeded_contacts = this.Membersvalue.needed_contacts;
+      this.IdValue = this.Membersvalue.m_id
 
 
       this.editForm.setValue({
-        username: this.custmernamevalue,
-        phone: this.custmerphonevalue,
-        email: this.custmeremailvalue,
-        password: this.custmerpasswordvalue,
-        Designation: this.custmerdesignationvalue,
-      });
-      this.selectedRowData = row;
-
-    });
-
-
-
-
-  }
-  // delete single row
-  deleteSingleRow(row) {
-    Swal.fire({
-      title: 'Are you sure?',
-      showCancelButton: true,
-      confirmButtonColor: '#8963ff',
-      cancelButtonColor: '#fb7823',
-      confirmButtonText: 'Yes',
-    }).then((result) => {
-      if (result.value) {
-        this.deleteRecord(row);
-        this.deleteRecordSuccess(1);
+        // name: this.Membername,
+        business_name: this.Memberbusiness_name,
+        address: this.Memberaddress ?? null,
+        pin: this.Memberpincode ?? null,
+        city: this.Membercity ?? null,
+        district: this.Memberdistrict ?? null,
+        state: this.Memberstate ?? null,
+        b_mobile_no: this.Memberb_mobile_no ?? null,
+        b_email_id: this.Memberb_email_id ?? null,
+        website: this.Memberwebsite ?? null,
+        business_info: this.Memberbusiness_info ?? null,
+        business_keywords: this.Memberbusiness_keywords ?? null,
+        products: this.Memberproducts ?? null,
+        needed_contacts: this.Memberneeded_contacts ?? null,
       }
+      );
+     // this.filteredData=data.response;
+
+      setTimeout(() => {
+        this.loadingIndicator = false;
+      }, 500);
     });
   }
-
-  deleteRecord(row) {
-    console.log("row",row._id);
-    this.request.deleteuser(row._id).subscribe((response) => {
-      console.log(response);
-      this.viewdata();
-     }, (error) => {
-       console.log(error);
-     });
-  }
-
-  arrayRemove(array, id) {
-    return array.filter(function (element) {
-      return element.id !== id;
-    });
-  }
-  // save add new record
-  onAddRowSave(form: FormGroup) {
-  
-    console.log(form.value);
-    this.request.adduser(form.value).subscribe((res: any) => {
-      if (res.status == 'success') {
-        console.log(res);
-        form.reset();
-    this.modalService.dismissAll();
-    this.viewdata();
-    this.addRecordSuccess();
-
-      }
-      else if (res.status == 'error') {
-        console.log("res",res);
-        form.reset();
-    this.modalService.dismissAll();
-      }
-    }, (error) => {
-      console.log("error",error);
-      form.reset();
-      this.modalService.dismissAll();
-    });
-
-
-  }
-
-
-
-viewdata(){
-  this.fetch((data) => {
-    this.data = data;
-    // this.filteredData = data;
-    this.Customers=data.response;
-    this.filteredData=data.response;
-    setTimeout(() => {
-      this.loadingIndicator = false;
-    }, 500);
-  });
-}
 
   // save record on edit
   onEditSave(form: FormGroup) {
-
+    console.log("pinnn",form.value.pin)
     const edata = {
-      username: form.value.username,
-      phone: form.value.phone,
-      email: form.value.email,
-      password: form.value.password,
-      Designation:form.value.Designation
-  }
-  this.request.updateuser(this.IdValue,edata).subscribe((res : any) => {
-    if (res.status == 'success') {
-      this.modalService.dismissAll();
-      this.viewdata();
-      this.editRecordSuccess();
-      return true;
-    }
-    else if (res.status == 'error') {
-      this.modalService.dismissAll();
+      m_id: this.IdValue,
+      business_name: form.value.business_name,
+      address: form.value.address,
+      pincode: form.value.pin,
+      city: form.value.city,
+      district: form.value.district,
+      state: form.value.state,
+      b_mobile_no: form.value.b_mobile_no,
+      b_email_id: form.value.b_email_id,
+      website: form.value.website,
+      business_info: form.value.business_info,
+      business_keywords: form.value.business_keywords,
+      products: form.value.products,
+      needed_contacts: form.value.needed_contacts,
     }
 
-  }, (error) => {
-    console.log(error);
-    this.modalService.dismissAll();
-  });
+    this.request.updateprofile(edata).subscribe((res: any) => {
+      console.log(res);
+      // console.log(this.IdValue);
+      if (res[0].status == 'success') {
+        // this.modalService.dismissAll();
+        this.editRecordSuccess();
+        this.viewdata();
+        return true;
+      }
+      else if (res[0].status == 'error') {
+        console.log("fail")
+        // this.modalService.dismissAll();
+      }
+
+    }, (error) => {
+      console.log(error);
+      this.modalService.dismissAll();
+    });
 
   }
   // filter table data
@@ -361,10 +358,10 @@ viewdata(){
     // get the amount of columns in the table
     const colsAmt = this.columns.length;
     // get the key names of each column in the dataset
-    const keys = Object.keys( this.filteredData[0]);
+    const keys = Object.keys(this.filteredData[0]);
     // console.log("keys",""+keys);
     // assign filtered matches to the active datatable
-    this.Customers = this.filteredData.filter(function (item) {
+    this.Members = this.filteredData.filter(function (item) {
       // iterate through each row's column data
       for (let i = 0; i < colsAmt; i++) {
         // check for a match
@@ -372,8 +369,8 @@ viewdata(){
           item[keys[i]].toString().toLowerCase().indexOf(val) !== -1 ||
           !val
         ) {
-           
-      
+
+
           return true;
         }
       }
@@ -395,6 +392,10 @@ viewdata(){
   deleteRecordSuccess(count) {
     this.toastr.error(count + ' Records Deleted Successfully', '');
   }
+  welcomeSuccess() {
+    this.toastr.success('welcome !!!  ' + this.Membersvalue.name);
+  }
+
 }
 export interface selectRowInterface {
   img: String;

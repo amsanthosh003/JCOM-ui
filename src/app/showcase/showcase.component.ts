@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
+import { DatatableComponent, id } from '@swimlane/ngx-datatable';
 import {
   FormGroup,
   FormBuilder,
@@ -11,6 +11,8 @@ import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { RequestService } from "../services/request.service";
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { User } from '../core/models/user';
 @Component({
   selector: 'app-showcase',
   templateUrl: './showcase.component.html',
@@ -19,12 +21,13 @@ import { RequestService } from "../services/request.service";
 })
 export class ShowcaseComponent implements OnInit {
   @ViewChild(DatatableComponent, { static: false }) table: DatatableComponent;
+  loader =true;
   rows = [];
   scrollBarHorizontal = window.innerWidth < 1200;
   selectedRowData: selectRowInterface;
   newUserImg = 'assets/images/users/user-2.png';
   data = [];
-  public Customers: any;
+  public Showcases: any;
   filteredData = [];
   editForm: FormGroup;
   register: FormGroup;
@@ -76,18 +79,13 @@ export class ShowcaseComponent implements OnInit {
 
   ];
 
-  modes = [
-   
-    { id: '1', value: 'Social Media' },
-    { id: '2', value: 'Live  Meeting' },
-    { id: '3', value: 'JCOM Conference' },
-     { id: '4', value: 'Whatsapp Group' },
-     
-    { id: '1', value: 'Social fsdgxd' },
-    { id: '2', value: 'Socdfg sfgg' },
-    { id: '3', value: 'Social fsdgxd' },
-     { id: '4', value: 'Social dgxdpp Group' },
-
+  modes = [  
+    { id: 'Social Media', value: 'Social Media' },
+    { id: 'Live Meeting', value: 'Live  Meeting' },
+    { id: 'JCOM Conference', value: 'JCOM Conference' },
+    { id: 'Whatsapp Group', value: 'Whatsapp Group' },
+    { id: 'Facebook', value: 'Facebook' },
+  
   ];
  
   @ViewChild(DatatableComponent, { static: false }) table2: DatatableComponent;
@@ -95,27 +93,27 @@ export class ShowcaseComponent implements OnInit {
   IdValue: any;
   designations: any;
   custmerdesignationvalue: any;
+  currentUserSubject: BehaviorSubject<User>;
+  currentUser: Observable<User>;
+  memberid: any;
   constructor(
     private fb: FormBuilder,
     private modalService: NgbModal,
     private toastr: ToastrService,private request: RequestService
   ) {
-    this.editForm = this.fb.group({
-      username: ['', [Validators.required, Validators.pattern('[a-zA-Z]+')]],
-      phone: ['', [Validators.required]],
-      email: [
-        '',
-        [Validators.required, Validators.email, Validators.minLength(5)],
-      ],
-      password: ['', [Validators.required]],
-      Designation: ['', [Validators.required]]
-    });
+
+    this.currentUserSubject = new BehaviorSubject<User>(
+      JSON.parse(localStorage.getItem('currentUser'))
+    );
+    this.currentUser = this.currentUserSubject.asObservable();
+    this.memberid = this.currentUserSubject.value[0]
+
     window.onresize = () => {
       this.scrollBarHorizontal = window.innerWidth < 1200;
     };
-  }
 
-  
+  }
+ 
   selectInput1(event) {
     let selected = event.target.value;
     if (selected == "1") {
@@ -125,81 +123,48 @@ export class ShowcaseComponent implements OnInit {
     }
   }
 
-  // select record using check box
-  onSelect({ selected }) {
-    this.selected.splice(0, this.selected.length);
-    this.selected.push(...selected);
-
-    if (this.selected.length === 0) {
-      this.isRowSelected = false;
-    } else {
-      this.isRowSelected = true;
-    }
-  }
-  deleteSelected() {
-    Swal.fire({
-      title: 'Are you sure?',
-      showCancelButton: true,
-      confirmButtonColor: '#8963ff',
-      cancelButtonColor: '#fb7823',
-      confirmButtonText: 'Yes',
-    }).then((result) => {
-      if (result.value) {
-        this.selected.forEach((row) => {
-          this.deleteRecord(row);
-        });
-        this.deleteRecordSuccess(this.selected.length);
-        this.selected = [];
-        this.isRowSelected = false;
-      }
-    });
-  }
+ 
   ngOnInit() {
-    this.viewdata();
-    this.designation();
+    this.viewdata();   
     this.register = this.fb.group({
-      username: ['', [Validators.required, Validators.pattern('[a-zA-Z]+')]],
-      phone: ['', [Validators.required]],
-      email: [
-        '',
-        [Validators.required, Validators.email, Validators.minLength(5)],
-      ],
-      password: ['', [Validators.required]],
-      Designation: ['', [Validators.required]]
+      m_id: this.memberid.m_id,
+      date: ['', [Validators.required]],
+      title: ['', [Validators.required]],     
+      mode: ['', [Validators.required]],
+    
     });
   }
-  // fetch data
-  fetch(cb) {
-
-    this.request.getuser().subscribe((response) => {
-     console.log(response);
-     
-              cb(response);
-    }, (error) => {
-      console.log(error);
-    });
-
-  }
-
-  designation() {
-    this.request.getdesignation().subscribe((response) => {
-  this.designations=response;
-  console.log(this.designations);
-    }, (error) => {
-      console.log(error);
-    });
-
-  }
-
 
   
+viewdata(){
+  this.fetch((data) => {
+    this.data = data; 
+    this.Showcases=data; 
+    
+    this.filteredData=data;
+    setTimeout(() => {
+      this.loadingIndicator = false;
+    }, 500);
+  });
+}
+  // fetch data
+  fetch(cb) {
+    this.request.fetchshowcaseById(this.memberid.m_id).subscribe((response) => {
+     console.log(response);    
+              cb(response);
+              this.loader=false;
+    }, (error) => {
+      console.log(error);
+    });
+
+  }
+
   openhistory(content) {
     this.modalService.open(content, {
       ariaLabelledBy: 'modal-basic-title',
       size: 'lg',
     });
   }
-
   
   pendinghistory(content) {
     this.modalService.open(content, {
@@ -219,73 +184,6 @@ export class ShowcaseComponent implements OnInit {
     });
 
   }
-  // edit record
-  editRow(row, rowIndex, content) {
-    this.modalService.open(content, {
-      ariaLabelledBy: 'modal-basic-title',
-      size: 'lg',
-    });
-
-
-
-    this.request.fetchuserById(row._id).subscribe((response) => {
-      this.editcustmergroup=response[0];
-      console.log(response);
-        this.custmernamevalue=this.editcustmergroup.username;
-        this.custmerphonevalue=this.editcustmergroup.phone;
-        this.custmeremailvalue=this.editcustmergroup.email;
-        this.custmerpasswordvalue=this.editcustmergroup.password;
-        this.custmerdesignationvalue=this.editcustmergroup.Designation;
-        this.IdValue=this.editcustmergroup._id;
-
-      //   this.editForm = this.formBuilder.group({
-      //     CountryName2:[this.CountryValue, Validators.required],
-      //     Countrycode2:[this.CountrycodeValue, Validators.required]
-      // });
-      // console.log(this.editForm.value);
-
-
-
-      this.editForm.setValue({
-        username: this.custmernamevalue,
-        phone: this.custmerphonevalue,
-        email: this.custmeremailvalue,
-        password: this.custmerpasswordvalue,
-        Designation: this.custmerdesignationvalue,
-      });
-      this.selectedRowData = row;
-
-    });
-
-
-
-
-  }
-  // delete single row
-  deleteSingleRow(row) {
-    Swal.fire({
-      title: 'Are you sure?',
-      showCancelButton: true,
-      confirmButtonColor: '#8963ff',
-      cancelButtonColor: '#fb7823',
-      confirmButtonText: 'Yes',
-    }).then((result) => {
-      if (result.value) {
-        this.deleteRecord(row);
-        this.deleteRecordSuccess(1);
-      }
-    });
-  }
-
-  deleteRecord(row) {
-    console.log("row",row._id);
-    this.request.deleteuser(row._id).subscribe((response) => {
-      console.log(response);
-      this.viewdata();
-     }, (error) => {
-       console.log(error);
-     });
-  }
 
   arrayRemove(array, id) {
     return array.filter(function (element) {
@@ -293,19 +191,20 @@ export class ShowcaseComponent implements OnInit {
     });
   }
   // save add new record
-  onAddRowSave(form: FormGroup) {
-  
+  onAddRowSave(form: FormGroup) { 
     console.log(form.value);
-    this.request.adduser(form.value).subscribe((res: any) => {
-      if (res.status == 'success') {
-        console.log(res);
+    this.request.addshowcase(form.value).subscribe((res: any) => {
+      console.log("added")
+      if (res[0].status == 'success') {
+        console.log("statusssss")
+        console.log(res);       
         form.reset();
     this.modalService.dismissAll();
     this.viewdata();
     this.addRecordSuccess();
 
       }
-      else if (res.status == 'error') {
+      else if (res[0].status == 'error') {
         console.log("res",res);
         form.reset();
     this.modalService.dismissAll();
@@ -318,20 +217,6 @@ export class ShowcaseComponent implements OnInit {
 
 
   }
-
-
-
-viewdata(){
-  this.fetch((data) => {
-    this.data = data;
-    // this.filteredData = data;
-    this.Customers=data.response;
-    this.filteredData=data.response;
-    setTimeout(() => {
-      this.loadingIndicator = false;
-    }, 500);
-  });
-}
 
   // save record on edit
   onEditSave(form: FormGroup) {
@@ -365,21 +250,22 @@ viewdata(){
     // get the value of the key pressed and make it lowercase
     const val = event.target.value.toLowerCase();
     // get the amount of columns in the table
-    const colsAmt = this.columns.length;
+    // const colsAmt = this.columns.length;
+    const colsAmt = 2;
     // get the key names of each column in the dataset
     const keys = Object.keys( this.filteredData[0]);
     // console.log("keys",""+keys);
     // assign filtered matches to the active datatable
-    this.Customers = this.filteredData.filter(function (item) {
+    this.Showcases = this.filteredData.filter(function (item) {
       // iterate through each row's column data
       for (let i = 0; i < colsAmt; i++) {
         // check for a match
-        if (
+        console.log("keys",item[keys[i]].toString().toLowerCase().indexOf(val));
+        console.log("keyindex",keys[i]);
+        if (         
           item[keys[i]].toString().toLowerCase().indexOf(val) !== -1 ||
           !val
-        ) {
-           
-      
+        ) {            
           return true;
         }
       }

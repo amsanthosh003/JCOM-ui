@@ -15,8 +15,8 @@ import { ArchwizardModule } from 'angular-archwizard';
 
 
 import { HttpClientModule } from '@angular/common/http';
-
-
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { NgSelectModule } from '@ng-select/ng-select';
 import {
   Facebook,
   Twitter,
@@ -52,7 +52,9 @@ const icons = {
     
     NgxDatatableModule,
     HttpClientModule,
-    ToastrModule.forRoot(),ArchwizardModule
+    ToastrModule.forRoot(),ArchwizardModule,
+    NgxSkeletonLoaderModule,
+    NgSelectModule
   ]
 })
 export class GnoteentryModule { }
