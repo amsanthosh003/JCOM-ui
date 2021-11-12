@@ -1,6 +1,21 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
+import { DatatableComponent } from '@swimlane/ngx-datatable';
+import {
+  FormGroup,
+  FormBuilder,
+  FormControl,
+  Validators,
+} from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
+import Swal from 'sweetalert2';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { RequestService } from "../../services/request.service"; 
+
 import {
   ApexAxisChartSeries,
+  ApexNonAxisChartSeries,
   ApexChart,
   ApexXAxis,
   ApexDataLabels,
@@ -18,6 +33,7 @@ import {
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
+  series2: ApexNonAxisChartSeries;
   chart: ApexChart;
   xaxis: ApexXAxis;
   stroke: ApexStroke;
@@ -32,10 +48,18 @@ export type ChartOptions = {
   title: ApexTitleSubtitle;
   plotOptions: ApexPlotOptions;
   responsive: ApexResponsive[];
+  labels: string[];
 };
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { User } from '../../core/models/user';
-import { ToastrService } from 'ngx-toastr';
+
+export type smallBarChart = {
+  series: ApexAxisChartSeries;
+  chart: ApexChart;
+  plotOptions: ApexPlotOptions;
+  tooltip: ApexTooltip;
+};
+
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -46,18 +70,133 @@ export class MainComponent implements OnInit {
   public lineChartOptions: Partial<ChartOptions>;
   public barChartOptions: Partial<ChartOptions>;
   public stackBarChart: Partial<ChartOptions>;
-
+  public pieChartOptions: Partial<ChartOptions>;
+  public smallBarChart: any;
+  public sampleData = [
+    31,
+    40,
+    28,
+    44,
+    60,
+    55,
+    68,
+    51,
+    42,
+    85,
+    77,
+    31,
+    40,
+    28,
+    44,
+    60,
+    55,
+  ];
   currentUserSubject: BehaviorSubject<User>;
   currentUser: Observable<User>;
   userstr: any;
   scrollBarHorizontal: boolean;
+  data: any;
+  Connects: any;
+  filteredData: any;
+  loadingIndicator: boolean;
+ 
+  memberid: any;
+  loader: boolean;
+  @ViewChild(DatatableComponent, { static: false }) table: DatatableComponent;
+ 
+  rows = [];
+ 
+ 
+  newUserImg = 'assets/images/users/user-2.png';
+  data1 = [];
+  public Connectss: any;
+  
+  editForm: FormGroup;
+  register: FormGroup;
 
-  constructor(private toastr: ToastrService){
+  isRowSelected = false;
+  selectedOption: string;
+  reorderable = true;
+  editcustmergroup: any;
+  public selected: any[] = [];
+  custmernamevalue:any;
+  custmerphonevalue:any;
+  custmeremailvalue:any;
+  custmerpasswordvalue:any;
+  isdisable: boolean;
+  columns = [
+    { name: 'username' },
+    { name: 'phone' },
+    { name: 'email' },
+    { name: 'password' }
+  ];
+ 
+  countries = [
+    { id: '1', name: 'India' },
+   
+  ];
+  meetings = [
+   
+    { id: '1', value: 'Live' },
+    { id: '2', value: 'Virtual' },
+    { id: '3', value: 'Virtual International' },
+    { id: '4', value: 'Association' },
+  ];
+  connects = [
+   
+    { id: '1', value: 'JCOM' },
+    { id: '2', value: 'JCI' },
+    { id: '3', value: 'Non-JCI' },
+   
+  ];
+  connectssts = [
+   
+    { id: '1', value: 'Self Connect' },
+    { id: '2', value: 'Within JCI-JCOM' },
+
+  ];
+ 
+  @ViewChild(DatatableComponent, { static: false }) table2: DatatableComponent;
+  error: string;
+  IdValue: any;
+  designations: any;
+  custmerdesignationvalue: any;
+  pendings: Object;
+  Persons: any;
+  Tables: Object;
+  table_id: string;
+  Members: Object;
+  Mtable_id: any;
+  Tablesstr: any;
+  setname: any;
+  setmobile: any;
+  setemail: any;
+  Business: Object;
+  memb_id: any;
+  Connectdtls: any;
+  pending: boolean;
+  history: boolean=true;
+  tblname: any;
+  Gnotes: any;
+  data2: any;
+  shortt: any;
+  Meetings: Object;
+  sts: any;
+  OverallStatus: any;
+  barChartOptions2: { series: { name: string; data: number[]; }[]; chart: { type: string; height: number; foreColor: string; }; plotOptions: { bar: { horizontal: boolean; columnWidth: string; borderRadius: number; }; }; grid: { borderColor: string; }; dataLabels: { enabled: boolean; }; stroke: { show: boolean; width: number; colors: string[]; }; xaxis: { categories: string[]; labels: { style: { colors: string; }; }; }; yaxis: { title: { text: string; }; }; fill: { opacity: number; }; tooltip: { theme: string; marker: { show: boolean; }; x: { show: boolean; }; }; };
+
+
+  constructor(
+    private fb: FormBuilder,
+    private modalService: NgbModal,
+    private toastr: ToastrService,
+    private request: RequestService){
     this.currentUserSubject = new BehaviorSubject<User>(
       JSON.parse(localStorage.getItem('currentUser'))
     );
     this.currentUser = this.currentUserSubject.asObservable();
     this.userstr = this.currentUserSubject.value[0]
+    this.memb_id=this.userstr.m_id;
     console.log("user name",this.userstr.m_name);
    
     window.onresize = () => {
@@ -65,18 +204,174 @@ export class MainComponent implements OnInit {
     };
 
   }
-  
- 
 
   ngOnInit() {
     this.chart1();
     this.chart2();
     this.chart3();
+    this.chart4();
     this.welcomeSuccess();
+    this.viewdata();  
+     this.viewdata2();
+     this.meeting() ;
+     this.cardCharts() ;
+     this.piechart();
+
   }
+
+
+  viewdata(){
+    this.fetch((data) => {
+      this.data1 = data;
+      // this.filteredData = data;
+      
+      console.log(" data",data); 
+      var result = data.filter(obj => {
+        return obj.type == 2
+      });
+      this.Connectss=result.slice(0, 10);
+  
+      console.log("short",result);
+    //  this.shortt= this.data1.find({type:1});
+      
+     
+      setTimeout(() => {
+        this.loadingIndicator = false;
+      }, 500);
+    });
+  }
+  
+    // fetch data
+    fetch(cb) {
+      this.request.fetchconnectById(this.userstr.m_id).subscribe((response) => {
+      //  console.log("fetch data",response);    
+                cb(response);
+                this.loader=false;
+      }, (error) => {
+        console.log(error);
+      });
+  
+    }
+
+    viewdata2() {
+      this.fetch2((data1) => {
+        this.data2 = data1;
+        // this.filteredData = data;
+        var result = data1.filter(obj => {
+          return obj.type == 2
+        });
+        this.Gnotes =result.slice(0, 10);
+        console.log(this.Gnotes);
+        // this.filteredData = data;
+        setTimeout(() => {
+          this.loadingIndicator = false;
+        }, 500);
+      });
+    }
+   
+    fetch2(cb) {
+      this.request.fetchgnoteById(this.userstr.m_id).subscribe((response) => {
+        console.log(response);
+        cb(response);
+        // this.loader = false;
+      }, (error) => {
+        console.log(error);
+      });
+  
+    }
+    meeting() {
+      this.request.fetchmeeting(this.userstr.m_id).subscribe((response) => {
+    this.Meetings=response;
+    this.OverallStatus=this.Meetings[0].overall_status;
+    console.log(this.OverallStatus);
+      }, (error) => {
+        console.log(error);
+      });
+    
+    }
   welcomeSuccess() {
     this.toastr.success('welcome !!!  ' +this.userstr.m_name);
   }
+
+
+  private chart4() {
+    this.barChartOptions2 = {
+      series: [
+        {
+          name: 'Net Profit',
+          data: [44, 55, 57, 56, 61, 58, 63, 60, 66],
+        },
+        {
+          name: 'Revenue',
+          data: [76, 85, 101, 98, 87, 105, 91, 114, 94],
+        },
+        {
+          name: 'Free Cash Flow',
+          data: [35, 41, 36, 26, 45, 48, 52, 53, 41],
+        },
+      ],
+      chart: {
+        type: 'bar',
+        height: 350,
+        foreColor: '#9aa0ac',
+      },
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: '55%',
+          borderRadius: 5,
+        },
+      },
+      grid: {
+        borderColor: '#9aa0ac',
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      stroke: {
+        show: true,
+        width: 2,
+        colors: ['transparent'],
+      },
+      xaxis: {
+        categories: [
+          'Feb',
+          'Mar',
+          'Apr',
+          'May',
+          'Jun',
+          'Jul',
+          'Aug',
+          'Sep',
+          'Oct',
+        ],
+        labels: {
+          style: {
+            colors: '#9aa0ac',
+          },
+        },
+      },
+      yaxis: {
+        title: {
+          text: '$ (thousands)',
+        },
+      },
+      fill: {
+        opacity: 1,
+      },
+      tooltip: {
+        theme: 'dark',
+        marker: {
+          show: true,
+        },
+        x: {
+          show: true,
+        },
+      },
+    };
+  }
+
+
   private chart1() {
     this.lineChartOptions = {
       series: [
@@ -148,6 +443,95 @@ export class MainComponent implements OnInit {
           show: true,
         },
       },
+    };
+  }
+
+  private cardCharts() {
+    this.smallBarChart = {
+      chart: {
+        type: 'bar',
+        width: 200,
+        height: 80,
+        sparkline: {
+          enabled: true,
+        },
+      },
+      plotOptions: {
+        bar: {
+          columnWidth: '40%',
+        },
+      },
+      series: [
+        {
+          name: 'income',
+          data: this.sampleData,
+        },
+      ],
+      tooltip: {
+        fixed: {
+          enabled: false,
+        },
+        x: {
+          show: false,
+        },
+        y: {},
+        marker: {
+          show: false,
+        },
+      },
+    };
+  }
+  private piechart() {
+    this.pieChartOptions = {
+      series2: [18, 22, 14, 31, 15],
+      chart: {
+        type: 'donut',
+        width: 280,
+      },
+      legend: {
+        show: false,
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      plotOptions: {
+        pie: {
+          donut: {
+            size: '65%',
+            background: 'transparent',
+            labels: {
+              show: true,
+              name: {
+                show: true,
+                fontSize: '22px',
+                fontWeight: 600,
+              },
+              value: {
+                show: true,
+                fontSize: '16px',
+                fontWeight: 400,
+                color: '#9aa0ac',
+              },
+              total: {
+                show: true,
+                showAlways: false,
+                label: 'Total',
+                fontSize: '22px',
+                fontWeight: 600,
+                color: '#6777EF',
+              },
+            },
+          },
+        },
+      },
+      colors: ['#9A8BE7', '#2AC3CB', '#FFAA00', '#FA62BB', '#FFD000'],
+      labels: ['Project 1', 'Project 2', 'Project 3', 'Project 4', 'Project 5'],
+      responsive: [
+        {
+          breakpoint: 480,
+          options: {},
+        },
+      ],
     };
   }
   private chart2() {

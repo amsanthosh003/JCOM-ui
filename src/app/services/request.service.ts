@@ -87,7 +87,9 @@ export class RequestService {
 public fetchuserBymId(id) {
   this.url = `${this.endPoint2}/get_member_details.php?m_id=` + id;
   return this.http.get(this.url);
+  
 }
+
 public updateprofile(body) { 
   this.url = `${this.endPoint2}/send_member_details.php`;
   return this.http.put(this.url, body);
@@ -169,8 +171,14 @@ public fetchgnoteById(id) {
   this.url = `${this.endPoint2}/get_gnote_list.php?m_id=` + id;
   return this.http.get(this.url);
 }
-//change password
 
+//dashboard meeting
+public fetchmeeting(id) {
+  this.url = `${this.endPoint2}/get_meeting_data.php?m_id=` + id;
+  return this.http.get(this.url);
+}
+
+//change password
 public updatePassword(body) {
   this.url = `${this.endPoint2}/change_password.php`;
   return this.http.put(this.url, body);
@@ -186,10 +194,7 @@ public gettablemembers(id,id2) {
   this.url = `${this.endPoint2}/get_member_list.php?m_id=` + id+'&table_id=' + id2;
   return this.http.get(this.url);
 }
-// public fetchtableById(id) {
-//   this.url = `${this.endPoint2}/get_gnote_list.php?m_id=` + id;
-//   return this.http.get(this.url);
-// }
+
 
 //get member connect
 public getconnectmembers(id,id2) {
@@ -218,6 +223,15 @@ public getkeymembers(id,key) {
 
 public getbusinessmembers(id,id2) {
   this.url = `${this.endPoint2}/get_category_members.php?m_id=` + id+'&category_id=' + id2;
+  return this.http.get(this.url);
+}
+//zone by table
+public getzonetables() {
+  this.url = `${this.endPoint2}/get_jib_table.php`;
+  return this.http.get(this.url);
+}
+public getzonetablemembers(id,id2) {
+  this.url = `${this.endPoint2}/get_jib_table_members.php?m_id=` + id+'&table_id=' + id2;
   return this.http.get(this.url);
 }
   //customer

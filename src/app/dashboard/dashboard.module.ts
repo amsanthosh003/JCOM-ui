@@ -10,6 +10,8 @@ import { NgxGaugeModule } from 'ngx-gauge';
 import { Dashboard2Component } from './dashboard2/dashboard2.component';
 import { ToastrModule } from 'ngx-toastr';
 import { ArchwizardModule } from 'angular-archwizard';
+
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 @NgModule({
   declarations: [MainComponent, Dashboard2Component],
   imports: [
@@ -23,6 +25,7 @@ import { ArchwizardModule } from 'angular-archwizard';
     NgApexchartsModule,
     NgxGaugeModule,
     ToastrModule.forRoot(),ArchwizardModule,
+    NgxDatatableModule
   ],
 })
 export class DashboardModule {}

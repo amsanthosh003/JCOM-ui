@@ -10,7 +10,173 @@
     <li class="breadcrumb-item">Dashboard</li>
   </ul>
   <div class="section-body">
-    <div class="row ">
+
+    <div class="row " *ngFor="let m of OverallStatus ">
+      <div class="col-xl-2 col-lg-6">
+        <div class="card l-bg-green">
+          <div class="card-statistic-3">
+            <div class="card-icon card-icon-large"><i class="fa fa-award"></i></div>
+            <div class="card-content">
+              <h4 class="card-title">Connect Given</h4>
+              <h6 class="font-20">{{m.connect_given}}</h6>
+              <div class="mt-2">
+                <!-- <ngb-progressbar type="primary" [value]="51" height=".5rem"></ngb-progressbar> -->
+              </div>   
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-2 col-lg-6">
+        <div class="card l-bg-cyan">
+          <div class="card-statistic-3">
+            <div class="card-icon card-icon-large"><i class="fa fa-globe "></i></div>
+            <div class="card-content">
+              <h4 class="card-title">Connect Received</h4>
+              <h6 class="font-20">{{m.connect_received}}</h6>
+              <div class="mt-2">
+                <!-- <ngb-progressbar type="orange" [value]="51" height=".5rem"></ngb-progressbar> -->
+              </div>
+             
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-2 col-lg-6">
+        <div class="card l-bg-purple">
+          <div class="card-statistic-3">
+            <div class="card-icon card-icon-large"><i class="fa fa-money-bill-alt"></i></div>
+            <div class="card-content">
+              <h4 class="card-title">GNote &nbsp; Given</h4>
+              <h6 class="font-20">{{m.gnote_given}}</h6>
+              <div class="mt-2">
+                <!-- <ngb-progressbar type="danger" [value]="51" height=".5rem"></ngb-progressbar> -->
+              </div>
+             
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-2 col-lg-6">
+        <div class="card l-bg-orange">
+          <div class="card-statistic-3">
+            <div class="card-icon card-icon-large"><i class="fa fa-money-bill-alt"></i></div>
+            <div class="card-content">
+              <h4 class="card-title">GNote Received</h4>
+              <h6 class="font-20">{{m.gnote_received}}</h6>
+              <div class="mt-2">
+                <!-- <ngb-progressbar type="success" [value]="51" height=".5rem"></ngb-progressbar> -->
+              </div>
+            
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-2 col-lg-6">
+        <div class="card l-bg-green">
+          <div class="card-statistic-3">
+            <div class="card-icon card-icon-large"><i class="fa fa-briefcase"></i></div>
+            <div class="card-content">
+              <h4 class="card-title">You And Me &nbsp;</h4>
+              <h6 class="font-20">{{m.youandme}}</h6>
+              
+              <div class="mt-2">
+
+                <!-- <ngb-progressbar type="primary" [value]="51" height=".5rem"></ngb-progressbar> -->
+              </div>   
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-2 col-lg-6">
+        <div class="card l-bg-cyan">
+          <div class="card-statistic-3">
+            <div class="card-icon card-icon-large"><i class="fa fa-award"></i></div>
+            <div class="card-content">
+              <h4 class="card-title"> Guest  &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp; </h4>
+              <h6 class="font-20">{{m.guest}}</h6>
+              <div class="mt-2">
+                <!-- <ngb-progressbar type="primary" [value]="51" height=".5rem"></ngb-progressbar> -->
+              </div>   
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 col-md-8 col-lg-8">
+        <div class="card">
+          <div class="card-header">
+            <h4>Bar chart</h4>
+          </div>
+          <div class="card-body">
+            <div style="text-align:center">
+              <apx-chart [series]="barChartOptions2.series" [chart]="barChartOptions2.chart"
+                [dataLabels]="barChartOptions2.dataLabels" [plotOptions]="barChartOptions2.plotOptions"
+                [grid]="barChartOptions2.grid" [yaxis]="barChartOptions2.yaxis" 
+                [fill]="barChartOptions2.fill" [stroke]="barChartOptions2.stroke" [tooltip]="barChartOptions2.tooltip"
+                [xaxis]="barChartOptions2.xaxis">
+              </apx-chart>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-4 col-lg-4">
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h5 class="m-b-5">Online Sales</h5>
+                  <h3 class="font-light col-green">$237.45</h3>
+                </div>
+                <div class="col-auto">
+                  <div class="bg-orange text-white icon-box-style">
+                    <i class="fas fa-shopping-bag"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="apex-chart-center">
+                <apx-chart [series]="smallBarChart.series" [chart]="smallBarChart.chart"
+                  [plotOptions]="smallBarChart.plotOptions" [tooltip]="smallBarChart.tooltip">
+                </apx-chart>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h5 class="m-b-0">Users</h5>
+                  <h3>11,506 <span class="font-16 text-success">+18%</span>
+                  </h3>
+                </div>
+                <div class="col-auto">
+                  <div class="bg-green text-white icon-box-style">
+                    <i class="fas fa-user-friends"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="m-t-30">
+                <div class="row text-center">
+                  <div class="col-6 border-right">
+                    <h4 class="m-b-0">72%</h4>
+                    <span class="font-14 text-muted">New Users</span>
+                  </div>
+                  <div class="col-6">
+                    <h4 class="m-b-0">28%</h4>
+                    <span class="font-14 text-muted">Repeat Users</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+       
+      </div>
+    </div>
+    
+    <!-- <div class="row ">
       <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
         <div class="card">
           <div class="card-statistic-4">
@@ -104,9 +270,10 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
+
     <div class="row">
-      <div class="col-md-12 col-lg-6 col-xl-6 ">
+      <div class="col-md-12 col-lg-8 col-xl-8 ">
         <div class="card">
           <div class="card-header">
             <h4>Chart Sample</h4>
@@ -121,628 +288,171 @@
           </div>
         </div>
       </div>
-      <div class="col-md-12 col-lg-6 col-xl-6 ">
+
+      <div class="col-md-12 col-lg-4 col-xl-4 ">
         <div class="card">
           <div class="card-header">
-            <h4>Chart Sample</h4>
+            <h4>Project Analysis</h4>
           </div>
           <div class="card-body">
-            <apx-chart [series]="barChartOptions.series" [chart]="barChartOptions.chart"
-              [dataLabels]="barChartOptions.dataLabels" [stroke]="barChartOptions.stroke"
-              [colors]="barChartOptions.colors" [title]="barChartOptions.title" [grid]="barChartOptions.grid"
-              [tooltip]="barChartOptions.tooltip" [plotOptions]="barChartOptions.plotOptions"
-              [yaxis]="barChartOptions.yaxis" [xaxis]="barChartOptions.xaxis"></apx-chart>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12">
-        <div class="card">
-          <div class="card-header">
-            <h4>Traffic Sources</h4>
-          </div>
-          <div class="card-body">
-            <div class="row">
-              <div class="col-sm-12">
-                <div class="d-flex justify-content-between mt-2 text-dark mb-2">
-                  <div><span class="fw-bold">3487</span> Hits</div>
-                  <div>Target: 10000</div>
-                </div>
-                <div class="progress traffic-bar mb-2">
-                  <div class="progress-bar bg-red" style="width: 33%"></div>
-                  <div class="progress-bar bg-blue" style="width: 25%"></div>
-                  <div class="progress-bar bg-amber" style="width: 12%"></div>
-                  <div class="progress-bar bg-purple" style="width: 10%"></div>
-                  <div class="progress-bar bg-green" style="width: 7%"></div>
-                  <div class="progress-bar bg-blue-grey" style="width: 13%"></div>
-                </div>
-              </div>
-              <div class="col-sm-12">
-                <div class="search-traffic">
-                  <div class="d-flex justify-content-between mb-1 mt-2">
-                    <div class="fw-bold">SOURCE</div>
-                    <div class="fw-bold">TOTAL</div>
-                  </div>
-                  <div class="d-flex justify-content-between traffic-source">
-                    <div><span><i class="fa fa-circle col-red msr-2"></i></span>Google Search</div>
-                    <div>33%</div>
-                  </div>
-                  <div class="d-flex justify-content-between traffic-source">
-                    <div><span><i class="fa fa-circle col-blue msr-2"></i></span>Social Media</div>
-                    <div>25%</div>
-                  </div>
-                  <div class="d-flex justify-content-between traffic-source">
-                    <div><span><i class="fa fa-circle col-amber msr-2"></i></span>Referrals</div>
-                    <div>12%</div>
-                  </div>
-                  <div class="d-flex justify-content-between traffic-source">
-                    <div><span><i class="fa fa-circle col-purple msr-2"></i></span>Direct Access</div>
-                    <div>10%</div>
-                  </div>
-                  <div class="d-flex justify-content-between traffic-source">
-                    <div><span><i class="fa fa-circle col-green msr-2"></i></span>Bing Search</div>
-                    <div>7%</div>
-                  </div>
-                  <div class="d-flex justify-content-between traffic-source">
-                    <div><span><i class="fa fa-circle col-blue-grey msr-2"></i></span>Email Marketing</div>
-                    <div>13%</div>
-                  </div>
-                </div>
-              </div>
+            <div id="chart">
+              <apx-chart [series]="pieChartOptions.series2" [chart]="pieChartOptions.chart"
+                [labels]="pieChartOptions.labels" [responsive]="pieChartOptions.responsive"
+                [colors]="pieChartOptions.colors" [dataLabels]="pieChartOptions.dataLabels"
+                [plotOptions]="pieChartOptions.plotOptions" [legend]="pieChartOptions.legend" class="apex-pie-center">
+              </apx-chart>
             </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12">
-        <div class="card gradient-bottom">
-          <div class="card-header">
-            <h4>Top 5 Products</h4>
-          </div>
-          <div class="card-body" id="top-5-scroll">
-            <ul class="list-unstyled list-unstyled-border" style="position: relative; max-height: 320px;"
-              [perfectScrollbar]>
-              <li class="product-list">
-                <img class="msr-3 rounded" width="55" src="assets/images/products/product-3.png" alt="product">
-                <div class="set-flex">
-                  <div class="float-end">
-                    <div class="font-weight-600 text-muted text-small">112 Sales</div>
-                  </div>
-                  <div class="fw-bold font-15">Mobile</div>
-                  <div class="mt-1">
-                    <div class="budget-price">
-                      <div class="budget-price-square bg-primary" style="width: 60%;"></div>
-                      <div class="budget-price-label">$24,897</div>
-                    </div>
-                    <div class="budget-price">
-                      <div class="budget-price-square bg-danger" style="width: 40%;"></div>
-                      <div class="budget-price-label">$18,865</div>
-                    </div>
-                  </div>
-                </div>
-              </li>
-              <li class="product-list">
-                <img class="msr-3 rounded" width="55" src="assets/images/products/product-4.png" alt="product">
-                <div class="set-flex">
-                  <div class="float-end">
-                    <div class="font-weight-600 text-muted text-small">49 Sales</div>
-                  </div>
-                  <div class="fw-bold font-15">Laptop</div>
-                  <div class="mt-1">
-                    <div class="budget-price">
-                      <div class="budget-price-square bg-primary" style="width: 78%;"></div>
-                      <div class="budget-price-label">$74,568</div>
-                    </div>
-                    <div class="budget-price">
-                      <div class="budget-price-square bg-danger" style="width: 55%;"></div>
-                      <div class="budget-price-label">$65,892</div>
-                    </div>
-                  </div>
-                </div>
-              </li>
-              <li class="product-list">
-                <img class="msr-3 rounded" width="55" src="assets/images/products/product-1.png" alt="product">
-                <div class="set-flex">
-                  <div class="float-end">
-                    <div class="font-weight-600 text-muted text-small">63 Sales</div>
-                  </div>
-                  <div class="fw-bold font-15">Headphone</div>
-                  <div class="mt-1">
-                    <div class="budget-price">
-                      <div class="budget-price-square bg-primary" style="width: 38%;"></div>
-                      <div class="budget-price-label">$2,859</div>
-                    </div>
-                    <div class="budget-price">
-                      <div class="budget-price-square bg-danger" style="width: 25%;"></div>
-                      <div class="budget-price-label">$1,872</div>
-                    </div>
-                  </div>
-                </div>
-              </li>
-              <li class="product-list">
-                <img class="msr-3 rounded" width="55" src="assets/images/products/product-2.png" alt="product">
-                <div class="set-flex">
-                  <div class="float-end">
-                    <div class="font-weight-600 text-muted text-small">28 Sales</div>
-                  </div>
-                  <div class="fw-bold font-15">Tablet</div>
-                  <div class="mt-1">
-                    <div class="budget-price">
-                      <div class="budget-price-square bg-primary" style="width: 48%;"></div>
-                      <div class="budget-price-label">$11,238</div>
-                    </div>
-                    <div class="budget-price">
-                      <div class="budget-price-square bg-danger" style="width: 33%;"></div>
-                      <div class="budget-price-label">$7,564</div>
-                    </div>
-                  </div>
-                </div>
-              </li>
-              <li class="product-list">
-                <img class="msr-3 rounded" width="55" src="assets/images/products/product-5.png" alt="product">
-                <div class="set-flex">
-                  <div class="float-end">
-                    <div class="font-weight-600 text-muted text-small">19 Sales</div>
-                  </div>
-                  <div class="fw-bold font-15">Camera</div>
-                  <div class="mt-1">
-                    <div class="budget-price">
-                      <div class="budget-price-square bg-primary" style="width: 91%;"></div>
-                      <div class="budget-price-label">$7,285</div>
-                    </div>
-                    <div class="budget-price">
-                      <div class="budget-price-square bg-danger" style="width: 74%;"></div>
-                      <div class="budget-price-label">$5,147</div>
-                    </div>
-                  </div>
-                </div>
-              </li>
-            </ul>
-          </div>
-          <div class="card-footer pt-3 d-flex justify-content-center">
-            <div class="budget-price justify-content-center">
-              <div class="budget-price-square bg-primary" data-width="20"></div>
-              <div class="budget-price-label">Selling Price</div>
-            </div>
-            <div class="budget-price justify-content-center">
-              <div class="budget-price-square bg-danger" data-width="20"></div>
-              <div class="budget-price-label">Product Cost</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12">
-        <div class="card">
-          <div class="card-header">
-            <h4>Chart Data</h4>
-          </div>
-          <div class="card-body">
-            <apx-chart [series]="stackBarChart.series" [chart]="stackBarChart.chart"
-              [dataLabels]="stackBarChart.dataLabels" [plotOptions]="stackBarChart.plotOptions"
-              [grid]="stackBarChart.grid" [responsive]="stackBarChart.responsive" [xaxis]="stackBarChart.xaxis"
-              [legend]="stackBarChart.legend" [fill]="stackBarChart.fill"></apx-chart>
-            <div class="row text-center ml-0 msr-0 pb-3">
-              <div class="col-6 border-right">
-                <div class="h4 fw-bold mb-0">30%</div><span class="small text-gray">Last week</span>
-              </div>
-              <div class="col-6">
-                <div class="h4 fw-bold mb-0">70%</div><span class="small text-gray">Last month</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8">
-        <div class="card">
-          <div class="card-header">
-            <h4>Assign Project List</h4>
-          </div>
-          <div class="card-body">
-            <div class="table-responsive" style="position: relative; max-height: 450px;" [perfectScrollbar]>
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th>Cust.</th>
-                    <th>Project</th>
-                    <th>Assign Date</th>
-                    <th>Team</th>
-                    <th>Priority</th>
-                    <th>Status</th>
-                    <th>Edit</th>
+            <div class="table-responsive m-t-15">
+              <table class="table align-items-center">
+                <tbody>
+                  <tr class="tbl-row-border">
+                    <td><i class="fa fa-circle col-blue msr-2"></i>Project 1</td>
+                    <td>18</td>
+                    <td class="col-green">+12%</td>
                   </tr>
-                </thead>
-                <tr>
-                  <td class="table-img"><img src="assets/images/users/user-8.png" alt="">
-                  </td>
-                  <td>
-                    <h6 class="pb-0 mb-0 font-13">Wordpress Website</h6>
-                    <p class="m-0 pt-0 font-12">
-                      Assigned to<span class="col-green fw-bold"> Airi Satou</span>
-                    </p>
-                  </td>
-                  <td>20-02-2018</td>
-                  <td class="text-truncate">
-                    <ul class="list-unstyled order-list m-b-0">
-                      <li class="team-member team-member-sm"><img class="rounded-circle"
-                          src="assets/images/users/user-8.png" alt="user" data-toggle="tooltip" title=""
-                          data-original-title="Wildan Ahdian"></li>
-                      <li class="team-member team-member-sm"><img class="rounded-circle"
-                          src="assets/images/users/user-9.png" alt="user" data-toggle="tooltip" title=""
-                          data-original-title="John Deo"></li>
-                      <li class="team-member team-member-sm"><img class="rounded-circle"
-                          src="assets/images/users/user-10.png" alt="user" data-toggle="tooltip" title=""
-                          data-original-title="Sarah Smith"></li>
-                      <li class="avatar avatar-sm"><span class="badge badge-primary">+4</span></li>
-                    </ul>
-                  </td>
-                  <td>
-                    <div class="badge-outline col-red">High</div>
-                  </td>
-                  <td class="align-middle">
-                    <div class="progress-text">50%</div>
-                    <ngb-progressbar type="success" [value]="50" height=".3rem" class="p-0"></ngb-progressbar>
-                  </td>
-                  <td>
-                    <a data-toggle="tooltip" title="" data-original-title="Edit"><i
-                        class="fas fa-pencil-alt m-1"></i></a>
-                    <a data-toggle="tooltip" title="" data-original-title="Delete"><i
-                        class="far fa-trash-alt m-1"></i></a>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="table-img"><img src="assets/images/users/user-1.png" alt="">
-                  </td>
-                  <td>
-                    <h6 class="pb-0 mb-0 font-13">Android Game App</h6>
-                    <p class="m-0 pt-0 font-12">
-                      Assigned to<span class="col-green fw-bold"> Sarah Smith</span>
-                    </p>
-                  </td>
-                  <td>22-05-2019</td>
-                  <td class="text-truncate">
-                    <ul class="list-unstyled order-list m-b-0">
-                      <li class="team-member team-member-sm"><img class="rounded-circle"
-                          src="assets/images/users/user-4.png" alt="user" data-toggle="tooltip" title=""
-                          data-original-title="Wildan Ahdian"></li>
-                      <li class="team-member team-member-sm"><img class="rounded-circle"
-                          src="assets/images/users/user-7.png" alt="user" data-toggle="tooltip" title=""
-                          data-original-title="John Deo"></li>
-                      <li class="team-member team-member-sm"><img class="rounded-circle"
-                          src="assets/images/users/user-2.png" alt="user" data-toggle="tooltip" title=""
-                          data-original-title="Sarah Smith"></li>
-                      <li class="avatar avatar-sm"><span class="badge badge-primary">+4</span></li>
-                    </ul>
-                  </td>
-                  <td>
-                    <div class="badge-outline col-green">Low</div>
-                  </td>
-                  <td class="align-middle">
-                    <div class="progress-text">55%</div>
-                    <ngb-progressbar type="info" [value]="55" height=".3rem" class="p-0"></ngb-progressbar>
-                  </td>
-                  <td>
-                    <a data-toggle="tooltip" title="" data-original-title="Edit"><i
-                        class="fas fa-pencil-alt m-1"></i></a>
-                    <a data-toggle="tooltip" title="" data-original-title="Delete"><i
-                        class="far fa-trash-alt m-1"></i></a>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="table-img"><img src="assets/images/users/user-2.png" alt="">
-                  </td>
-                  <td>
-                    <h6 class="pb-0 mb-0 font-13">Java Web Service</h6>
-                    <p class="m-0 pt-0 font-12">
-                      Assigned to<span class="col-green fw-bold"> Cara Stevens</span>
-                    </p>
-                  </td>
-                  <td>11-04-2019</td>
-                  <td class="text-truncate">
-                    <ul class="list-unstyled order-list m-b-0">
-                      <li class="team-member team-member-sm"><img class="rounded-circle"
-                          src="assets/images/users/user-3.png" alt="user" data-toggle="tooltip" title=""
-                          data-original-title="Wildan Ahdian"></li>
-                      <li class="team-member team-member-sm"><img class="rounded-circle"
-                          src="assets/images/users/user-7.png" alt="user" data-toggle="tooltip" title=""
-                          data-original-title="John Deo"></li>
-                      <li class="team-member team-member-sm"><img class="rounded-circle"
-                          src="assets/images/users/user-8.png" alt="user" data-toggle="tooltip" title=""
-                          data-original-title="Sarah Smith"></li>
-                      <li class="avatar avatar-sm"><span class="badge badge-primary">+4</span></li>
-                    </ul>
-                  </td>
-                  <td>
-                    <div class="badge-outline col-blue">Medium</div>
-                  </td>
-                  <td class="align-middle">
-                    <div class="progress-text">70%</div>
-                    <ngb-progressbar type="warning" [value]="70" height=".3rem" class="p-0"></ngb-progressbar>
-                  </td>
-                  <td>
-                    <a data-toggle="tooltip" title="" data-original-title="Edit"><i
-                        class="fas fa-pencil-alt m-1"></i></a>
-                    <a data-toggle="tooltip" title="" data-original-title="Delete"><i
-                        class="far fa-trash-alt m-1"></i></a>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="table-img"><img src="assets/images/users/user-9.png" alt="">
-                  </td>
-                  <td>
-                    <h6 class="pb-0 mb-0 font-13">Wedding IOS App</h6>
-                    <p class="m-0 pt-0 font-12">
-                      Assigned to<span class="col-green fw-bold"> John Doe</span>
-                    </p>
-                  </td>
-                  <td>19-05-2019</td>
-                  <td class="text-truncate">
-                    <ul class="list-unstyled order-list m-b-0">
-                      <li class="team-member team-member-sm"><img class="rounded-circle"
-                          src="assets/images/users/user-2.png" alt="user" data-toggle="tooltip" title=""
-                          data-original-title="Wildan Ahdian"></li>
-                      <li class="team-member team-member-sm"><img class="rounded-circle"
-                          src="assets/images/users/user-10.png" alt="user" data-toggle="tooltip" title=""
-                          data-original-title="John Deo"></li>
-                      <li class="team-member team-member-sm"><img class="rounded-circle"
-                          src="assets/images/users/user-4.png" alt="user" data-toggle="tooltip" title=""
-                          data-original-title="Sarah Smith"></li>
-                      <li class="avatar avatar-sm"><span class="badge badge-primary">+4</span></li>
-                    </ul>
-                  </td>
-                  <td>
-                    <div class="badge-outline col-red">High</div>
-                  </td>
-                  <td class="align-middle">
-                    <div class="progress-text">45%</div>
-                    <ngb-progressbar type="primary" [value]="45" height=".3rem" class="p-0"></ngb-progressbar>
-                  </td>
-                  <td>
-                    <a data-toggle="tooltip" title="" data-original-title="Edit"><i
-                        class="fas fa-pencil-alt m-1"></i></a>
-                    <a data-toggle="tooltip" title="" data-original-title="Delete"><i
-                        class="far fa-trash-alt m-1"></i></a>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="table-img"><img src="assets/images/users/user-5.png" alt="">
-                  </td>
-                  <td>
-                    <h6 class="pb-0 mb-0 font-13">Blize Admin Template</h6>
-                    <p class="m-0 pt-0 font-12">
-                      Assigned to<span class="col-green fw-bold"> Ashton Cox</span>
-                    </p>
-                  </td>
-                  <td>25-07-2019</td>
-                  <td class="text-truncate">
-                    <ul class="list-unstyled order-list m-b-0">
-                      <li class="team-member team-member-sm"><img class="rounded-circle"
-                          src="assets/images/users/user-1.png" alt="user" data-toggle="tooltip" title=""
-                          data-original-title="Wildan Ahdian"></li>
-                      <li class="team-member team-member-sm"><img class="rounded-circle"
-                          src="assets/images/users/user-5.png" alt="user" data-toggle="tooltip" title=""
-                          data-original-title="John Deo"></li>
-                      <li class="team-member team-member-sm"><img class="rounded-circle"
-                          src="assets/images/users/user-7.png" alt="user" data-toggle="tooltip" title=""
-                          data-original-title="Sarah Smith"></li>
-                      <li class="avatar avatar-sm"><span class="badge badge-primary">+4</span></li>
-                    </ul>
-                  </td>
-                  <td>
-                    <div class="badge-outline col-blue">Medium</div>
-                  </td>
-                  <td class="align-middle">
-                    <div class="progress-text">67%</div>
-                    <ngb-progressbar type="danger" [value]="67" height=".3rem" class="p-0"></ngb-progressbar>
-                  </td>
-                  <td>
-                    <a data-toggle="tooltip" title="" data-original-title="Edit"><i
-                        class="fas fa-pencil-alt m-1"></i></a>
-                    <a data-toggle="tooltip" title="" data-original-title="Delete"><i
-                        class="far fa-trash-alt m-1"></i></a>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="table-img"><img src="assets/images/users/user-4.png" alt="">
-                  </td>
-                  <td>
-                    <h6 class="pb-0 mb-0 font-13">React js website</h6>
-                    <p class="m-0 pt-0 font-12">
-                      Assigned to<span class="col-green fw-bold"> Sarah Smith </span>
-                    </p>
-                  </td>
-                  <td>11-08-2019</td>
-                  <td class="text-truncate">
-                    <ul class="list-unstyled order-list m-b-0">
-                      <li class="team-member team-member-sm"><img class="rounded-circle"
-                          src="assets/images/users/user-5.png" alt="user" data-toggle="tooltip" title=""
-                          data-original-title="Wildan Ahdian"></li>
-                      <li class="team-member team-member-sm"><img class="rounded-circle"
-                          src="assets/images/users/user-8.png" alt="user" data-toggle="tooltip" title=""
-                          data-original-title="John Deo"></li>
-                      <li class="team-member team-member-sm"><img class="rounded-circle"
-                          src="assets/images/users/user-3.png" alt="user" data-toggle="tooltip" title=""
-                          data-original-title="Sarah Smith"></li>
-                      <li class="avatar avatar-sm"><span class="badge badge-primary">+4</span></li>
-                    </ul>
-                  </td>
-                  <td>
-                    <div class="badge-outline col-green">Low</div>
-                  </td>
-                  <td class="align-middle">
-                    <div class="progress-text">41%</div>
-                    <ngb-progressbar type="success" [value]="41" height=".3rem" class="p-0"></ngb-progressbar>
-                  </td>
-                  <td>
-                    <a data-toggle="tooltip" title="" data-original-title="Edit"><i
-                        class="fas fa-pencil-alt m-1"></i></a>
-                    <a data-toggle="tooltip" title="" data-original-title="Delete"><i
-                        class="far fa-trash-alt m-1"></i></a>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="table-img"><img src="assets/images/users/user-10.png" alt="">
-                  </td>
-                  <td>
-                    <h6 class="pb-0 mb-0 font-13">SEO improvement</h6>
-                    <p class="m-0 pt-0 font-12">
-                      Assigned to<span class="col-green fw-bold"> Janak Gandhi</span>
-                    </p>
-                  </td>
-                  <td>22-02-2018</td>
-                  <td class="text-truncate">
-                    <ul class="list-unstyled order-list m-b-0">
-                      <li class="team-member team-member-sm"><img class="rounded-circle"
-                          src="assets/images/users/user-3.png" alt="user" data-toggle="tooltip" title=""
-                          data-original-title="Wildan Ahdian"></li>
-                      <li class="team-member team-member-sm"><img class="rounded-circle"
-                          src="assets/images/users/user-9.png" alt="user" data-toggle="tooltip" title=""
-                          data-original-title="John Deo"></li>
-                      <li class="team-member team-member-sm"><img class="rounded-circle"
-                          src="assets/images/users/user-1.png" alt="user" data-toggle="tooltip" title=""
-                          data-original-title="Sarah Smith"></li>
-                      <li class="avatar avatar-sm"><span class="badge badge-primary">+4</span></li>
-                    </ul>
-                  </td>
-                  <td>
-                    <div class="badge-outline col-red">High</div>
-                  </td>
-                  <td class="align-middle">
-                    <div class="progress-text">70%</div>
-                    <ngb-progressbar type="info" [value]="70" height=".3rem" class="p-0"></ngb-progressbar>
-                  </td>
-                  <td>
-                    <a data-toggle="tooltip" title="" data-original-title="Edit"><i
-                        class="fas fa-pencil-alt m-1"></i></a>
-                    <a data-toggle="tooltip" title="" data-original-title="Delete"><i
-                        class="far fa-trash-alt m-1"></i></a>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="table-img"><img src="assets/images/users/user-6.png" alt="">
-                  </td>
-                  <td>
-                    <h6 class="pb-0 mb-0 font-13">Laravel Website</h6>
-                    <p class="m-0 pt-0 font-12">
-                      Assigned to<span class="col-green fw-bold"> Mili Rain</span>
-                    </p>
-                  </td>
-                  <td>31-03-2019</td>
-                  <td class="text-truncate">
-                    <ul class="list-unstyled order-list m-b-0">
-                      <li class="team-member team-member-sm"><img class="rounded-circle"
-                          src="assets/images/users/user-4.png" alt="user" data-toggle="tooltip" title=""
-                          data-original-title="Wildan Ahdian"></li>
-                      <li class="team-member team-member-sm"><img class="rounded-circle"
-                          src="assets/images/users/user-7.png" alt="user" data-toggle="tooltip" title=""
-                          data-original-title="John Deo"></li>
-                      <li class="team-member team-member-sm"><img class="rounded-circle"
-                          src="assets/images/users/user-2.png" alt="user" data-toggle="tooltip" title=""
-                          data-original-title="Sarah Smith"></li>
-                      <li class="avatar avatar-sm"><span class="badge badge-primary">+4</span></li>
-                    </ul>
-                  </td>
-                  <td>
-                    <div class="badge-outline col-green">Low</div>
-                  </td>
-                  <td class="align-middle">
-                    <div class="progress-text">55%</div>
-                    <ngb-progressbar type="warning" [value]="55" height=".3rem" class="p-0"></ngb-progressbar>
-                  </td>
-                  <td>
-                    <a data-toggle="tooltip" title="" data-original-title="Edit"><i
-                        class="fas fa-pencil-alt m-1"></i></a>
-                    <a data-toggle="tooltip" title="" data-original-title="Delete"><i
-                        class="far fa-trash-alt m-1"></i></a>
-                  </td>
-                </tr>
+                  <tr class="tbl-row-border">
+                    <td><i class="fa fa-circle col-cyan msr-2"></i>Project 2</td>
+                    <td>22</td>
+                    <td class="col-orange">-12%</td>
+                  </tr>
+                  <tr class="tbl-row-border">
+                    <td><i class="fa fa-circle col-orange msr-2"></i>Project 3</td>
+                    <td>14</td>
+                    <td class="col-green">+3%</td>
+                  </tr>
+                 
+                  
+                </tbody>
               </table>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4">
+    </div>
+   
+    <!-- recent connect received -->
+    <div class="row">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
         <div class="card">
           <div class="card-header">
-            <h4>Documents</h4>
+            <h4>Recent Connect Received</h4>
+            <span  class="float-right"><button class="btn btn-icon icon-left btn-success" >
+              <i class="fas fa-eye"></i> <a routerLink="/connectentry" style="text-decoration: none; color: rgb(255, 255, 255);"> View All </a></button></span>
           </div>
           <div class="card-body">
-            <div class="doc-file-type">
-              <ul class="list-unstyled" style="position: relative; max-height: 370px;" [perfectScrollbar]>
-                <li class="d-flex mb-3">
-                  <span class="msr-3 img-icon primary-rgba text-primary"><i class="far fa-file-word"></i></span>
-                  <div class="set-flex">
-                    <h5 class="font-16 mb-1">Java Programming</h5>
-                    <p>.doc, 4.3 MB</p>
-                  </div>
-                  <div class="ms-auto">
-                    <td>
-                      <i class="far fa-trash-alt psr-3"></i>
-                      <i class="far fa-arrow-alt-circle-down"></i>
-                    </td>
-                  </div>
-                </li>
-                <li class="d-flex mb-3">
-                  <span class="msr-3 img-icon success-rgba text-success"><i class="far fa-file-excel"></i></span>
-                  <div class="set-flex">
-                    <h5 class="font-16 mb-1">Angular Theory</h5>
-                    <p>.xls, 2.5 MB</p>
-                  </div>
-                  <div class="ms-auto">
-                    <td>
-                      <i class="far fa-trash-alt psr-3"></i>
-                      <i class="far fa-arrow-alt-circle-down"></i>
-                    </td>
-                  </div>
-                </li>
-                <li class="d-flex mb-3">
-                  <span class="msr-3 img-icon danger-rgba text-danger"><i class="far fa-file-pdf"></i></span>
-                  <div class="set-flex">
-                    <h5 class="font-16 mb-1">Maths Sums Solution</h5>
-                    <p>.pdf, 10.5 MB</p>
-                  </div>
-                  <div class="ms-auto">
-                    <td>
-                      <i class="far fa-trash-alt psr-3"></i>
-                      <i class="far fa-arrow-alt-circle-down"></i>
-                    </td>
-                  </div>
-                </li>
-                <li class="d-flex mb-3">
-                  <span class="msr-3 img-icon info-rgba text-info"><i class="far fa-file-archive"></i></span>
-                  <div class="set-flex">
-                    <h5 class="font-16 mb-1">Submit Science Journal</h5>
-                    <p>.zip, 53.2 MB</p>
-                  </div>
-                  <div class="ms-auto">
-                    <td>
-                      <i class="far fa-trash-alt psr-3"></i>
-                      <i class="far fa-arrow-alt-circle-down"></i>
-                    </td>
-                  </div>
-                </li>
-                <li class="d-flex mb-3">
-                  <span class="msr-3 img-icon primary-rgba text-primary"><i class="far fa-file-word"></i></span>
-                  <div class="set-flex">
-                    <h5 class="font-16 mb-1">Marketing Instructions</h5>
-                    <p>.doc, 5.3 MB</p>
-                  </div>
-                  <div class="ms-auto">
-                    <td>
-                      <i class="far fa-trash-alt psr-3"></i>
-                      <i class="far fa-arrow-alt-circle-down"></i>
-                    </td>
-                  </div>
-                </li>
-              </ul>
-              <div class="text-center p-t-20">
-                <button class="btn btn-primary">View More</button>
-              </div>
+            <div class="table-responsive" style="position: relative; max-height: 450px;" [perfectScrollbar]>
+    
+          <table class="table table-striped" >
+                <thead>
+                  <tr>
+                    <th>Connect Date</th>
+                    <th>Form</th>
+                    <th>To</th>
+                    <th>Connect Name</th>
+                    <th>Connect Type</th>
+                    <th>Status</th>
+                    <th>Type</th>
+                  </tr>
+                </thead>
+                <tr *ngFor="let a of Connectss">
+                  <td>{{a.created_on}}</td>
+                  <td>
+                    <h6 class="pb-0 mb-0 font-13">{{a.name}}</h6>     
+                  </td>
+                  
+                  <td class="text-truncate">
+                    <h6 class="pb-0 mb-0 font-13">{{a.to_name}}</h6>    
+                  </td>
+
+                  <td class="text-truncate">
+                    <h6 class="pb-0 mb-0 font-13">{{a.connect_name}}</h6>    
+                  </td>
+
+                  <td>
+                    <div class="badge-outline col-red" *ngIf="a.connect_type=='JCOM'" >{{a.connect_type}}</div>
+                    <div class="badge-outline col-green" *ngIf="a.connect_type=='JCI'" >{{a.connect_type}}</div>
+                    <div class="badge-outline col-blue" *ngIf="a.connect_type=='Non-JCI'" >{{a.connect_type}}</div>
+                  </td> 
+
+                  <td>
+                    <div *ngIf="a.connect_status=='Within JCOM'" class="badge-outline col-green">{{a.connect_status}}
+                    </div>
+                    <div *ngIf="a.connect_status=='Self'" class="badge-outline col-indigo">{{a.connect_status}}
+                    </div>
+                  </td>
+                  <td>
+                    <h6 *ngIf="a.type=='1'" style="color: rgb(245, 11, 11);"><i class="material-icons">call_made</i>
+                    </h6>
+                    <h6 *ngIf="a.type=='2'" style="color: rgb(3, 153, 15);"><i class="material-icons">call_received</i>
+                    </h6>
+                  </td>
+
+                </tr>
+              </table> 
             </div>
           </div>
         </div>
       </div>
+     
+    </div>
+    <br>
+    <!-- recent gnote received -->
+    <div class="row">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        <div class="card">
+          <div class="card-header">
+            <h4>Recent Gnote Received</h4>
+            <span  class="float-right"><button class="btn btn-icon icon-left btn-success" >
+              <i class="fas fa-eye"></i> <a routerLink="/gnoteentry" style="text-decoration: none; color: rgb(255, 255, 255);"> View All </a></button></span>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive" style="position: relative; max-height: 450px;" [perfectScrollbar]>
+             
+            <table class="table table-striped" >
+              <thead>
+                <tr>
+                  <th>Gnote Date</th>
+                  <th>Name</th>  
+                  <th>Amount</th>
+                  <th>Business Category</th>
+                  <th>Connect Type</th>
+                  <th>Type</th>
+                </tr>
+              </thead>
+              <tr *ngFor="let a of Gnotes">
+                <td>{{a.created_on}}</td>
+                <td>
+                  <h6 class="pb-0 mb-0 font-13">{{a.name}}</h6>     
+                </td>
+                
+                <td class="text-truncate">
+                  <h6 class="pb-0 mb-0 font-13">{{a.amount}}</h6>    
+                </td>
+
+                <td class="text-truncate">
+                  <h6 class="pb-0 mb-0 font-13">{{a.business_category}}</h6>    
+                </td>
+
+                <td>
+                  <div class="badge-outline col-red" *ngIf="a.connect_type=='JCOM'" >{{a.connect_type}}</div>
+                  <div class="badge-outline col-green" *ngIf="a.connect_type=='JCI'" >{{a.connect_type}}</div>
+                  <div class="badge-outline col-blue" *ngIf="a.connect_type=='Non-JCI'" >{{a.connect_type}}</div>
+                </td> 
+
+                <td>
+                  <h6 *ngIf="a.type=='1'" style="color: rgb(245, 11, 11);"><i class="material-icons">call_made</i>
+                  </h6>
+                  <h6 *ngIf="a.type=='2'" style="color: rgb(3, 153, 15);"><i class="material-icons">call_received</i>
+                  </h6>
+                </td>
+
+              </tr>
+            </table> 
+          </div>
+          </div>
+        </div>
+      </div>
+     
     </div>
   </div>
 </section>

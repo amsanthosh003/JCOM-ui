@@ -48,7 +48,7 @@
       
               <ngx-datatable #table class="material" [rows]="Gnotes" [loadingIndicator]="loadingIndicator"
                 columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="10"
-                [reorderable]="reorderable" *ngIf="!loader">
+                [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable" *ngIf="!loader">
 
                 <ngx-datatable-column name="Date">
                   <ng-template let-row="row" ngx-datatable-cell-template>
@@ -75,6 +75,12 @@
                     {{row.business_category}}
                   </ng-template>
                 </ngx-datatable-column>
+
+                <ngx-datatable-column name="Connect Type">
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{row.connect_type}}
+                  </ng-template>
+                </ngx-datatable-column>
                
                  <ngx-datatable-column name="Type">
                   <ng-template let-row="row" ngx-datatable-cell-template>
@@ -86,9 +92,25 @@
                    
                   </ng-template>
                 </ngx-datatable-column> 
-                <ngx-datatable-column name="Connect Type">
+              
+                <ngx-datatable-column  name="Type"  >
                   <ng-template let-row="row" ngx-datatable-cell-template>
-                    {{row.connect_type}}
+                    <!-- <div *ngIf="row.type=='1'" class="badge-outline col-green"><i class="material-icons">call_made</i>
+                    </div> -->
+                    <!-- <div *ngIf="row.type=='2'" class="badge-outline col-red"><i class="material-icons">call_received</i>
+                    </div> -->
+  
+                    <h6 *ngIf="row.type=='1'" style="color: rgb(245, 11, 11);"><i class="material-icons">call_made</i></h6> 
+                    <h6 *ngIf="row.type=='2'" style="color: rgb(3, 153, 15);"><i class="material-icons">call_received</i></h6>
+                    <!-- <a class="btn btn-icon btn-sm btn-danger" >
+                      <i class="material-icons">call_made</i>
+                    </a> -->
+                    <!-- <div *ngIf="row.type=='1'" ><h5 class="msr-2 h-auto tblEditBtn"><i class="fas fa-eye"></i></h5>
+                    </div> -->
+                    <!-- <div *ngIf="row.type=='2'" ><h5 class="msr-2 h-auto tblEditBtn"><i class="fas fa-eye"></i></h5>
+                    </div> -->
+                    <!-- <button class="btn btn-icon btn-sm btn-danger" *ngIf="row.type=='1'"> <i-feather name="arrow-up-right"></i-feather></button>
+                    <button class="btn btn-icon btn-sm btn-success" *ngIf="row.type=='2'"> <i-feather name="arrow-down-left"></i-feather></i></button> -->
                   </ng-template>
                 </ngx-datatable-column>
                 <ngx-datatable-column name="Actions" sortable="false">
@@ -146,10 +168,10 @@
 
                     <div class="col-md-6">
                     <div class="form-group position-relative">
-                      <label>LOM <span class="text-danger">*</span></label>
+                      <label>JCOM Tables <span class="text-danger">*</span></label>
                       <i-feather name="Flag" class="login-icons" style="color: rgb(63, 89, 241);"></i-feather>
-                      <ng-select (change)="ontableChange($event)" placeholder="please select" >
-                        <ng-option [value]="Mtable_id" selected ></ng-option>
+                      <ng-select (change)="ontableChange($event)"   placeholder="{{tblname}}">
+                        <ng-option [value]="Mtable_id" selected disable >{{tblname}}</ng-option>
                         <ng-option *ngFor="let tab of Tables" [value]="tab.table" >
                           {{tab.table_name}}
                         </ng-option>                        
@@ -183,10 +205,10 @@
 
                     <div class="col-md-6">
                       <div class="form-group position-relative" *ngIf="isdisable">
-                        <label>Connect</label>
+                        <label>Connect<span class="text-danger">*</span></label>
                         <i-feather name="link2" class="login-icons" style="color: rgb(63, 89, 241);"></i-feather>
                         <ng-select  formControlName="connect_id"  required placeholder="please select">
-                          <ng-option [value]="" selected ></ng-option>
+                          <!-- <ng-option [value]="" selected ></ng-option> -->
                           <ng-option *ngFor="let tab of Connectmem" [value]="tab.connect_id" >
                             <span >
                               {{tab.connect_name}}
@@ -207,14 +229,15 @@
 
                     <div class="col-md-6">
                       <div class="form-group position-relative">
-                        <label>Connect Type</label>
+                        <label>Connect Type<span class="text-danger">*</span></label>
                         <i-feather name="airplay" class="login-icons" style="color: rgb(63, 89, 241);"></i-feather>
-                        <select class="form-control pl-5" formControlName="connect_status" required >
-                          <option value="" selected disabled>select</option>
+                        <ng-select  [items]="connects" bindLabel="value" bindValue="id"  formControlName="connect_status"  placeholder="please select" required>
+                        </ng-select>
+                        <!-- <select class="form-control pl-5" formControlName="connect_status"  placeholder="please select" required >       
                           <option *ngFor="let connect of connects" [value]="connect.id">
                             {{connect.value}}
                           </option>
-                        </select>
+                        </select> -->
                       </div>
                     </div>
                  
@@ -223,7 +246,7 @@
                       <div class="form-group position-relative">
                         <label>Business Category <span class="text-danger">*</span></label>
                         <i-feather name="Briefcase" class="login-icons" style="color: rgb(63, 89, 241);"></i-feather>                  
-                        <ng-select  [items]="Business" bindLabel="category" bindValue="id"  formControlName="business_category" required>
+                        <ng-select  [items]="Business" bindLabel="category" bindValue="id"  formControlName="business_category"  placeholder="please select" required>
                         </ng-select>
                       </div>
                     </div>
@@ -288,7 +311,7 @@
                 <div class="section-body">
                   <div class="row ">
                     <div class="col-12 col-md-12 ">
-                      <div class="card author-box" style="margin-left: 75px; margin-right: 75px;">
+                      <div class="card author-box" style="margin-left:35px; margin-right: 35px;">
 
                         <div class="card-body">
                           <div class="card-header">

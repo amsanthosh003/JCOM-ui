@@ -1,4 +1,4 @@
-<section class="main-content">
+<section class="main-content" *ngIf="tableview">
     <div class="section-body" style="margin-top: 20px;">
         <div class="row" style="margin-left: 10px; margin-right: 10px;">
             <!-- business col -->
@@ -10,29 +10,27 @@
                                 <div class="row" style="margin-left: 10px; margin-right: 10px;">
                                     <div class="col-lg-12">
                                         <div class="row m-0">
-                                            <div class="col-lg-3 p-0">
+                                            <div class="col-lg-2 p-0">
                                                 <div class="ngxTableHeader">
-                                                    <h2><strong>SEARCH BY BUSINESS</strong></h2>
+                                                    <h2><strong> Business Category</strong></h2>
 
                                                 </div>
                                             </div>
 
-                                            <div class="col-lg-3 p-0">
+                                            <div class="col-lg-4 p-0">
                                                 <div class="ngxTableHeader">
                                                     <div class="header-buttons-left">
                                                         <div class="icon-button-demo buttons">
                                                             <button class="btn btn-icon icon-left btn-success"
                                                                 (click)=' openkeysearch(gotokeysearch)'>
-                                                                <i class="fas fa-search"></i> SEARCH BY KEYWORD</button>
-
-
+                                                                <i class="fas fa-search"></i>Search By Keyword</button>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <div class="col-lg-6 p-0">
-                                                <div class="ngxTableHeader" style="justify-content: end;">
+                                            <div class="col-lg-5 p-0">
+                                                <div class="ngxTableHeader" style="display: flex;  justify-content: flex-end;">
                                                     <div class="table-search-area">
                                                         <div>
                                                             <label for="search-input"><i
@@ -56,7 +54,7 @@
                                 <div class="col-sm-12">
 
                                     <div class="row" style="margin-left: 10px; margin-right: 10px;">
-                                        <div class="col-12 col-md-6 col-lg-6" *ngFor="let table of Business | paginate: {  itemsPerPage:12 , currentPage: p } " >
+                                        <div class="col-12 col-lg-6 col-lg-6" *ngFor="let table of Business | paginate: { id:'page2',  itemsPerPage:12 , currentPage: p } " >
                                             <div class="card card-primary" >
                                                 <div class="card-header">
                                                     <h4>{{table.category}}</h4>
@@ -65,7 +63,7 @@
                                                   View 
                                                 </a> -->
                                                         <a class="msr-2 h-auto tblEditBtn"
-                                                            (click)='openmembers(table.id, membersRecord)'>
+                                                            (click)='openmembers(table.id)'>
                                                             <i class="fas fa-eye"></i>
                                                         </a>
                                                     </div>
@@ -95,15 +93,12 @@
                             
                                     <div  style="text-align: center;">
 
-                                        <pagination-controls  (pageChange)=" p = $event"></pagination-controls>
+                                        <pagination-controls  id="page2" (pageChange)=" p = $event"></pagination-controls>
                                     </div>
 
                                 </div>
 
-                                
-
-                                
-
+        
                                 <!-- members Window by business-->
                                 <ng-template #membersRecord let-modal>
                                     <div class="modal-header editRowModal">
@@ -155,7 +150,7 @@
                                             <br>
                                             <div class="row" style="margin-left: 10px; margin-right: 10px;" *ngIf='!loader'>
                                                 <div class="col-12 col-md-6 col-lg-6"
-                                                    *ngFor="let table of CatMembers | paginate: { itemsPerPage:12 , currentPage: p } ">
+                                                    *ngFor="let table of CatMembers | paginate: { itemsPerPage:12 , currentPage: m } ">
                                                     <div class="card card-primary">
                                                         <div class="card-header">
                                                             <h4>{{table.name}}</h4>
@@ -194,7 +189,7 @@
                                         </div>
                                         <div id="pg" style="text-align: center;">
 
-                                            <pagination-controls  (pageChange)=" p = $event"></pagination-controls>
+                                            <pagination-controls  (pageChange)=" m = $event"></pagination-controls>
                                         </div>
 
                                     </div>
@@ -571,63 +566,6 @@
                                     </div>
                                 </ng-template>
 
-                                <!-- 1 to search by key  -->
-
-                                <ng-template #ggggotokeysearch let-modal>
-
-                                    <main class="d-flex align-items-center min-vh-100 py-3 py-md-0">
-                                        <div class="container">
-                                            <div class="row">
-                                                <div class="auth-card">
-                                                    <div class="col-12">
-                                                        <div class="card card-primary">
-                                                            <div class="card-header">
-
-                                                                <div class="col-11">
-                                                                    <h4>SEARCH BY KEYWORD</h4>
-                                                                </div>
-                                                                <div class="col-1"
-                                                                    style="display: flex;  justify-content: flex-end;">
-                                                                    <button type="button" class="close"
-                                                                        aria-label="Close" (click)="modal.dismiss()">
-                                                                        <span aria-hidden="true"><i
-                                                                                class="material-icons">close</i></span>
-                                                                    </button>
-                                                                </div>
-
-                                                            </div>
-
-
-                                                            <div class="card-body">
-                                                                <form>
-                                                                    <div class="form-group">
-                                                                        <div class="form-group position-relative">
-                                                                            <label>KeyWord</label>
-                                                                            <i-feather name="key" class="login-icons">
-                                                                            </i-feather>
-                                                                            <input type="text" class="form-control pl-5"
-                                                                                placeholder="keywords">
-                                                                        </div>
-
-                                                                    </div>
-                                                                </form>
-                                                                <div class="form-group">
-                                                                    <button class="btn btn-primary btn-lg btn-block"
-                                                                        (click)='openkeymembers(keymembersRecord)'>
-                                                                        SEARCH
-                                                                    </button>
-                                                                </div>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </main>
-
-                                </ng-template>
-
                                 <!-- 2 to search by key  (used) -->
                                 <ng-template #gotokeysearch let-modal>
                                     <div class="modal-header editRowModal">
@@ -663,7 +601,7 @@
 
                                                 <button class="btn btn-primary btn-lg btn-block"
                                                     [disabled]="!register.valid" type="submit"
-                                                    (click)='openkeymembers(keymembersRecord)'>
+                                                    (click)='openkeymembers()'>
                                                     SEARCH
                                                 </button>
 
@@ -724,20 +662,16 @@
                                                 <br>
                                             </div>
 
-
                                         </div>
 
                                         <div class="row" style="margin-left: 10px; margin-right: 10px;" *ngIf='!loader'>
 
                                             <div class="col-12 col-md-6 col-lg-6"
-                                                *ngFor="let table of KeyMembers | paginate: { itemsPerPage:12 , currentPage: p }">
+                                                *ngFor="let table of KeyMembers | paginate: { id:'page1', itemsPerPage:12 , currentPage: m }">
                                                 <div class="card card-primary">
                                                     <div class="card-header">
                                                         <h4>{{table.name}}</h4>
-                                                        <div class="card-header-action">
-                                                            <!-- <a href="#" onClick="return false;" class="btn btn-primary">
-                                                      View 
-                                                    </a> -->
+                                                        <div class="card-header-action">        
                                                             <a class="msr-2 h-auto tblEditBtn"
                                                                 (click)='openkeyprofile(table,keyprofileRecord)'>
                                                                 <i class="fas fa-eye"></i>
@@ -766,12 +700,9 @@
                                                 </ngx-skeleton-loader>
                                             </div>
                                         </div>
-
                                         <div id="pg" style="text-align: center;">
-
-                                            <pagination-controls (pageChange)=" p = $event"></pagination-controls>
+                                            <pagination-controls id="page1" (pageChange)=" m = $event"></pagination-controls>
                                         </div>
-
                                     </div>
                                 </ng-template>
 
@@ -949,7 +880,7 @@
                                                                 </p> -->
                                                                 <p class="clearfix">
                                                                     <span class="float-start">
-                                                                        Business Mobile No :
+                                                                        Personal Mobile No :
                                                                     </span>
                                                                     <span class="float-right text-muted"
                                                                         style="width: 60%;">
@@ -967,7 +898,7 @@
                                                                 </p> -->
                                                                 <p class="clearfix">
                                                                     <span class="float-start">
-                                                                        Business Mail :
+                                                                        Personal Mail :
                                                                     </span>
                                                                     <span class="float-right text-muted"
                                                                         style="width: 60%;">
@@ -978,15 +909,16 @@
                                                                 </p>
                                                                 <p class="clearfix">
                                                                     <span class="float-start">
-                                                                        Website :
+                                                                        Business Category :
                                                                     </span>
                                                                     <span class="float-right text-muted"
                                                                         style="width: 60%;">
                                                                         <span class="float-end text-muted">
-                                                                            {{memdtls.website}}
+                                                                            {{memdtls.business_category}}
                                                                         </span>
                                                                     </span>
                                                                 </p>
+                                                              
                                                                 <p class="clearfix">
                                                                     <span class="float-start">
                                                                         Business Information :
@@ -1006,6 +938,17 @@
                                                                         style="width: 60%;">
                                                                         <span class="float-end text-muted">
                                                                             {{memdtls.business_keywords}}
+                                                                        </span>
+                                                                    </span>
+                                                                </p>
+                                                                <p class="clearfix">
+                                                                    <span class="float-start">
+                                                                        Website :
+                                                                    </span>
+                                                                    <span class="float-right text-muted"
+                                                                        style="width: 60%;">
+                                                                        <span class="float-end text-muted">
+                                                                            {{memdtls.website}}
                                                                         </span>
                                                                     </span>
                                                                 </p>
@@ -1571,3 +1514,887 @@
         </div>
     </div>
 </section>
+
+
+<!-- by key -->
+<section class="main-content"  *ngIf="memberview">
+    <div class="section-body" style="margin-top: 20px;">
+      <div class="row clearfix">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <div class="card">
+            <div class="p-10" style="margin-right: 20px; margin-left: 20px;">
+              <div class="row" >
+                <div class="col-lg-12">
+                  <div class="row m-0">
+                    <div class="col-lg-2 p-0">
+                      <div class="ngxTableHeader">
+                        <div class="table-title">
+                          <h5><strong>Members</strong></h5>
+                        </div>
+                      </div>
+                    </div>
+  
+                    <div class="col-lg-8 p-0">
+                        <div class="ngxTableHeader">
+                            <div class="table-search-area">
+                                <div>
+                                    <label for="search-input"><i
+                                            class="material-icons search-icon">search</i></label>
+                                    <input placeholder="Search" type="text"
+                                        class="browser-default search-field"
+                                        (keyup)='filterDatatable1($event)' aria-label="Search box">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+               
+                    <div class="col-lg-2 p-0">
+                        <div class="ngxTableHeader" style="display: flex;  justify-content: flex-end;">
+                          <div class="header-buttons-left">
+                            <div class="icon-button-demo buttons">                         
+                             <button class="btn btn-icon icon-left btn-info" (click)='back()' >
+                                <i class="fa fa-arrow-left"></i> Back</button> 
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+              <!-- row end -->
+              <br>
+                     
+                <ngx-datatable #table class="material" [rows]="CatMembers" 
+                columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="8"
+                [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable" *ngIf="!loader1">
+    
+                <ngx-datatable-column  name="Profile">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                      <img src="https://admin.jcombiz.com/{{row.profile_photo}}" class="data-table-img" />          
+                    </ng-template>
+                  </ngx-datatable-column>
+    
+                  <ngx-datatable-column [width]="200" name="Name">
+                    <ng-template let-row="row" let-value="value" let-i="index" ngx-datatable-cell-template>
+                      <div class="name-col-style">
+                        <div>{{row.name}}</div>
+                      </div>
+                    </ng-template>
+                  </ngx-datatable-column>
+    
+                  <ngx-datatable-column name="Email" [width]="250">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{row.p_email_id}}
+                    </ng-template>
+                  </ngx-datatable-column>
+    
+                  <ngx-datatable-column name="City">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                     {{row.city}}
+                   </ng-template>
+                  </ngx-datatable-column>
+    
+                    <ngx-datatable-column name="Zone">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{row.zone}}
+                    </ng-template>
+                  </ngx-datatable-column>
+    
+                  <ngx-datatable-column name="Category">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+            {{row.business_category}}
+          </ng-template>
+                  </ngx-datatable-column>
+                 
+                  <ngx-datatable-column name="Actions" sortable="false">
+                    <ng-template let-value="value" let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                      <a class="msr-2 h-auto tblEditBtn" (click)='openprofile(row  ,profileRecord)'>
+                        <i class="fas fa-eye"></i>
+                      </a>
+                    </ng-template>
+                  </ngx-datatable-column>
+                
+    
+                </ngx-datatable>
+    
+    
+                    <!-- <ngx-skeleton-loader count="3" appearance="line" *ngIf="loader"></ngx-skeleton-loader> -->
+                    <div id="tit" style="width: 100%;">
+                      <ngx-skeleton-loader count="1"
+                        [theme]="{  'border-radius': '4px',  height: '60px',  width:'100%', 'opacity':.6, 'background-color': '##b9b8b8',   border: '1px solid white'  }"
+                        *ngIf="loader1"></ngx-skeleton-loader>
+                    </div>
+                    <div class="skle" style="width: 100%;">
+                      <ngx-skeleton-loader count="8"
+                        [theme]="{  'border-radius': '4px',  height: '30px', width:'100%', 'opacity':.6, 'background-color': '##b9b8b8',   border: '1px solid white'  }"
+                        appearance="line" *ngIf="loader1"></ngx-skeleton-loader>
+      
+                    </div>
+                    
+                             
+    <!-- open profile -->
+    
+    <ng-template #profileRecord let-modal>
+        <div class="modal-header editRowModal">
+            <h4 class="modal-title" id="modal-basic-title">
+                <div class="table-modal-header">
+                    <img src="assets/images/JCOM logo 4.jpg" alt="avatar">
+                    <div class="modal-about">
+                        <div class="font-weight-bold p-t-10 font-17">
+                            Profile</div>
+                    </div>
+                </div>
+            </h4>
+            <button type="button" class="close" aria-label="Close"
+                (click)="modal.dismiss()">
+                <span aria-hidden="true"><i class="material-icons">close</i></span>
+            </button>
+        </div>
+
+        <div class="modal-body">
+
+            <div class="section-body" >
+                <div class="row ">
+                    <div class="col-12 col-md-12 ">
+                        <div class="card author-box"
+                            style="margin-left: 35px; margin-right: 35px;">
+                            <div class="card-body"
+                                style="margin-left: 35px; margin-right: 35px;">
+                                <div class="author-box-center">
+                                    <img alt="image" src="https://admin.jcombiz.com/{{memdtls.profile_photo}}"
+                                        class="rounded-circle author-box-picture">
+                                    <div class="clearfix"></div>
+                                    <div class="author-box-name">
+                                        <a href="#" onClick="return false;">{{memdtls.name}}</a>
+                                    </div>
+                                    <div class="author-box-job">{{memdtls.business_category}}</div>
+
+
+                                </div>
+                            </div>
+
+
+                            <div class="card-body">
+                                <div class="card-header">
+                                    <h4>About Member</h4>
+                                </div>
+                                <div class="py-4" style="margin-left: 30px;">
+                                    <p class="clearfix">
+                                        <span class="float-start">
+                                            Name:
+                                        </span>
+                                        <span class="float-right text-muted"
+                                            style="width: 60%;">
+                                            {{memdtls.name}}
+                                        </span>
+                                    </p>
+                                    <p class="clearfix">
+                                        <span class="float-start">
+                                            Address:
+                                        </span>
+                                        <span class="float-right text-muted"
+                                            style="width: 60%;">
+                                            {{memdtls.address}}
+                                        </span>
+                                    </p>
+                                    <p class="clearfix">
+                                        <span class="float-start">
+                                            Pin:
+                                        </span>
+                                        <span class="float-right text-muted"
+                                            style="width: 60%;">
+                                            {{memdtls.pincode}}
+                                        </span>
+                                    </p>
+                                    <p class="clearfix">
+                                        <span class="float-start">
+                                            City/Town:
+                                        </span>
+                                        <span class="float-right text-muted"
+                                            style="width: 60%;">
+                                            <span class="float-end text-muted">
+                                                {{memdtls.city}}
+                                            </span>
+                                        </span>
+                                    </p>
+                                    <p class="clearfix">
+                                        <span class="float-start">
+                                            District:
+                                        </span>
+                                        <span class="float-right text-muted"
+                                            style="width: 60%;">
+                                            <span class="float-end text-muted">
+                                                {{memdtls.district}}
+                                            </span>
+                                        </span>
+                                    </p>
+                                    <p class="clearfix">
+                                        <span class="float-start">
+                                            State:
+                                        </span>
+                                        <span class="float-right text-muted"
+                                            style="width: 60%;">
+                                            <span class="float-end text-muted">
+                                                {{memdtls.state}}
+                                            </span>
+                                        </span>
+                                    </p>
+                                    <p class="clearfix">
+                                        <span class="float-start">
+                                            Country:
+                                        </span>
+                                        <span class="float-right text-muted"
+                                            style="width: 60%;">
+                                            <span class="float-end text-muted">
+                                                {{memdtls.country}}
+                                            </span>
+                                        </span>
+                                    </p>
+                                    <p class="clearfix">
+                                        <span class="float-start">
+                                            Zone:
+                                        </span>
+                                        <span class="float-right text-muted"
+                                            style="width: 60%;">
+                                            <span class="float-end text-muted">
+                                                {{memdtls.zone}}
+                                            </span>
+                                        </span>
+                                    </p>
+                                    <p class="clearfix">
+                                        <span class="float-start">
+                                            LOM:
+                                        </span>
+                                        <span class="float-right text-muted"
+                                            style="width: 60%;">
+                                            <span class="float-end text-muted">
+                                                {{memdtls.lom}}
+                                            </span>
+                                        </span>
+                                    </p>
+                                    <p class="clearfix">
+                                        <span class="float-start">
+                                            JCOM table:
+                                        </span>
+                                        <span class="float-right text-muted"
+                                            style="width: 60%;">
+                                            <span class="float-end text-muted">
+                                                {{memdtls.jib_table}}
+                                            </span>
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="card"
+                            style="margin-left: 35px; margin-right: 35px; border-color: rgb(187, 218, 236);">
+                            <div class="card-header">
+                                <h4>Business Info</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="py-4" style="margin-left: 30px;">
+                                    <!-- <p class="clearfix">
+                                        <span class="float-start">
+                                            Business Mobile No :
+                                        </span>
+                                        <span class="float-right text-muted"
+                                            style="width: 60%;">
+                                            {{memdtls.name}}
+                                        </span>
+                                    </p> -->
+                                    <p class="clearfix">
+                                        <span class="float-start">
+                                            Personal Mobile No :
+                                        </span>
+                                        <span class="float-right text-muted" style="width: 60%;">
+                                            <a href="tel:{{memdtls.p_mobile_no}}" >{{memdtls.p_mobile_no}}</a>
+                                          </span>
+                                        
+                                    </p>
+                                  
+                                    <p class="clearfix">
+                                        <span class="float-start">
+                                            Personal Mail :
+                                        </span>
+                                        <span class="float-right text-muted" style="width: 60%;">
+                                            <a href="mailto:{{memdtls.p_email_id}}" >{{memdtls.p_email_id}}</a>
+                                          </span>
+                                        
+                                    </p>
+                                   
+                                    <p class="clearfix">
+                                        <span class="float-start">
+                                            Business Category :
+                                        </span>
+                                        <span class="float-right text-muted"
+                                            style="width: 60%;">
+                                            <span class="float-end text-muted">
+                                                {{memdtls.business_category}}
+                                            </span>
+                                        </span>
+                                    </p>
+                                   
+                                    <p class="clearfix">
+                                        <span class="float-start">
+                                            Business Information :
+                                        </span>
+                                        <span class="float-right text-muted"
+                                            style="width: 60%;">
+                                            <span class="float-end text-muted">
+                                                {{memdtls.business_info}}
+                                            </span>
+                                        </span>
+                                    </p>
+                                    <p class="clearfix">
+                                        <span class="float-start">
+                                            Business keywords :
+                                        </span>
+                                        <span class="float-right text-muted"
+                                            style="width: 60%;">
+                                            <span class="float-end text-muted">
+                                                {{memdtls.business_keywords}}
+                                            </span>
+                                        </span>
+                                    </p>
+                                     <p class="clearfix">
+                                        <span class="float-start">
+                                            Website :
+                                        </span>
+                                        <span class="float-right text-muted" style="width: 60%;">
+                                            <a href="{{memdtls.website}}">{{memdtls.website}}</a>
+                                          </span>
+                                       
+                                    </p>
+                                    <p class="clearfix">
+                                        <span class="float-start">
+                                            Products :
+                                        </span>
+                                        <span class="float-right text-muted"
+                                            style="width: 60%;">
+                                            <span class="float-end text-muted">
+                                                {{memdtls.products}}
+                                            </span>
+                                        </span>
+                                    </p>
+                                    <p class="clearfix">
+                                        <span class="float-start">
+                                            Needed Contacts :
+                                        </span>
+                                        <span class="float-right text-muted"
+                                            style="width: 60%;">
+                                            <span class="float-end text-muted">
+                                                {{memdtls.needed_contacts}}
+                                            </span>
+                                        </span>
+                                    </p>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- col end -->
+                    </div>
+
+                    <!-- skleton -->
+                    <!-- <div class="col-12 col-md-12 " *ngIf='loader'>
+                        <div class="card author-box"
+                            style="margin-left: 75px; margin-right: 75px;">
+                            <div class="card-body"
+                                style="margin-left: 75px; margin-right: 75px;">
+                                <div class="author-box-center">
+
+                                    <div class="col-lg-12"
+                                        style="width: 100%; height: 100%;"
+                                        style="align-content: center;">
+                                        <ngx-skeleton-loader count="1"
+                                            [theme]="{  'border-radius': '40px',  height: '80px',  width:'80px', 'opacity':.6, 'background-color': '##b9b8b8',   border: '1px solid white'  }">
+                                        </ngx-skeleton-loader>
+                                    </div>
+
+                                    <div class="col-lg-12"
+                                        style="width: 100%; height: 10px;"
+                                        style="align-content: center;">
+                                        <ngx-skeleton-loader count="1"
+                                            [theme]="{  'border-radius': '4px',  height: '15px',  width:'30%', 'opacity':.6, 'background-color': '##b9b8b8',   border: '1px solid white'  }">
+                                        </ngx-skeleton-loader>
+                                    </div>
+                                    <div class="col-lg-12"
+                                        style="width: 100%; height: 10px; "
+                                        style="align-content: center;">
+                                        <ngx-skeleton-loader count="1"
+                                            [theme]="{  'border-radius': '4px',  height: '15px',  width:'37%', 'opacity':.6, 'background-color': '##b9b8b8',   border: '1px solid white'  }">
+                                        </ngx-skeleton-loader>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card-body">
+                                <div class="py-0"
+                                    style="margin-left: 20px; margin-right: 20px;">
+                                    <div class="col-lg-10"
+                                        style="width: 30%; height: 30px;">
+                                        <ngx-skeleton-loader count="1"
+                                            [theme]="{  'border-radius': '4px',  height: '30px',  width:'100%', 'opacity':.6, 'background-color': '##b9b8b8',   border: '1px solid white'  }">
+                                        </ngx-skeleton-loader>
+
+                                    </div>
+                                    <br><br>
+
+                                    <div class="row" style="  opacity: 1;  height:400px;">
+
+                                        <div class="col-lg-4">
+                                            <ngx-skeleton-loader count="10"
+                                                [theme]="{  'border-radius': '5px',  height: '5%',  width:'100%', 'opacity':.6, 'background-color': '##b9b8b8',   border: '1px solid white' }">
+                                            </ngx-skeleton-loader>
+
+                                        </div>
+                                        <div class="col-lg-8">
+                                            <ngx-skeleton-loader count="10"
+                                                [theme]="{  'border-radius': '5px',  height: '5%',  width:'100%', 'opacity':.6,  'background-color': '##b9b8b8',   border: '1px solid white' }">
+                                            </ngx-skeleton-loader>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card"
+                            style="margin-left: 75px; margin-right: 75px; border-color: rgb(187, 218, 236);"
+                            *ngIf='!loader'>
+
+                            <div class="card-body">
+                                <div class="py-4"
+                                    style="margin-left: 10px; margin-right: 10px;">
+
+                                    <div class="col-lg-10"
+                                        style="width: 30%; height: 30px;">
+                                        <ngx-skeleton-loader count="1"
+                                            [theme]="{  'border-radius': '4px',  height: '30px',  width:'100%', 'opacity':.6, 'background-color': '##b9b8b8',   border: '1px solid white'  }">
+                                        </ngx-skeleton-loader>
+
+                                    </div>
+                                    <br><br>
+
+                                    <div class="row" style="  opacity: 1;  height:400px;">
+
+                                        <div class="col-lg-4">
+                                            <ngx-skeleton-loader count="10"
+                                                [theme]="{  'border-radius': '5px',  height: '5%',  width:'100%', 'opacity':.6, 'background-color': '##b9b8b8',   border: '1px solid white' }">
+                                            </ngx-skeleton-loader>
+
+                                        </div>
+                                        <div class="col-lg-8">
+                                            <ngx-skeleton-loader count="10"
+                                                [theme]="{  'border-radius': '5px',  height: '5%',  width:'100%', 'opacity':.6,  'background-color': '##b9b8b8',   border: '1px solid white' }">
+                                            </ngx-skeleton-loader>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div> -->
+                    <!-- skleton end -->
+
+                </div>
+            </div>
+
+
+        </div>
+    </ng-template>
+  
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="main-content"  *ngIf="keytableview">
+    <div class="section-body" style="margin-top: 20px;">
+      <div class="row clearfix">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <div class="card">
+            <div class="p-10" style="margin-right: 20px; margin-left: 20px;">
+              <div class="row" >
+                <div class="col-lg-12">
+                  <div class="row m-0">
+                    <div class="col-lg-2 p-0">
+                      <div class="ngxTableHeader">
+                        <div class="table-title">
+                          <h5><strong>Members</strong></h5>
+                        </div>
+                      </div>
+                    </div>
+  
+                    <div class="col-lg-8 p-0">
+                        <div class="ngxTableHeader">
+                            <div class="table-search-area">
+                                <div>
+                                    <label for="search-input"><i
+                                            class="material-icons search-icon">search</i></label>
+                                    <input placeholder="Search" type="text"
+                                        class="browser-default search-field"
+                                        (keyup)='filterDatatable2($event)' aria-label="Search box">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+               
+                    <div class="col-lg-2 p-0">
+                        <div class="ngxTableHeader" style="display: flex;  justify-content: flex-end;">
+                          <div class="header-buttons-left">
+                            <div class="icon-button-demo buttons">                         
+                             <button class="btn btn-icon icon-left btn-info" (click)='back2()' >
+                                <i class="fa fa-arrow-left"></i> Back</button> 
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+              <!-- row end -->
+              <br>
+                     
+                <ngx-datatable #table class="material" [rows]="KeyMembers" 
+                columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="8"
+                [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable" *ngIf="!loader2">
+    
+                <ngx-datatable-column  name="Profile">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                      <img src="https://admin.jcombiz.com/{{row.profile_photo}}" class="data-table-img" />          
+                    </ng-template>
+                  </ngx-datatable-column>
+    
+                  <ngx-datatable-column [width]="200" name="Name">
+                    <ng-template let-row="row" let-value="value" let-i="index" ngx-datatable-cell-template>
+                      <div class="name-col-style">
+                        <div>{{row.name}}</div>
+                      </div>
+                    </ng-template>
+                  </ngx-datatable-column>
+    
+                  <ngx-datatable-column name="Email" [width]="250">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{row.p_email_id}}
+                    </ng-template>
+                  </ngx-datatable-column>
+    
+                  <ngx-datatable-column name="City">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                     {{row.city}}
+                   </ng-template>
+                  </ngx-datatable-column>
+    
+                    <ngx-datatable-column name="Zone">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{row.zone}}
+                    </ng-template>
+                  </ngx-datatable-column>
+    
+                  <ngx-datatable-column name="Category">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+            {{row.business_category}}
+          </ng-template>
+                  </ngx-datatable-column>
+                 
+                  <ngx-datatable-column name="Actions" sortable="false">
+                    <ng-template let-value="value" let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                      <a class="msr-2 h-auto tblEditBtn" (click)='openprofile(row  ,profileRecord)'>
+                        <i class="fas fa-eye"></i>
+                      </a>
+                    </ng-template>
+                  </ngx-datatable-column>
+                
+    
+                </ngx-datatable>
+    
+    
+                    <!-- <ngx-skeleton-loader count="3" appearance="line" *ngIf="loader"></ngx-skeleton-loader> -->
+                    <div id="tit" style="width: 100%;">
+                      <ngx-skeleton-loader count="1"
+                        [theme]="{  'border-radius': '4px',  height: '60px',  width:'100%', 'opacity':.6, 'background-color': '##b9b8b8',   border: '1px solid white'  }"
+                        *ngIf="loader2"></ngx-skeleton-loader>
+                    </div>
+                    <div class="skle" style="width: 100%;">
+                      <ngx-skeleton-loader count="8"
+                        [theme]="{  'border-radius': '4px',  height: '30px', width:'100%', 'opacity':.6, 'background-color': '##b9b8b8',   border: '1px solid white'  }"
+                        appearance="line" *ngIf="loader2"></ngx-skeleton-loader>
+      
+                    </div>
+                    
+                             
+    <!-- open profile -->
+    
+    <ng-template #profileRecord let-modal>
+        <div class="modal-header editRowModal">
+            <h4 class="modal-title" id="modal-basic-title">
+                <div class="table-modal-header">
+                    <img src="assets/images/JCOM logo 4.jpg" alt="avatar">
+                    <div class="modal-about">
+                        <div class="font-weight-bold p-t-10 font-17">
+                            Profile</div>
+                    </div>
+                </div>
+            </h4>
+            <button type="button" class="close" aria-label="Close"
+                (click)="modal.dismiss()">
+                <span aria-hidden="true"><i class="material-icons">close</i></span>
+            </button>
+        </div>
+
+        <div class="modal-body">
+
+            <div class="section-body" >
+                <div class="row ">
+                    <div class="col-12 col-md-12 ">
+                        <div class="card author-box"
+                            style="margin-left: 35px; margin-right: 35px;">
+                            <div class="card-body"
+                                style="margin-left: 35px; margin-right: 35px;">
+                                <div class="author-box-center">
+                                    <img alt="image" src="https://admin.jcombiz.com/{{memdtls.profile_photo}}"
+                                        class="rounded-circle author-box-picture">
+                                    <div class="clearfix"></div>
+                                    <div class="author-box-name">
+                                        <a href="#" onClick="return false;">{{memdtls.name}}</a>
+                                    </div>
+                                    <div class="author-box-job">{{memdtls.business_category}}</div>
+
+
+                                </div>
+                            </div>
+                          <div class="card-body">
+                                <div class="card-header">
+                                    <h4>About Member</h4>
+                                </div>
+                                <div class="py-4" style="margin-left: 30px;">
+                                    <p class="clearfix">
+                                        <span class="float-start">
+                                            Name:
+                                        </span>
+                                        <span class="float-right text-muted"
+                                            style="width: 60%;">
+                                            {{memdtls.name}}
+                                        </span>
+                                    </p>
+                                    <p class="clearfix">
+                                        <span class="float-start">
+                                            Address:
+                                        </span>
+                                        <span class="float-right text-muted"
+                                            style="width: 60%;">
+                                            {{memdtls.address}}
+                                        </span>
+                                    </p>
+                                    <p class="clearfix">
+                                        <span class="float-start">
+                                            Pin:
+                                        </span>
+                                        <span class="float-right text-muted"
+                                            style="width: 60%;">
+                                            {{memdtls.pincode}}
+                                        </span>
+                                    </p>
+                                    <p class="clearfix">
+                                        <span class="float-start">
+                                            City/Town:
+                                        </span>
+                                        <span class="float-right text-muted"
+                                            style="width: 60%;">
+                                            <span class="float-end text-muted">
+                                                {{memdtls.city}}
+                                            </span>
+                                        </span>
+                                    </p>
+                                    <p class="clearfix">
+                                        <span class="float-start">
+                                            District:
+                                        </span>
+                                        <span class="float-right text-muted"
+                                            style="width: 60%;">
+                                            <span class="float-end text-muted">
+                                                {{memdtls.district}}
+                                            </span>
+                                        </span>
+                                    </p>
+                                    <p class="clearfix">
+                                        <span class="float-start">
+                                            State:
+                                        </span>
+                                        <span class="float-right text-muted"
+                                            style="width: 60%;">
+                                            <span class="float-end text-muted">
+                                                {{memdtls.state}}
+                                            </span>
+                                        </span>
+                                    </p>
+                                    <p class="clearfix">
+                                        <span class="float-start">
+                                            Country:
+                                        </span>
+                                        <span class="float-right text-muted"
+                                            style="width: 60%;">
+                                            <span class="float-end text-muted">
+                                                {{memdtls.country}}
+                                            </span>
+                                        </span>
+                                    </p>
+                                    <p class="clearfix">
+                                        <span class="float-start">
+                                            Zone:
+                                        </span>
+                                        <span class="float-right text-muted"
+                                            style="width: 60%;">
+                                            <span class="float-end text-muted">
+                                                {{memdtls.zone}}
+                                            </span>
+                                        </span>
+                                    </p>
+                                    <p class="clearfix">
+                                        <span class="float-start">
+                                            LOM:
+                                        </span>
+                                        <span class="float-right text-muted"
+                                            style="width: 60%;">
+                                            <span class="float-end text-muted">
+                                                {{memdtls.lom}}
+                                            </span>
+                                        </span>
+                                    </p>
+                                    <p class="clearfix">
+                                        <span class="float-start">
+                                            JCOM table:
+                                        </span>
+                                        <span class="float-right text-muted"
+                                            style="width: 60%;">
+                                            <span class="float-end text-muted">
+                                                {{memdtls.jib_table}}
+                                            </span>
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card"
+                            style="margin-left: 35px; margin-right: 35px; border-color: rgb(187, 218, 236);">
+                            <div class="card-header">
+                                <h4>Business Info</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="py-4" style="margin-left: 30px;">
+                                
+                                    <p class="clearfix">
+                                        <span class="float-start">
+                                            Personal Mobile No :
+                                        </span>
+                                        <span class="float-right text-muted" style="width: 60%;">
+                                            <a href="tel:{{memdtls.p_mobile_no}}" >{{memdtls.p_mobile_no}}</a>
+                                          </span>
+                                        
+                                    </p>
+                                  
+                                    <p class="clearfix">
+                                        <span class="float-start">
+                                            Personal Mail :
+                                        </span>
+                                        <span class="float-right text-muted" style="width: 60%;">
+                                            <a href="mailto:{{memdtls.p_email_id}}" >{{memdtls.p_email_id}}</a>
+                                          </span>
+                                        
+                                    </p>
+                                   
+                                    <p class="clearfix">
+                                        <span class="float-start">
+                                            Business Category :
+                                        </span>
+                                        <span class="float-right text-muted"
+                                            style="width: 60%;">
+                                            <span class="float-end text-muted">
+                                                {{memdtls.business_category}}
+                                            </span>
+                                        </span>
+                                    </p>
+
+                                    <p class="clearfix">
+                                        <span class="float-start">
+                                            Business Information :
+                                        </span>
+                                        <span class="float-right text-muted"
+                                            style="width: 60%;">
+                                            <span class="float-end text-muted">
+                                                {{memdtls.business_info}}
+                                            </span>
+                                        </span>
+                                    </p>
+                                    <p class="clearfix">
+                                        <span class="float-start">
+                                            Business keywords :
+                                        </span>
+                                        <span class="float-right text-muted"
+                                            style="width: 60%;">
+                                            <span class="float-end text-muted">
+                                                {{memdtls.business_keywords}}
+                                            </span>
+                                        </span>
+                                    </p>
+                                    <p class="clearfix">
+                                        <span class="float-start">
+                                            Website :
+                                        </span>
+                                        <span class="float-right text-muted" style="width: 60%;">
+                                            <a href="{{memdtls.website}}">{{memdtls.website}}</a>
+                                          </span>
+                                       
+                                    </p>
+                                 
+                                    <p class="clearfix">
+                                        <span class="float-start">
+                                            Products :
+                                        </span>
+                                        <span class="float-right text-muted"
+                                            style="width: 60%;">
+                                            <span class="float-end text-muted">
+                                                {{memdtls.products}}
+                                            </span>
+                                        </span>
+                                    </p>
+
+                                    <p class="clearfix">
+                                        <span class="float-start">
+                                            Needed Contacts :
+                                        </span>
+                                        <span class="float-right text-muted"
+                                            style="width: 60%;">
+                                            <span class="float-end text-muted">
+                                                {{memdtls.needed_contacts}}
+                                            </span>
+                                        </span>
+                                    </p>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- col end -->
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </ng-template> 
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>

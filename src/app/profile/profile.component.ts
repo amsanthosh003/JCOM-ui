@@ -174,7 +174,7 @@ export class ProfileComponent implements OnInit{
 
   ngOnInit() {
 
-    console.log("currentuser details=", this.currentUserSubject.value[0]);
+    // console.log("currentuser details=", this.currentUserSubject.value[0]);
     // console.log("memberid=",this.memberid)
     this.viewdata();
     // this.designation();
@@ -184,10 +184,8 @@ export class ProfileComponent implements OnInit{
 
   // fetch data
   fetch(cb) {
-
     this.request.fetchuserBymId(this.memberid.m_id).subscribe((response) => {
       // console.log(response);
-
       cb(response);
       this.loader = false;
     }, (error) => {
@@ -267,7 +265,7 @@ export class ProfileComponent implements OnInit{
       this.Membersvalue = this.Members[0];
       // this.welcomeSuccess();
 
-      console.log(this.Membersvalue.pincode);
+      console.log(this.Members);
 
       // this.Membername = this.Membersvalue.name;
       this.Memberbusiness_name = this.Membersvalue.business_name;

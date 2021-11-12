@@ -97,6 +97,7 @@ export class ConnectentryComponent implements OnInit {
   Connectdtls: any;
   pending: boolean;
   history: boolean=true;
+  tblname: any;
   constructor(
     private fb: FormBuilder,
     private modalService: NgbModal,
@@ -109,8 +110,10 @@ export class ConnectentryComponent implements OnInit {
     this.currentUser = this.currentUserSubject.asObservable();
     this.memberid = this.currentUserSubject.value[0]
     this.Mtable_id=this.memberid.jib_table;
-    this.memb_id=this.memberid.m_id,
-    console.log(this.memberid)
+    this.memb_id=this.memberid.m_id;
+    this.tblname=this.memberid.table_name;
+    console.log(this.memberid);
+    console.log(this.tblname);
     window.onresize = () => {
       this.scrollBarHorizontal = window.innerWidth < 1200;
     };
@@ -189,7 +192,7 @@ viewdata(){
     this.table_id =tbl_id;    
     this.request.gettablemembers(this.memberid.m_id,this.table_id).subscribe((response) => {
       console.log("member_id",this.memberid.m_id);
-    
+      
            this.Members=response;
            console.log("res",this.Members); 
     },
@@ -208,6 +211,7 @@ viewdata(){
   // }
 
   selectInput1(event) {
+    console.log("yes");
     let selected = event.target.value;
     if (selected == "1") {
       this.isdisable = true ;
@@ -306,7 +310,7 @@ this.Business=response;
    
     // console.log(row);
     this.Connectdtls=row;
-    console.log(this.Connectdtls.connect_name);
+    console.log(this.Connectdtls.connect_name); 
     
     // this.request.fetchpersonById(row.m_id).subscribe((response) => {
     //   this.Persons=response[0];
@@ -372,8 +376,8 @@ this.Business=response;
     this.Connects = this.filteredData.filter(function (item) {
       // iterate through each row's column data
       for (let i = 2; i < 3; i++) {
-        console.log("itemkeys",item[keys[i]].toString().toLowerCase().indexOf(val));
-        console.log("keyindex",keys[i]);
+        // console.log("itemkeys",item[keys[i]].toString().toLowerCase().indexOf(val));
+        // console.log("keyindex",keys[i]);
         // check for a match
         if (
           item[keys[i]].toString().toLowerCase().indexOf(val) !== -1 ||

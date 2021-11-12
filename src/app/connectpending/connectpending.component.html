@@ -93,13 +93,7 @@
                   </div>
                 </ng-template>
               </ngx-datatable-column> -->
-              <ngx-datatable-column  name="About Connect">
-                <ng-template let-row="row" ngx-datatable-cell-template>
-                  <h5 *ngIf="row.about_connect=='HOT'" ><span class="badge badge-danger">Hot</span></h5>
-                  <h5 *ngIf="row.about_connect=='MEDIUM'"><span class="badge badge-warning">Medium</span></h5>
-                  <h5 *ngIf="row.about_connect=='COLD'"><span class="badge badge-info">Cold</span></h5>                
-                </ng-template>
-              </ngx-datatable-column>
+              
               
               <ngx-datatable-column  name="Status">
                 <ng-template let-row="row" ngx-datatable-cell-template>                
@@ -109,6 +103,15 @@
                   </div>
                 </ng-template>
               </ngx-datatable-column>
+
+              <ngx-datatable-column  name="About Connect">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <h5 *ngIf="row.about_connect=='HOT'" ><span class="badge badge-danger">Hot</span></h5>
+                  <h5 *ngIf="row.about_connect=='MEDIUM'"><span class="badge badge-warning">Medium</span></h5>
+                  <h5 *ngIf="row.about_connect=='COLD'"><span class="badge badge-info">Cold</span></h5>                
+                </ng-template>
+              </ngx-datatable-column>
+              
               <ngx-datatable-column  name="Type"  >
                 <ng-template let-row="row" ngx-datatable-cell-template>
                   <!-- <div *ngIf="row.type=='1'" class="badge-outline col-green"><i class="material-icons">call_made</i>
@@ -116,8 +119,8 @@
                   <!-- <div *ngIf="row.type=='2'" class="badge-outline col-red"><i class="material-icons">call_received</i>
                   </div> -->
 
-                  <h6 *ngIf="row.type=='1'"><span class="badge badge-danger"><i class="material-icons">call_made</i></span></h6> 
-                  <h6 *ngIf="row.type=='2'"><span class="badge badge-success"><i class="material-icons">call_received</i></span></h6>
+                  <h6 *ngIf="row.type=='1'" style="color: rgb(245, 11, 11);"><i class="material-icons">call_made</i></h6> 
+                    <h6 *ngIf="row.type=='2'" style="color: rgb(3, 153, 15);"><i class="material-icons">call_received</i></h6>
                   <!-- <a class="btn btn-icon btn-sm btn-danger" >
                     <i class="material-icons">call_made</i>
                   </a> -->
@@ -225,20 +228,18 @@
                                 <span class="float-start">
                                   Email :
                                 </span>
-  
-                                <span class="float-end text-muted" class="float-right text-muted" style="width: 60%;">
-                                  {{Connectdtls.email_id}}
-  
+                                <span class="float-right text-muted" style="width: 60%;">
+                                  <a href="mailto:{{Connectdtls.email_id}}"> {{Connectdtls.email_id}}</a>
                                 </span>
+                                
                               </p>
   
                               <p class="clearfix">
                                 <span class="float-start">
                                   Mobile :
                                 </span>
-  
-                                <span class="float-end text-muted" class="float-right text-muted" style="width: 60%;">
-                                  {{Connectdtls.mobile_no}}
+                                <span class="float-right text-muted" style="width: 60%;">
+                                  <a href="tel:{{Connectdtls.mobile_no}}" >{{Connectdtls.mobile_no}}</a>
                                 </span>
   
                               </p>

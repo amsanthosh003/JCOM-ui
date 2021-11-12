@@ -28,6 +28,7 @@ export class SearchmembersComponent implements OnInit {
   // public Editor = ClassicEditor;
   @ViewChild(DatatableComponent, { static: false }) table: DatatableComponent;
   p: number = 1;
+  m: number = 1;
   rows = [];
   scrollBarHorizontal = window.innerWidth < 1200;
   selectedRowData: selectRowInterface;
@@ -104,6 +105,11 @@ export class SearchmembersComponent implements OnInit {
   Busmemb: any;
   filteredData1 = [];
   filteredData2 = [];
+  memberview: boolean=false;
+  tableview: boolean=true;
+  loader1: boolean;
+  keytableview: boolean;
+  loader2: boolean;
   constructor(
     private fb: FormBuilder,
     private modalService: NgbModal,
@@ -157,7 +163,7 @@ viewdata(){
   fetch(cb) {
 
     this.request.fetchbusiness().subscribe((response) => {
-     console.log(response);
+    //  console.log(response);
      
               cb(response);
               this.loader=false;
@@ -177,14 +183,17 @@ viewdata(){
     });
 
   }
-
-  openkeymembers(content) {
-    // console.log("wrk")
-    this.modalService.open(content, {
-      ariaLabelledBy: 'modal-basic-title',
-      size: 'lg',
-    });
-    this.loader=true;
+  back2(){
+    this.memberview=false;
+    this.tableview=true;
+  }
+  openkeymembers() { 
+    this.memberview=false;
+    this.tableview=false;
+    this.keytableview=true;
+    this.loader2=true;
+    
+    this.modalService.dismissAll();
   }
   // save add new record
   onAddRowSave(form: FormGroup) {
@@ -192,7 +201,7 @@ viewdata(){
     this.keyword= form.value.keyword
     this.request.getkeymembers(this.memb_id,this.keyword).subscribe((response:any) => {
       this.KeyMembers=response;
-      this.loader=false;
+      this.loader2=false;
       response.forEach(element =>{
         this.filteredData2.push(element);
       });
@@ -210,22 +219,36 @@ viewdata(){
       size: 'lg',
     });
   }
-  openmembers(id,content) {
-    this.CatMembers="";
-    console.log("category id",id);
+  openprofile(row,content) {
     this.modalService.open(content, {
       ariaLabelledBy: 'modal-basic-title',
       size: 'lg',
     });
-    this.loader=true;
+    this.memdtls=row;
+    console.log(row);
+   
+  }
+
+  back(){
+    this.memberview=false;
+    this.tableview=true;
+  }
+  openmembers(id) {
+    this.memberview=true;
+    this.tableview=false;
+    this.CatMembers="";
+    console.log("category id",id);
+   
+    this.loader1=true;
     this.request.getbusinessmembers(this.memb_id,id).subscribe((response:any) => {
       // console.log(response.data);
       this.CatMembers=response;
+      this.loader1=false;
       response.forEach(element =>{
         this.filteredData1.push(element);
       });
     //  this.filteredData1=response.data;
-      this.loader=false;
+      
      console.log(this.CatMembers);
    console.log(this.filteredData1);
         }, (error) => {

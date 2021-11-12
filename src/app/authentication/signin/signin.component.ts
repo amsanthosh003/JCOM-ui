@@ -105,33 +105,6 @@ fetch(cb) {
 
 }
 
-//   addRow(content) {
-  
-
-//     let seller={
-//       mobile_no :""+this.OtpForm.controls['phone'].value,
-//     }
-
-//     this.request.adminotplogin(seller).subscribe(
-//       (res: any) => {
-//         if (res.login_status == "1") {
-//          console.log("registerForm",""+res.message);
-//          this.modalService.open(content, {
-//           ariaLabelledBy: 'modal-basic-title',
-//           size: 'lg',
-//         });
-//         } else if (res.login_status == "0") {
-
-//           this.error1=""+res.message
-         
-//         }
-//       },
-//       error1 => {
-       
-//       }
-//     );
-
-
 
 
 // //     let body={ 
@@ -205,6 +178,7 @@ fetch(cb) {
       return;
      
     } else {
+      // current user by login is stored in local storage -see authservice
       this.authService
         .login(this.f.username.value,this.f.password.value,this.f.meeting_type.value)
         .subscribe(

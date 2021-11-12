@@ -7,7 +7,7 @@
           <i-feather name="menu"></i-feather>
         </a>
       </li>
-     
+
     </ul>
   </div>
   <ul class="navbar-nav navbar-right">
@@ -15,12 +15,9 @@
         <i-feather name="maximize"></i-feather>
       </a>
     </li>
-
-   
-
     <li ngbDropdown><a ngbDropdownToggle data-toggle="dropdown"
         class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-        <img alt="image" src="assets/images/user.png" class="user-img-radious-style collapse-btn"> <span
+        <img alt="image" src="https://admin.jcombiz.com/{{profilepto}}" class="user-img-radious-style collapse-btn"> <span
           class="d-sm-none d-lg-inline-block"></span></a>
       <div ngbDropdownMenu class="dropdown-menu dropdown-menu-right pullDown">
         <!-- <div class="dropdown-title">Hello Sarah..</div> -->
@@ -40,7 +37,60 @@
   </ul>
 </nav>
 
+
 <ng-template #changeRecord let-modal>
+  <div class="modal-header editRowModal">
+      <h4 class="modal-title" id="modal-basic-title">
+          <div class="table-modal-header">
+              <img src="assets/images/JCOM logo 4.jpg" alt="avatar">
+              <div class="modal-about">
+                  <div class="font-weight-bold p-t-10 font-17">
+                    Reset Password  </div>
+              </div>
+          </div>
+      </h4>
+      <button type="button" class="close" aria-label="Close"
+          (click)="modal.dismiss()">
+          <span aria-hidden="true"><i class="material-icons">close</i></span>
+      </button>
+  </div>
+  <br>
+  <div class="modal-body">
+      <div class="card-body" style="margin-left: 50px;margin-right: 50px;">
+        <p class="text-muted">Enter Your New Password</p>
+        <form class="edit-form" [formGroup]="editForm" (ngSubmit)="onEditSave(editForm)">
+
+          <div class="form-group">
+            <label>New Password</label>
+            <input type="password" formControlName="password" class="form-control" required>
+            <!-- <div *ngIf="f.password.touched && f.password.invalid" class="alert alert-danger">
+              <div *ngIf="f.password.errors.required">Password is required.</div>
+            </div> -->
+          </div>
+
+          <div class="form-group">
+            <label>Confirm Password</label>
+            <input type="password" class="form-control" formControlName="confirm_password" required>
+            <!-- <div *ngIf="f.confirm_password.touched && f.confirm_password.invalid" class="alert alert-danger">
+          <div *ngIf="f.confirm_password.errors.required">Password is required.</div>
+          <div *ngIf="f.confirm_password.errors.confirmedValidator">Password and Confirm Password must be match.
+          </div>
+        </div>  -->
+          </div>
+          <div *ngIf="error2" class="alert alert-danger mb-3 msl-3">{{error2}}</div>
+          <div class="form-group">
+            <button class="btn btn-primary btn-lg btn-block" type="submit">
+              Reset Password
+            </button>
+          </div>
+        </form>
+      </div>
+      <br>
+  </div>
+</ng-template>
+
+<!-- 
+<ng-template #changeRecordd let-modal>
   <div class="modal-header editRowModal">
     <h4 class="modal-title" id="modal-basic-title">
       <div class="table-modal-header">
@@ -67,38 +117,37 @@
               </div>
               <div class="card-body">
                 <p class="text-muted">Enter Your New Password</p>
-                <form class="edit-form" [formGroup]="editForm" (ngSubmit)="onEditSave(editForm)" > 
+                <form class="edit-form" [formGroup]="editForm" (ngSubmit)="onEditSave(editForm)">
 
                   <div class="form-group">
-                    <label >New Password</label>
-                    <input   type="password" formControlName="password" class="form-control" required>
-                    <!-- <div *ngIf="f.password.touched && f.password.invalid" class="alert alert-danger">
+                    <label>New Password</label>
+                    <input type="password" formControlName="password" class="form-control" required>
+                     <div *ngIf="f.password.touched && f.password.invalid" class="alert alert-danger">
                       <div *ngIf="f.password.errors.required">Password is required.</div>
-                    </div> -->
+                    </div> 
                   </div>
-              
-              <div class="form-group">
-                <label >Confirm Password</label>
-                <input  type="password" class="form-control" formControlName="confirm_password" required>
-                 <!-- <div *ngIf="f.confirm_password.touched && f.confirm_password.invalid" class="alert alert-danger">
+
+                  <div class="form-group">
+                    <label>Confirm Password</label>
+                    <input type="password" class="form-control" formControlName="confirm_password" required>
+                    <div *ngIf="f.confirm_password.touched && f.confirm_password.invalid" class="alert alert-danger">
                   <div *ngIf="f.confirm_password.errors.required">Password is required.</div>
                   <div *ngIf="f.confirm_password.errors.confirmedValidator">Password and Confirm Password must be match.
                   </div>
-                </div>  -->
+                </div>  
+                  </div>
+                  <div *ngIf="error2" class="alert alert-danger mb-3 msl-3">{{error2}}</div>
+                  <div class="form-group">
+                    <button class="btn btn-primary btn-lg btn-block" type="submit">
+                      Reset Password
+                    </button>
+                  </div>
+                </form>
               </div>
-              <div *ngIf="error2" class="alert alert-danger mb-3 msl-3">{{error2}}</div>
-              <div class="form-group">                
-                  <button class="btn btn-primary btn-lg btn-block" type="submit" >
-                  Reset Password
-                </button>
-              </div>
-              </form> 
             </div>
           </div>
         </div>
       </div>
     </div>
-    </div>
   </main>
-
-</ng-template>
+</ng-template> -->

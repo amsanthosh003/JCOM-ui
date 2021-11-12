@@ -11,6 +11,8 @@ import {
 } from '@angular/core';
 import { ROUTES } from './sidebar-items';
 import { AuthService } from 'src/app/core/service/auth.service';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { User } from '../../core/models/user';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -31,6 +33,11 @@ export class SidebarComponent implements OnInit, OnDestroy {
   headerHeight = 60;
   routerObj = null;
   currentRoute: string;
+  currentUserSubject: BehaviorSubject<User>;
+  currentUser: Observable<User>;
+  memberid: any;
+  memname: any;
+  profilepto: any;
   constructor(
     @Inject(DOCUMENT) private document: Document,
     private renderer: Renderer2,
@@ -38,9 +45,22 @@ export class SidebarComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private router: Router
   ) {
+
+
+    this.currentUserSubject = new BehaviorSubject<User>(
+      JSON.parse(localStorage.getItem('currentUser'))
+    );
+    this.currentUser = this.currentUserSubject.asObservable();
+    this.memberid = this.currentUserSubject.value[0]
+    this.memname=this.memberid.m_name;
+    this.profilepto=this.memberid.profile_photo,
+    console.log("userrridd", this.memberid.m_id)
+    
+
+
     this.routerObj = this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        // logic for select active menu in dropdown
+        // logic for select active menu in dropdown 
         const currenturl = event.url.split('?')[0];
         this.level1Menu = currenturl.split('/')[1];
         this.level2Menu = currenturl.split('/')[2];
@@ -50,6 +70,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
         this.sidebbarClose();
       }
     });
+
+    
   }
   @HostListener('window:resize', ['$event'])
   windowResizecall(event) {

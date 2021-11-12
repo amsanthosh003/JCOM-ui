@@ -43,6 +43,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   editForm: FormGroup;
 
   error2 = '';
+  profilepto: any;
   constructor(
     private toastr: ToastrService,
     @Inject(DOCUMENT) private document: Document,
@@ -63,6 +64,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     );
     this.currentUser = this.currentUserSubject.asObservable();
     this.memberid = this.currentUserSubject.value[0]
+    this.profilepto=this.memberid.profile_photo,
     console.log("userrridd", this.memberid.m_id)
     window.onresize = () => {
       this.scrollBarHorizontal = window.innerWidth < 1200;

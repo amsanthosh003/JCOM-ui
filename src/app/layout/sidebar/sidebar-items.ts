@@ -63,6 +63,18 @@ export const ROUTES: RouteInfo[] = [
         badgeClass: '',
         submenu: [],
       }, 
+      {
+        path: 'guestreg',
+        title: 'Guest Registration',
+        moduleName: 'guestreg',
+        iconType: 'feather',
+        icon: 'users',
+        class: '',
+        groupTitle: false,
+        badge: '',
+        badgeClass: '',
+        submenu: [],
+      }, 
 
       {
         path: 'jcomtables',
@@ -88,18 +100,7 @@ export const ROUTES: RouteInfo[] = [
         badgeClass: '',
         submenu: [],
       },
-      {
-        path: 'guestreg',
-        title: 'Guest Registration',
-        moduleName: 'guestreg',
-        iconType: 'feather',
-        icon: 'users',
-        class: '',
-        groupTitle: false,
-        badge: '',
-        badgeClass: '',
-        submenu: [],
-      }, 
+      
   // {
   // {
   //   path: 'Customer',

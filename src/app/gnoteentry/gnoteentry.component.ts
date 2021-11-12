@@ -99,6 +99,7 @@ export class GnoteentryComponent implements OnInit {
   public Connectmem: any;
   connectid: any;
   Gnotedtls: any;
+  tblname: any;
   constructor(
     private fb: FormBuilder,
     private modalService: NgbModal,
@@ -111,6 +112,9 @@ export class GnoteentryComponent implements OnInit {
     this.currentUser = this.currentUserSubject.asObservable();
     this.memberid = this.currentUserSubject.value[0]
     this.Mtable_id = this.memberid.jib_table;
+     this.tblname=this.memberid.table_name;
+    console.log(this.memberid);
+    console.log(this.tblname);
     window.onresize = () => {
       this.scrollBarHorizontal = window.innerWidth < 1200;
     };
@@ -170,7 +174,7 @@ export class GnoteentryComponent implements OnInit {
   business() {
     this.request.fetchbusiness().subscribe((response) => {
       this.Business = response;
-      console.log(this.Business);
+      // console.log(this.Business);
     }, (error) => {
       console.log(error);
     });

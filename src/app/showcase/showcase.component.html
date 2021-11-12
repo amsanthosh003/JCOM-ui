@@ -29,7 +29,7 @@
                           </div>
                       </div> 
                   </div> -->
-                  <div class="col-lg-4 p-0">
+                  <div class="col-lg-6 p-0">
                     <div class="ngxTableHeader" >
                       <div class="header-buttons-left">
                         <div class="icon-button-demo buttons">
@@ -62,7 +62,7 @@
 
             <ngx-datatable #table class="material" [rows]="Showcases" [loadingIndicator]="loadingIndicator"
                   columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="10"
-                  [reorderable]="reorderable" *ngIf="!loader">
+                  [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable" *ngIf="!loader">
 
           
                   <ngx-datatable-column name="Date">

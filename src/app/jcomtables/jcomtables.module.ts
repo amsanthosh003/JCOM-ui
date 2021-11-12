@@ -14,7 +14,7 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
 import { HttpClientModule } from '@angular/common/http';
 import {NgxPaginationModule} from 'ngx-pagination';
-
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {
   Facebook,
   Twitter,
@@ -41,15 +41,17 @@ const icons = {
   imports: [
     CommonModule,
     JcomtablesRoutingModule,
-    FeatherModule.pick(icons),
-   
-    ReactiveFormsModule,
-    
+    FeatherModule.pick(icons),  
+    ReactiveFormsModule,  
     NgxDatatableModule,
     HttpClientModule,
     ToastrModule.forRoot(),ArchwizardModule,
     NgxSkeletonLoaderModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    NgbModule
+   
+   
+
   ]
 })
 export class JcomtablesModule { }
