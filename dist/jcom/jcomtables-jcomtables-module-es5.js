@@ -1409,7 +1409,7 @@
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](87, "div", 102);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](88, "div", 24);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](88, "div", 103);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](89, "h4");
 
@@ -1427,13 +1427,13 @@
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](94, "span", 99);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](95, " Personal Mobile No : ");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](95, " Business Name : ");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](96, "span", 100);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](97, "a", 103);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](97, "span", 101);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](98);
 
@@ -1447,13 +1447,13 @@
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](100, "span", 99);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](101, " Personal Mail : ");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](101, " Personal Mobile No : ");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](102, "span", 100);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](103, "a", 103);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](103, "a", 104);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](104);
 
@@ -1467,13 +1467,13 @@
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](106, "span", 99);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](107, " Website : ");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](107, " Personal Mail : ");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](108, "span", 100);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](109, "span", 101);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](109, "a", 104);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](110);
 
@@ -1487,7 +1487,7 @@
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](112, "span", 99);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](113, " Business Information : ");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](113, " Website : ");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
@@ -1507,7 +1507,7 @@
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](118, "span", 99);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](119, " Business keywords : ");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](119, " Business Information : ");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
@@ -1527,7 +1527,7 @@
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](124, "span", 99);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](125, " Products : ");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](125, " Business keywords : ");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
@@ -1547,7 +1547,7 @@
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](130, "span", 99);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](131, " Needed Contacts : ");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](131, " Products : ");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
@@ -1556,6 +1556,26 @@
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](133, "span", 101);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](134);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](135, "p", 94);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](136, "span", 99);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](137, " Needed Contacts : ");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](138, "span", 100);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](139, "span", 101);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](140);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
@@ -1633,7 +1653,11 @@
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"](" ", ctx_r31.memdtls.jib_table, " ");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](11);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](12);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"](" ", ctx_r31.memdtls.business_name, " ");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](5);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpropertyInterpolate1"]("href", "tel:", ctx_r31.memdtls.p_mobile_no, "", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵsanitizeUrl"]);
 
@@ -1807,7 +1831,7 @@
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](36, JcomtablesComponent_section_1_ng_template_36_Template, 135, 22, "ng-template", null, 73, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplateRefExtractor"]);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](36, JcomtablesComponent_section_1_ng_template_36_Template, 141, 23, "ng-template", null, 73, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplateRefExtractor"]);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
@@ -2187,7 +2211,7 @@
         features: [_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵProvidersFeature"]([ngx_toastr__WEBPACK_IMPORTED_MODULE_4__["ToastrService"]])],
         decls: 2,
         vars: 2,
-        consts: [["class", "main-content", 4, "ngIf"], [1, "main-content"], [1, "section-body", 2, "margin-top", "20px"], [1, "row", "clearfix"], [1, "col-lg-12", "col-md-12", "col-sm-12", "col-xs-12"], [1, "card"], [1, "p-10"], [1, "row", 2, "margin-right", "10px", "margin-left", "10px"], [1, "col-lg-6"], [1, "row", "m-0"], [1, "col-lg-3", "p-0"], [1, "ngxTableHeader"], [1, "table-title"], [1, "col-lg-5", "p-0"], [1, "table-search-area"], ["for", "search-input"], [1, "material-icons", "search-icon"], ["placeholder", "Search", "type", "text", "aria-label", "Search box", 1, "browser-default", "search-field", 3, "keyup"], [1, "col-lg-4", "p-0"], ["class", "zzo", 4, "ngIf"], ["class", " row", "style", "  opacity: 1; margin-left: 5px;   margin-right: 10px;   height:500px;", 4, "ngIf"], ["historyRecord", ""], [1, "zzo"], ["class", "card", 4, "ngFor", "ngForOf"], [1, "card-header"], [1, "card-body"], [1, "row"], ["class", "col-12 col-md-6 col-lg-4", 4, "ngFor", "ngForOf"], [1, "col-12", "col-md-6", "col-lg-4"], [1, "card", "card-primary"], [1, "card-header-action"], [1, "btn", "btn-primary", 3, "click"], [1, "row", 2, "opacity", "1", "margin-left", "5px", "margin-right", "10px", "height", "500px"], [1, "col-lg-12"], ["count", "2", 3, "theme", 4, "ngIf"], ["count", "2", 3, "theme"], [1, "modal-header", "editRowModal"], ["id", "modal-basic-title", 1, "modal-title"], [1, "table-modal-header"], ["src", "assets/images/JCOM logo 4.jpg", "alt", "avatar"], [1, "modal-about"], [1, "font-weight-bold", "p-t-10", "font-17"], ["type", "button", "aria-label", "Close", 1, "close", 3, "click"], ["aria-hidden", "true"], [1, "material-icons"], [1, "modal-body"], [1, "row", 2, "margin-left", "20px", "margin-right", "20px"], [1, "col-lg-12", "p-0"], [1, "ngxTableHeader", 2, "margin-left", "20px"], ["for", ""], ["class", "col-12 col-md-6 col-lg-6", 4, "ngFor", "ngForOf"], ["class", " row", "style", "  opacity: 1; margin-left: 5px;   margin-right: 10px;   height:400px;", 4, "ngIf"], ["id", "pagination2", 2, "text-align", "end"], [3, "pageChange"], [1, "col-12", "col-md-6", "col-lg-6"], [1, "msr-2", "h-auto", "tblEditBtn", 3, "click"], [1, "fas", "fa-eye"], [1, "row", 2, "opacity", "1", "margin-left", "5px", "margin-right", "10px", "height", "400px"], ["count", "5", 3, "theme", 4, "ngIf"], ["count", "5", 3, "theme"], [1, "p-10", 2, "margin-right", "20px", "margin-left", "20px"], [1, "col-lg-2", "p-0"], [1, "col-lg-8", "p-0"], [1, "ngxTableHeader", 2, "display", "flex", "justify-content", "flex-end"], [1, "header-buttons-left"], [1, "icon-button-demo", "buttons"], [1, "btn", "btn-icon", "icon-left", "btn-info", 3, "click"], [1, "fa", "fa-arrow-left"], ["class", "material", "columnMode", "force", "rowHeight", "auto", 3, "rows", "headerHeight", "footerHeight", "limit", "scrollbarH", "reorderable", 4, "ngIf"], ["id", "tit", 2, "width", "100%"], ["count", "1", 3, "theme", 4, "ngIf"], [1, "skle", 2, "width", "100%"], ["count", "9", "appearance", "line", 3, "theme", 4, "ngIf"], ["profileRecord", ""], ["columnMode", "force", "rowHeight", "auto", 1, "material", 3, "rows", "headerHeight", "footerHeight", "limit", "scrollbarH", "reorderable"], ["table", ""], ["name", "Profile"], ["ngx-datatable-cell-template", ""], ["name", "Name", 3, "width"], ["name", "Email", 3, "width"], ["name", "City"], ["name", "Zone"], ["name", "Category"], ["name", "Actions", "sortable", "false"], [1, "data-table-img", 3, "src"], [1, "name-col-style"], ["count", "1", 3, "theme"], ["count", "9", "appearance", "line", 3, "theme"], [1, "section-body"], [1, "col-12", "col-md-12"], [1, "card", "author-box", 2, "margin-left", "35px", "margin-right", "35px"], [1, "card-body", 2, "margin-left", "35px", "margin-right", "35px"], [1, "author-box-center"], ["alt", "image", 1, "rounded-circle", "author-box-picture", 3, "src"], [1, "clearfix"], [1, "author-box-name"], ["href", "#", "onClick", "return false;"], [1, "author-box-job"], [1, "py-4", 2, "margin-left", "30px"], [1, "float-start"], [1, "float-right", "text-muted", 2, "width", "60%"], [1, "float-end", "text-muted"], [1, "card", 2, "margin-left", "35px", "margin-right", "35px", "border-color", "rgb(187, 218, 236)"], [3, "href"]],
+        consts: [["class", "main-content", 4, "ngIf"], [1, "main-content"], [1, "section-body", 2, "margin-top", "20px"], [1, "row", "clearfix"], [1, "col-lg-12", "col-md-12", "col-sm-12", "col-xs-12"], [1, "card"], [1, "p-10"], [1, "row", 2, "margin-right", "10px", "margin-left", "10px"], [1, "col-lg-6"], [1, "row", "m-0"], [1, "col-lg-3", "p-0"], [1, "ngxTableHeader"], [1, "table-title"], [1, "col-lg-5", "p-0"], [1, "table-search-area"], ["for", "search-input"], [1, "material-icons", "search-icon"], ["placeholder", "Search", "type", "text", "aria-label", "Search box", 1, "browser-default", "search-field", 3, "keyup"], [1, "col-lg-4", "p-0"], ["class", "zzo", 4, "ngIf"], ["class", " row", "style", "  opacity: 1; margin-left: 5px;   margin-right: 10px;   height:500px;", 4, "ngIf"], ["historyRecord", ""], [1, "zzo"], ["class", "card", 4, "ngFor", "ngForOf"], [1, "card-header"], [1, "card-body"], [1, "row"], ["class", "col-12 col-md-6 col-lg-4", 4, "ngFor", "ngForOf"], [1, "col-12", "col-md-6", "col-lg-4"], [1, "card", "card-primary"], [1, "card-header-action"], [1, "btn", "btn-primary", 3, "click"], [1, "row", 2, "opacity", "1", "margin-left", "5px", "margin-right", "10px", "height", "500px"], [1, "col-lg-12"], ["count", "2", 3, "theme", 4, "ngIf"], ["count", "2", 3, "theme"], [1, "modal-header", "editRowModal"], ["id", "modal-basic-title", 1, "modal-title"], [1, "table-modal-header"], ["src", "assets/images/JCOM logo 4.jpg", "alt", "avatar"], [1, "modal-about"], [1, "font-weight-bold", "p-t-10", "font-17"], ["type", "button", "aria-label", "Close", 1, "close", 3, "click"], ["aria-hidden", "true"], [1, "material-icons"], [1, "modal-body"], [1, "row", 2, "margin-left", "20px", "margin-right", "20px"], [1, "col-lg-12", "p-0"], [1, "ngxTableHeader", 2, "margin-left", "20px"], ["for", ""], ["class", "col-12 col-md-6 col-lg-6", 4, "ngFor", "ngForOf"], ["class", " row", "style", "  opacity: 1; margin-left: 5px;   margin-right: 10px;   height:400px;", 4, "ngIf"], ["id", "pagination2", 2, "text-align", "end"], [3, "pageChange"], [1, "col-12", "col-md-6", "col-lg-6"], [1, "msr-2", "h-auto", "tblEditBtn", 3, "click"], [1, "fas", "fa-eye"], [1, "row", 2, "opacity", "1", "margin-left", "5px", "margin-right", "10px", "height", "400px"], ["count", "5", 3, "theme", 4, "ngIf"], ["count", "5", 3, "theme"], [1, "p-10", 2, "margin-right", "20px", "margin-left", "20px"], [1, "col-lg-2", "p-0"], [1, "col-lg-8", "p-0"], [1, "ngxTableHeader", 2, "display", "flex", "justify-content", "flex-end"], [1, "header-buttons-left"], [1, "icon-button-demo", "buttons"], [1, "btn", "btn-icon", "icon-left", "btn-info", 3, "click"], [1, "fa", "fa-arrow-left"], ["class", "material", "columnMode", "force", "rowHeight", "auto", 3, "rows", "headerHeight", "footerHeight", "limit", "scrollbarH", "reorderable", 4, "ngIf"], ["id", "tit", 2, "width", "100%"], ["count", "1", 3, "theme", 4, "ngIf"], [1, "skle", 2, "width", "100%"], ["count", "9", "appearance", "line", 3, "theme", 4, "ngIf"], ["profileRecord", ""], ["columnMode", "force", "rowHeight", "auto", 1, "material", 3, "rows", "headerHeight", "footerHeight", "limit", "scrollbarH", "reorderable"], ["table", ""], ["name", "Profile"], ["ngx-datatable-cell-template", ""], ["name", "Name", 3, "width"], ["name", "Email", 3, "width"], ["name", "City"], ["name", "Zone"], ["name", "Category"], ["name", "Actions", "sortable", "false"], [1, "data-table-img", 3, "src"], [1, "name-col-style"], ["count", "1", 3, "theme"], ["count", "9", "appearance", "line", 3, "theme"], [1, "section-body"], [1, "col-12", "col-md-12"], [1, "card", "author-box", 2, "margin-left", "35px", "margin-right", "35px"], [1, "card-body", 2, "margin-left", "35px", "margin-right", "35px"], [1, "author-box-center"], ["alt", "image", 1, "rounded-circle", "author-box-picture", 3, "src"], [1, "clearfix"], [1, "author-box-name"], ["href", "#", "onClick", "return false;"], [1, "author-box-job"], [1, "py-4", 2, "margin-left", "30px"], [1, "float-start"], [1, "float-right", "text-muted", 2, "width", "60%"], [1, "float-end", "text-muted"], [1, "card", 2, "margin-left", "35px", "margin-right", "35px", "border-color", "rgb(187, 218, 236)"], [1, "card-header", 2, "margin-left", "30px"], [3, "href"]],
         template: function JcomtablesComponent_Template(rf, ctx) {
           if (rf & 1) {
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](0, JcomtablesComponent_section_0_Template, 30, 2, "section", 0);

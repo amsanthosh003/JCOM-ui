@@ -69,6 +69,13 @@ const routes: Routes = [
           { path: 'connectpending',
            loadChildren: () =>
            import('./connectpending/connectpending.module').then(m => m.ConnectpendingModule) },
+
+           {
+              path: 'mytable',
+            loadChildren: () => 
+           import('./mytable/mytable.module').then(m => m.MytableModule)
+           },
+           
       {
         path: 'Customer',
         loadChildren: () =>
@@ -149,6 +156,7 @@ const routes: Routes = [
       ),
   },
   { path: 'currentstatus', loadChildren: () => import('./currentstatus/currentstatus.module').then(m => m.CurrentstatusModule) },
+ 
   
  
   

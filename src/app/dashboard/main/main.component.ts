@@ -184,6 +184,12 @@ export class MainComponent implements OnInit {
   sts: any;
   OverallStatus: any;
   barChartOptions2: { series: { name: string; data: number[]; }[]; chart: { type: string; height: number; foreColor: string; }; plotOptions: { bar: { horizontal: boolean; columnWidth: string; borderRadius: number; }; }; grid: { borderColor: string; }; dataLabels: { enabled: boolean; }; stroke: { show: boolean; width: number; colors: string[]; }; xaxis: { categories: string[]; labels: { style: { colors: string; }; }; }; yaxis: { title: { text: string; }; }; fill: { opacity: number; }; tooltip: { theme: string; marker: { show: boolean; }; x: { show: boolean; }; }; };
+  Statics: Object;
+  month1:[];
+  connectgiv: any;
+  gnoterec: any;
+  avggiven: any;
+  avgrec: any;
 
 
   constructor(
@@ -216,6 +222,7 @@ export class MainComponent implements OnInit {
      this.meeting() ;
      this.cardCharts() ;
      this.piechart();
+     this.statics();
 
   }
 
@@ -283,6 +290,9 @@ export class MainComponent implements OnInit {
       this.request.fetchmeeting(this.userstr.m_id).subscribe((response) => {
     this.Meetings=response;
     this.OverallStatus=this.Meetings[0].overall_status;
+    this.avggiven=this.OverallStatus[0].avg_ref_value_given;
+    this.avgrec=this.OverallStatus[0].avg_ref_value_received;
+    console.log(this.avggiven);
     console.log(this.OverallStatus);
       }, (error) => {
         console.log(error);
@@ -290,25 +300,38 @@ export class MainComponent implements OnInit {
     
     }
   welcomeSuccess() {
-    this.toastr.success('welcome !!!  ' +this.userstr.m_name);
+    this.toastr.success('Welcome !!!  ' +this.userstr.m_name);
   }
 
+  statics() {
+    this.request.fetchstatic(this.userstr.m_id).subscribe((response) => {
+  this.Statics=response;
+  this.month1=this.Statics[0].month;
+  this.connectgiv=this.Statics[0].connect_given;
+  this.gnoterec=this.Statics[0].gnote_received;
+  console.log(this.Statics);
+  console.log("mon",this.month1);
+  console.log("con given",this.connectgiv);
+  console.log("gnote rec",this.gnoterec);
+  
+    }, (error) => {
+      console.log(error);
+    });
+  
+  }
 
   private chart4() {
     this.barChartOptions2 = {
       series: [
         {
-          name: 'Net Profit',
+          name: 'Connect Given',
           data: [44, 55, 57, 56, 61, 58, 63, 60, 66],
         },
         {
-          name: 'Revenue',
+          name: 'Gnote Received',
           data: [76, 85, 101, 98, 87, 105, 91, 114, 94],
         },
-        {
-          name: 'Free Cash Flow',
-          data: [35, 41, 36, 26, 45, 48, 52, 53, 41],
-        },
+       
       ],
       chart: {
         type: 'bar',
@@ -318,7 +341,7 @@ export class MainComponent implements OnInit {
       plotOptions: {
         bar: {
           horizontal: false,
-          columnWidth: '55%',
+          columnWidth: '50%',
           borderRadius: 5,
         },
       },
@@ -334,23 +357,15 @@ export class MainComponent implements OnInit {
         colors: ['transparent'],
       },
       xaxis: {
-        categories: [
-          'Feb',
-          'Mar',
-          'Apr',
-          'May',
-          'Jun',
-          'Jul',
-          'Aug',
-          'Sep',
-          'Oct',
-        ],
+        categories:['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul']
+        ,
         labels: {
           style: {
             colors: '#9aa0ac',
           },
         },
       },
+     
       yaxis: {
         title: {
           text: '$ (thousands)',
@@ -371,7 +386,7 @@ export class MainComponent implements OnInit {
     };
   }
 
-
+ 
   private chart1() {
     this.lineChartOptions = {
       series: [

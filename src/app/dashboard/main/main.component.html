@@ -107,7 +107,7 @@
       <div class="col-12 col-md-8 col-lg-8">
         <div class="card">
           <div class="card-header">
-            <h4>Bar chart</h4>
+            <h4>ConnectGiven VS GNoteReceived</h4>
           </div>
           <div class="card-body">
             <div style="text-align:center">
@@ -127,8 +127,8 @@
             <div class="card-body">
               <div class="row">
                 <div class="col">
-                  <h5 class="m-b-5">Online Sales</h5>
-                  <h3 class="font-light col-green">$237.45</h3>
+                  <h5 class="m-b-5">Average-Ref-Value-Given</h5>
+                  <h3 class="font-light col-green">{{avggiven}}</h3>
                 </div>
                 <div class="col-auto">
                   <div class="bg-orange text-white icon-box-style">
@@ -144,32 +144,27 @@
             </div>
           </div>
           <div class="card">
-            <div class="card-body">
-              <div class="row">
-                <div class="col">
-                  <h5 class="m-b-0">Users</h5>
-                  <h3>11,506 <span class="font-16 text-success">+18%</span>
-                  </h3>
-                </div>
-                <div class="col-auto">
-                  <div class="bg-green text-white icon-box-style">
-                    <i class="fas fa-user-friends"></i>
+      
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <h5 class="m-b-5">Average-Ref-Value-Received</h5>
+                    <h3 class="font-light col-green"  >{{avgrec}}</h3>
+                  </div>
+                  <div class="col-auto">
+                    <div class="bg-orange text-white icon-box-style">
+                      <i class="fas fa-shopping-bag"></i>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="m-t-30">
-                <div class="row text-center">
-                  <div class="col-6 border-right">
-                    <h4 class="m-b-0">72%</h4>
-                    <span class="font-14 text-muted">New Users</span>
-                  </div>
-                  <div class="col-6">
-                    <h4 class="m-b-0">28%</h4>
-                    <span class="font-14 text-muted">Repeat Users</span>
-                  </div>
+                <div class="apex-chart-center">
+                  <apx-chart [series]="smallBarChart.series" [chart]="smallBarChart.chart"
+                    [plotOptions]="smallBarChart.plotOptions" [tooltip]="smallBarChart.tooltip">
+                  </apx-chart>
                 </div>
               </div>
-            </div>
+          
+           
           </div>
         
        
@@ -274,9 +269,9 @@
 
     <div class="row">
       <div class="col-md-12 col-lg-8 col-xl-8 ">
-        <div class="card">
+        <div class="card"> 
           <div class="card-header">
-            <h4>Chart Sample</h4>
+            <h4>ConnectReceived VS GNoteGiven</h4>
           </div>
           <div class="card-body">
             <apx-chart [series]="lineChartOptions.series" [chart]="lineChartOptions.chart"
@@ -285,6 +280,7 @@
               [tooltip]="lineChartOptions.tooltip" [markers]="lineChartOptions.markers" [grid]="lineChartOptions.grid"
               [yaxis]="lineChartOptions.yaxis" [title]="lineChartOptions.title" [fill]="lineChartOptions.fill">
             </apx-chart>
+            <br><br>
           </div>
         </div>
       </div>
@@ -292,7 +288,7 @@
       <div class="col-md-12 col-lg-4 col-xl-4 ">
         <div class="card">
           <div class="card-header">
-            <h4>Project Analysis</h4>
+            <h4>Your Score</h4>
           </div>
           <div class="card-body">
             <div id="chart">
@@ -306,21 +302,30 @@
               <table class="table align-items-center">
                 <tbody>
                   <tr class="tbl-row-border">
-                    <td><i class="fa fa-circle col-blue msr-2"></i>Project 1</td>
+                    <td><i class="fa fa-circle col-blue msr-2"></i>Attendance</td>
                     <td>18</td>
                     <td class="col-green">+12%</td>
                   </tr>
                   <tr class="tbl-row-border">
-                    <td><i class="fa fa-circle col-cyan msr-2"></i>Project 2</td>
+                    <td><i class="fa fa-circle col-cyan msr-2"></i>Connect</td>
                     <td>22</td>
                     <td class="col-orange">-12%</td>
                   </tr>
                   <tr class="tbl-row-border">
-                    <td><i class="fa fa-circle col-orange msr-2"></i>Project 3</td>
+                    <td><i class="fa fa-circle col-orange msr-2"></i>GNote</td>
                     <td>14</td>
                     <td class="col-green">+3%</td>
                   </tr>
-                 
+                  <tr class="tbl-row-border">
+                    <td><i class="fa fa-circle col-orange msr-2"></i>YouAndMe</td>
+                    <td>14</td>
+                    <td class="col-green">+3%</td>
+                  </tr>
+                  <tr class="tbl-row-border">
+                    <td><i class="fa fa-circle col-orange msr-2"></i>Guest</td>
+                    <td>14</td>
+                    <td class="col-green">+3%</td>
+                  </tr>
                   
                 </tbody>
               </table>

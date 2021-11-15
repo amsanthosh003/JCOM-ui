@@ -234,6 +234,11 @@ public getzonetablemembers(id,id2) {
   this.url = `${this.endPoint2}/get_jib_table_members.php?m_id=` + id+'&table_id=' + id2;
   return this.http.get(this.url);
 }
+//staticts
+public fetchstatic(id) {
+  this.url = `${this.endPoint2}/get_statistics.php?m_id=` + id;
+  return this.http.get(this.url);
+}
   //customer
   public getcustomer() {
     this.url = `${this.endPoint1}/customer/`;

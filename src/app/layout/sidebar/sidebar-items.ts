@@ -26,6 +26,18 @@ export const ROUTES: RouteInfo[] = [
       badgeClass: '',
       submenu: [],
     },
+    {
+      path: 'mytable',
+      title: 'My Table',
+      moduleName: 'mytable',
+      iconType: 'feather',
+      icon: 'server',
+      class: '',
+      groupTitle: false,
+      badge: '',
+      badgeClass: '',
+      submenu: [],
+    }, 
 
     {
         path: 'connectentry',

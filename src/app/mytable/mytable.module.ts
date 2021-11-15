@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
- 
-import { ConnectentryRoutingModule } from './connectentry-routing.module';
-import { ConnectentryComponent } from './connectentry.component';
+
+import { MytableRoutingModule } from './mytable-routing.module';
+import { MytableComponent } from './mytable.component';
 import { FeatherModule } from 'angular-feather';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -37,11 +37,13 @@ const icons = {
   
 };
 
-@NgModule({ 
-  declarations: [ConnectentryComponent],
+
+
+@NgModule({
+  declarations: [MytableComponent],
   imports: [
     CommonModule,
-    ConnectentryRoutingModule,
+    MytableRoutingModule,
     FeatherModule.pick(icons),
    
     ReactiveFormsModule,
@@ -51,6 +53,7 @@ const icons = {
     ToastrModule.forRoot(),ArchwizardModule,
     NgxSkeletonLoaderModule,
     NgSelectModule
+  
   ]
 })
-export class ConnectentryModule { }
+export class MytableModule { }

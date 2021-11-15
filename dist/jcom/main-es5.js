@@ -885,6 +885,17 @@
         badgeClass: '',
         submenu: []
       }, {
+        path: 'mytable',
+        title: 'My Table',
+        moduleName: 'mytable',
+        iconType: 'feather',
+        icon: 'server',
+        "class": '',
+        groupTitle: false,
+        badge: '',
+        badgeClass: '',
+        submenu: []
+      }, {
         path: 'connectentry',
         title: 'Connect Entry',
         moduleName: 'connectentry',
@@ -1937,6 +1948,13 @@
           key: "getzonetablemembers",
           value: function getzonetablemembers(id, id2) {
             this.url = "".concat(this.endPoint2, "/get_jib_table_members.php?m_id=") + id + '&table_id=' + id2;
+            return this.http.get(this.url);
+          } //staticts
+
+        }, {
+          key: "fetchstatic",
+          value: function fetchstatic(id) {
+            this.url = "".concat(this.endPoint2, "/get_statistics.php?m_id=") + id;
             return this.http.get(this.url);
           } //customer
 
@@ -5048,7 +5066,7 @@
           loadChildren: function loadChildren() {
             return Promise.all(
             /*! import() | profile-profile-module */
-            [__webpack_require__.e("default~changepassword-changepassword-module~connectentry-connectentry-module~connectpending-connect~166a4e9d"), __webpack_require__.e("profile-profile-module")]).then(__webpack_require__.bind(null,
+            [__webpack_require__.e("default~changepassword-changepassword-module~connectentry-connectentry-module~connectpending-connect~be1a7bad"), __webpack_require__.e("profile-profile-module")]).then(__webpack_require__.bind(null,
             /*! ./profile/profile.module */
             "cRhG")).then(function (m) {
               return m.ProfileModule;
@@ -5059,7 +5077,7 @@
           loadChildren: function loadChildren() {
             return Promise.all(
             /*! import() | changepassword-changepassword-module */
-            [__webpack_require__.e("default~changepassword-changepassword-module~connectentry-connectentry-module~connectpending-connect~166a4e9d"), __webpack_require__.e("changepassword-changepassword-module")]).then(__webpack_require__.bind(null,
+            [__webpack_require__.e("default~changepassword-changepassword-module~connectentry-connectentry-module~connectpending-connect~be1a7bad"), __webpack_require__.e("changepassword-changepassword-module")]).then(__webpack_require__.bind(null,
             /*! ./changepassword/changepassword.module */
             "u0FJ")).then(function (m) {
               return m.ChangepasswordModule;
@@ -5070,7 +5088,7 @@
           loadChildren: function loadChildren() {
             return Promise.all(
             /*! import() | connectentry-connectentry-module */
-            [__webpack_require__.e("default~changepassword-changepassword-module~connectentry-connectentry-module~connectpending-connect~166a4e9d"), __webpack_require__.e("default~connectentry-connectentry-module~connectpending-connectpending-module~gnoteentry-gnoteentry-~1aaf4157"), __webpack_require__.e("connectentry-connectentry-module")]).then(__webpack_require__.bind(null,
+            [__webpack_require__.e("default~changepassword-changepassword-module~connectentry-connectentry-module~connectpending-connect~be1a7bad"), __webpack_require__.e("default~connectentry-connectentry-module~connectpending-connectpending-module~gnoteentry-gnoteentry-~0472d4af"), __webpack_require__.e("connectentry-connectentry-module")]).then(__webpack_require__.bind(null,
             /*! ./connectentry/connectentry.module */
             "EAJ4")).then(function (m) {
               return m.ConnectentryModule;
@@ -5081,7 +5099,7 @@
           loadChildren: function loadChildren() {
             return Promise.all(
             /*! import() | gnoteentry-gnoteentry-module */
-            [__webpack_require__.e("default~changepassword-changepassword-module~connectentry-connectentry-module~connectpending-connect~166a4e9d"), __webpack_require__.e("default~connectentry-connectentry-module~connectpending-connectpending-module~gnoteentry-gnoteentry-~1aaf4157"), __webpack_require__.e("gnoteentry-gnoteentry-module")]).then(__webpack_require__.bind(null,
+            [__webpack_require__.e("default~changepassword-changepassword-module~connectentry-connectentry-module~connectpending-connect~be1a7bad"), __webpack_require__.e("default~connectentry-connectentry-module~connectpending-connectpending-module~gnoteentry-gnoteentry-~0472d4af"), __webpack_require__.e("gnoteentry-gnoteentry-module")]).then(__webpack_require__.bind(null,
             /*! ./gnoteentry/gnoteentry.module */
             "ozL1")).then(function (m) {
               return m.GnoteentryModule;
@@ -5092,7 +5110,7 @@
           loadChildren: function loadChildren() {
             return Promise.all(
             /*! import() | showcase-showcase-module */
-            [__webpack_require__.e("default~changepassword-changepassword-module~connectentry-connectentry-module~connectpending-connect~166a4e9d"), __webpack_require__.e("showcase-showcase-module")]).then(__webpack_require__.bind(null,
+            [__webpack_require__.e("default~changepassword-changepassword-module~connectentry-connectentry-module~connectpending-connect~be1a7bad"), __webpack_require__.e("showcase-showcase-module")]).then(__webpack_require__.bind(null,
             /*! ./showcase/showcase.module */
             "Zah/")).then(function (m) {
               return m.ShowcaseModule;
@@ -5103,7 +5121,7 @@
           loadChildren: function loadChildren() {
             return Promise.all(
             /*! import() | guestreg-guestreg-module */
-            [__webpack_require__.e("default~changepassword-changepassword-module~connectentry-connectentry-module~connectpending-connect~166a4e9d"), __webpack_require__.e("default~connectentry-connectentry-module~connectpending-connectpending-module~gnoteentry-gnoteentry-~1aaf4157"), __webpack_require__.e("default~advance-table-advance-table-module~customer-customer-module~guestreg-guestreg-module~user-user-module"), __webpack_require__.e("guestreg-guestreg-module")]).then(__webpack_require__.bind(null,
+            [__webpack_require__.e("default~changepassword-changepassword-module~connectentry-connectentry-module~connectpending-connect~be1a7bad"), __webpack_require__.e("default~connectentry-connectentry-module~connectpending-connectpending-module~gnoteentry-gnoteentry-~0472d4af"), __webpack_require__.e("default~advance-table-advance-table-module~customer-customer-module~guestreg-guestreg-module~user-user-module"), __webpack_require__.e("guestreg-guestreg-module")]).then(__webpack_require__.bind(null,
             /*! ./guestreg/guestreg.module */
             "77kb")).then(function (m) {
               return m.GuestregModule;
@@ -5114,7 +5132,7 @@
           loadChildren: function loadChildren() {
             return Promise.all(
             /*! import() | jcomtables-jcomtables-module */
-            [__webpack_require__.e("default~changepassword-changepassword-module~connectentry-connectentry-module~connectpending-connect~166a4e9d"), __webpack_require__.e("default~jcomtables-jcomtables-module~searchmembers-searchmembers-module"), __webpack_require__.e("jcomtables-jcomtables-module")]).then(__webpack_require__.bind(null,
+            [__webpack_require__.e("default~changepassword-changepassword-module~connectentry-connectentry-module~connectpending-connect~be1a7bad"), __webpack_require__.e("default~jcomtables-jcomtables-module~searchmembers-searchmembers-module"), __webpack_require__.e("jcomtables-jcomtables-module")]).then(__webpack_require__.bind(null,
             /*! ./jcomtables/jcomtables.module */
             "0Hwp")).then(function (m) {
               return m.JcomtablesModule;
@@ -5125,7 +5143,7 @@
           loadChildren: function loadChildren() {
             return Promise.all(
             /*! import() | searchmembers-searchmembers-module */
-            [__webpack_require__.e("default~changepassword-changepassword-module~connectentry-connectentry-module~connectpending-connect~166a4e9d"), __webpack_require__.e("default~jcomtables-jcomtables-module~searchmembers-searchmembers-module"), __webpack_require__.e("searchmembers-searchmembers-module")]).then(__webpack_require__.bind(null,
+            [__webpack_require__.e("default~changepassword-changepassword-module~connectentry-connectentry-module~connectpending-connect~be1a7bad"), __webpack_require__.e("default~jcomtables-jcomtables-module~searchmembers-searchmembers-module"), __webpack_require__.e("searchmembers-searchmembers-module")]).then(__webpack_require__.bind(null,
             /*! ./searchmembers/searchmembers.module */
             "6hWy")).then(function (m) {
               return m.SearchmembersModule;
@@ -5136,10 +5154,21 @@
           loadChildren: function loadChildren() {
             return Promise.all(
             /*! import() | connectpending-connectpending-module */
-            [__webpack_require__.e("default~changepassword-changepassword-module~connectentry-connectentry-module~connectpending-connect~166a4e9d"), __webpack_require__.e("default~connectentry-connectentry-module~connectpending-connectpending-module~gnoteentry-gnoteentry-~1aaf4157"), __webpack_require__.e("connectpending-connectpending-module")]).then(__webpack_require__.bind(null,
+            [__webpack_require__.e("default~changepassword-changepassword-module~connectentry-connectentry-module~connectpending-connect~be1a7bad"), __webpack_require__.e("default~connectentry-connectentry-module~connectpending-connectpending-module~gnoteentry-gnoteentry-~0472d4af"), __webpack_require__.e("connectpending-connectpending-module")]).then(__webpack_require__.bind(null,
             /*! ./connectpending/connectpending.module */
             "LeVT")).then(function (m) {
               return m.ConnectpendingModule;
+            });
+          }
+        }, {
+          path: 'mytable',
+          loadChildren: function loadChildren() {
+            return Promise.all(
+            /*! import() | mytable-mytable-module */
+            [__webpack_require__.e("default~changepassword-changepassword-module~connectentry-connectentry-module~connectpending-connect~be1a7bad"), __webpack_require__.e("default~connectentry-connectentry-module~connectpending-connectpending-module~gnoteentry-gnoteentry-~0472d4af"), __webpack_require__.e("mytable-mytable-module")]).then(__webpack_require__.bind(null,
+            /*! ./mytable/mytable.module */
+            "9VeP")).then(function (m) {
+              return m.MytableModule;
             });
           }
         }, {
