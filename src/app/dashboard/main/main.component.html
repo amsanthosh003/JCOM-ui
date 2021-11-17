@@ -107,7 +107,7 @@
       <div class="col-12 col-md-8 col-lg-8">
         <div class="card">
           <div class="card-header">
-            <h4>GNoteGiven VS GNoteReceived</h4>
+            <h4>ConnectGiven VS GNoteReceived</h4>
           </div>
           <div class="card-body">
             <div style="text-align:center">
@@ -138,7 +138,7 @@
                 </div>
               </div>
               <div class="apex-chart-center">
-                <apx-chart [series]="smallBarChart.series" [chart]="smallBarChart.chart"
+                <apx-chart [series]="smallBarChart?.series" [chart]="smallBarChart.chart"
                   [plotOptions]="smallBarChart.plotOptions" [tooltip]="smallBarChart.tooltip">
                 </apx-chart>
               </div>
@@ -272,7 +272,7 @@
       <div class="col-md-12 col-lg-8 col-xl-8 ">
         <div class="card"> 
           <div class="card-header">
-            <h4>ConnectGiven VS ConnectReceived</h4>
+            <h4>ConnectReceived VS GNoteGiven</h4>
           </div>
           <div class="card-body">
             <apx-chart [series]="lineChartOptions?.series" [chart]="lineChartOptions?.chart"
@@ -289,48 +289,42 @@
       <div class="col-md-12 col-lg-4 col-xl-4 ">
         <div class="card">
           <div class="card-header">
-            <h4>Your Score</h4>
+            <h4>Your Score <span style="padding-top: 5px;">{{stsmonth}}</span></h4>  
           </div>
           <div class="card-body">
             <div id="chart">
               <apx-chart [series]="pieChartOptions?.series" [chart]="pieChartOptions?.chart"
-                [responsive]="pieChartOptions?.responsive"
-                [colors]="pieChartOptions?.colors" 
+                [responsive]="pieChartOptions?.responsive" [dataLabels]="pieChartOptions.dataLabels"
+                [colors]="pieChartOptions?.colors"  [tooltip]="pieChartOptions?.tooltip"
                 [plotOptions]="pieChartOptions?.plotOptions" [legend]="pieChartOptions?.legend" class="apex-pie-center">
               </apx-chart>
             </div>
-            <div class="table-responsive m-t-15">
-              <table class="table align-items-center">
-                <tbody *ngFor="let s of Status">
+            <div class="table-responsive m-t-15"  style="height:180px">
+              <table class="table align-items-center" >
+                <tbody *ngFor="let s of Status"  >
                   <tr class="tbl-row-border">
                     <td><i class="fa fa-circle col-blue msr-2"></i>Attendance</td>
                     <td>{{s.attendance_score}}</td>
-                   
                   </tr>
                   <tr class="tbl-row-border">
                     <td><i class="fa fa-circle col-cyan msr-2"></i>Connect</td>
-                    <td>{{s.connect_score}}</td>
-                    
+                    <td>{{s.connect_score}}</td>  
                   </tr>
                   <tr class="tbl-row-border">
                     <td><i class="fa fa-circle col-orange msr-2"></i>GNote</td>
                     <td>{{s.gnote_score}}</td>
-                   
                   </tr>
                   <tr class="tbl-row-border">
                     <td><i class="fa fa-circle col-pink msr-2"></i>YouAndMe</td>
                     <td>{{s.youandme_score}}</td>
-                   
                   </tr>
                   <tr class="tbl-row-border">
                     <td><i class="fa fa-circle col-amber msr-2"></i>Guest</td>
-                    <td>{{s.guest_score}}</td>
-                    
+                    <td>{{s.guest_score}}</td> 
                   </tr>
                   <tr class="tbl-row-border">
-                    <td><i class="fa fa-circle col-brown msr-2"></i>Balance</td>
-                    <td>{{s.balance}}</td>
-                    
+                    <td><i class="fa fa-circle col-brown msr-2"></i>Total</td>
+                    <td>{{s.total_score}}</td>
                   </tr>
                   
                 </tbody>

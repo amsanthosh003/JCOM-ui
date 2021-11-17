@@ -56,14 +56,28 @@ import { Data } from '@angular/router';
 
 
 export type ChartOptions1 = {
-  series: ApexNonAxisChartSeries;
+  // series: ApexAxisChartSeries;
+  series2: ApexNonAxisChartSeries;
+   series: any[];
   chart: ApexChart;
   responsive: ApexResponsive[];
-  labels: any;
+  labels:string[];
   dataLabels: ApexDataLabels;
   plotOptions: ApexPlotOptions;
   legend: ApexLegend;
   colors: string[];
+  fill: ApexFill;
+
+  stroke: ApexStroke;
+ 
+  markers: ApexMarkers;
+ 
+  grid: ApexGrid;
+  
+  tooltip: ApexTooltip;
+
+  title: ApexTitleSubtitle;
+ 
 };
 
 export type smallBarChart = {
@@ -130,11 +144,11 @@ export class MainComponent implements OnInit {
   filteredData: any;
   loadingIndicator: boolean;
   Statics: any = [];
-  result:any=[];
+  result: any = [];
   memberid: any;
   loader: boolean;
   donutscore = [];
-  seraries:any=[]
+  seraries: any = []
   @ViewChild(DatatableComponent, { static: false }) table: DatatableComponent;
 
   rows = [];
@@ -224,6 +238,7 @@ export class MainComponent implements OnInit {
   scoress: number[];
   Month1: [];
   Score1: any[];
+  stsmonth: any;
 
   constructor(
     private fb: FormBuilder,
@@ -380,11 +395,11 @@ export class MainComponent implements OnInit {
     console.log("gnote rec", gnoterec);
 
     searies.push({
-      name: "GNote Given",
-      data: gnotegiv
+      name: "Connect Given",
+      data: connectgiv
     },
       {
-        name: "GNote Received",
+        name: "GNote Received(in lakhs)",
         data: gnoterec
       },
     )
@@ -409,7 +424,7 @@ export class MainComponent implements OnInit {
         borderColor: '#9aa0ac',
       },
       dataLabels: {
-        enabled: true,
+        enabled: false,
         offsetX: -6,
         style: {
           fontSize: "12px",
@@ -426,7 +441,7 @@ export class MainComponent implements OnInit {
       },
       yaxis: {
         title: {
-          text: '$ (thousands)',
+          text: '',
         },
       },
 
@@ -438,13 +453,10 @@ export class MainComponent implements OnInit {
         },
         y: {
           formatter: function (val) {
-            return "$ " + val + " thousands";
+            return "" + val + "";
           }
         }
       }
-
-
-
     };
 
     this.serviceChartOptions = this.serviceChartOptions
@@ -725,14 +737,15 @@ export class MainComponent implements OnInit {
     }
     console.log("cr", connectrec);
     console.log("gg", gnotegiv);
-    searies.push({
-      name: "Connect Given",
-      data: connectgiv
-    },
+    searies.push(
       {
         name: "Connect Received",
         data: connectrec
 
+      },
+      {
+        name: "GNote Given(in lakhs)",
+        data: gnotegiv
       },
     )
     this.lineChartOptions = {
@@ -838,6 +851,7 @@ export class MainComponent implements OnInit {
   Score() {
     this.request.fetchscore(this.userstr.m_id).subscribe((response: any) => {
       this.Status = response;
+     this.stsmonth= this.Status[0].month
 
       let result = response.map(x => {
         return {
@@ -846,75 +860,89 @@ export class MainComponent implements OnInit {
           gnote_score: x.gnote_score,
           guest_score: x.guest_score,
           youandme_score: x.youandme_score,
-          balance:x.balance
+          balance: x.balance
         };
       });
 
-      var result1 =result[0];
+      var result1 = result[0];
       console.log("x", result1);
+      var seariess = [];
       var searies = [];
       for (var property in result1) {
         searies.push(result1[property]);
       }
 
-      console.log("x", searies);
 
+      console.log("x", searies);
       this.pieChartOptions = {
-        //  series: searies,
-            series: [20,15,20,0,0,45],
-            // series2: [18, 22, 14, 31, 15],
-      
-            chart: {
-              type: 'donut',
-              width: 280,
-            },
-            legend: {
-              show: false,
-            },
-            dataLabels: {
-              enabled: false,
-            },
-                colors: ['#9A8BE7', '#2AC3CB', '#FFAA00', '#FA62BB', '#FFD000','#591112'],
-            labels: ['Attendance', 'Connect', 'GNote', 'YouAndMe', 'Guest','Balance'],
-            plotOptions: {
-              pie: {
-                donut: {
-                  size: '65%',
-                  background: 'transparent',
-                  labels: {
-                    show: true,
-                    name: {
-                      show: true,
-                      fontSize: '22px',
-                      fontWeight: 600,
-                    },
-                    value: {
-                      show: true,
-                      fontSize: '16px',
-                      fontWeight: 400,
-                      color: '#9aa0ac',
-                    },
-                    total: {
-                      show: true,
-                      showAlways: false,
-                      label: 'Total',
-                      fontSize: '22px',
-                      fontWeight: 600,
-                      color: '#6777EF',
-                    },
-                  },
+         series: searies,
+       
+        chart: {
+          type: 'donut',
+          width: 280,
+        },
+        legend: {
+          show: false,
+        },
+        dataLabels: {
+          enabled: false,
+        },
+        // tooltip: {
+        //   theme: 'dark',
+        //   marker: {
+        //     show: true,
+        //   },
+        //   // x: {
+        //   //   show: true,
+        //   // },
+        //   y: {
+        //     formatter: function (val) {
+        //       return "" + val + "";
+        //     }
+        //   }
+        // },
+        plotOptions: {
+          pie: {
+            donut: {
+              size: '65%',
+              background: 'transparent',
+              labels: {
+                show: true,
+                name: {
+                  show: true,
+                  fontSize: '22px',
+                  fontWeight: 600,
+                },
+                value: {
+                  show: true,
+                  fontSize: '16px',
+                  fontWeight: 400,
+                  color: '#9aa0ac',
+                },
+                total: {
+                  show: true,
+                  showAlways: false,
+                  label: 'Total',
+                  fontSize: '22px',
+                  fontWeight: 600,
+                  color: '#6777EF',
                 },
               },
             },
-          
-            responsive: [
-              {
-                breakpoint: 480,
-                options: {},
-              },
-            ],
-          };
-     
+          },
+        },
+        colors: ['#9A8BE7', '#2AC3CB', '#FFAA00', '#FA62BB', '#FFD000','#8a030e'],
+
+        labels:  ['Attendance', 'Connect', 'GNote', 'YouAndMe', 'Guest','Balance'],
+        responsive: [
+          {
+            breakpoint: 480,
+            options: {},
+          },
+        ],
+      };
+    
+
       this.pieChartOptions = this.pieChartOptions
 
     }, (error) => {
