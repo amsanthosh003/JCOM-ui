@@ -21,9 +21,9 @@ import { User } from '../core/models/user';
   providers: [ToastrService],
 })
 export class SearchmembersComponent implements OnInit {
-  
- 
-  loader =true;
+
+
+  loader = true;
   active;
   // public Editor = ClassicEditor;
   @ViewChild(DatatableComponent, { static: false }) table: DatatableComponent;
@@ -34,7 +34,7 @@ export class SearchmembersComponent implements OnInit {
   selectedRowData: selectRowInterface;
   newUserImg = 'assets/images/users/user-2.png';
   data = [];
-  public Customers: any; 
+  public Customers: any;
   filteredData = [];
   editForm: FormGroup;
   register: FormGroup;
@@ -44,10 +44,10 @@ export class SearchmembersComponent implements OnInit {
   reorderable = true;
   editcustmergroup: any;
   public selected: any[] = [];
-  custmernamevalue:any;
-  custmerphonevalue:any;
-  custmeremailvalue:any;
-  custmerpasswordvalue:any;
+  custmernamevalue: any;
+  custmerphonevalue: any;
+  custmeremailvalue: any;
+  custmerpasswordvalue: any;
 
   isdisable: boolean;
 
@@ -63,29 +63,29 @@ export class SearchmembersComponent implements OnInit {
   ];
   countries = [
     { id: '1', name: 'India' },
-   
+
   ];
   meetings = [
-   
+
     { id: '1', value: 'Live' },
     { id: '2', value: 'Virtual' },
     { id: '3', value: 'Virtual International' },
     { id: '4', value: 'Association' },
   ];
   connects = [
-   
+
     { id: '1', value: 'JCOM' },
     { id: '2', value: 'JCI' },
     { id: '3', value: 'Non-JCI' },
-   
+
   ];
   connectssts = [
-   
+
     { id: '1', value: 'Self Connect' },
     { id: '2', value: 'Within JCI-JCOM' },
 
   ];
- 
+
   @ViewChild(DatatableComponent, { static: false }) table2: DatatableComponent;
   error: string;
   IdValue: any;
@@ -105,68 +105,68 @@ export class SearchmembersComponent implements OnInit {
   Busmemb: any;
   filteredData1 = [];
   filteredData2 = [];
-  memberview: boolean=false;
-  tableview: boolean=true;
+  memberview: boolean = false;
+  tableview: boolean = true;
   loader1: boolean;
   keytableview: boolean;
   loader2: boolean;
   constructor(
     private fb: FormBuilder,
     private modalService: NgbModal,
-    private toastr: ToastrService,private request: RequestService
+    private toastr: ToastrService, private request: RequestService
   ) {
     this.currentUserSubject = new BehaviorSubject<User>(
       JSON.parse(localStorage.getItem('currentUser'))
     );
     this.currentUser = this.currentUserSubject.asObservable();
     this.memberid = this.currentUserSubject.value[0]
-    this.Mtable_id=this.memberid.jib_table;
-    this.memb_id=this.memberid.m_id,
-    console.log(this.memberid)
+    this.Mtable_id = this.memberid.jib_table;
+    this.memb_id = this.memberid.m_id,
+      console.log(this.memberid)
     window.onresize = () => {
       this.scrollBarHorizontal = window.innerWidth < 1200;
     };
   }
 
-  
+
   selectInput1(event) {
     let selected = event.target.value;
     if (selected == "1") {
-      this.isdisable = true ;
+      this.isdisable = true;
     } else {
-      this.isdisable =  false;
+      this.isdisable = false;
     }
   }
 
- 
+
   ngOnInit() {
     this.viewdata();
     // this.designation();
 
     this.register = this.fb.group({
-      keyword: ['', [Validators.required]],   
+      keyword: ['', [Validators.required]],
     });
   }
-  
-viewdata(){
-  this.fetch((data) => {
-    this.data = data;
-    // this.filteredData = data;
-    this.Business=data;
-    this.filteredData=data;
-    setTimeout(() => {
-      this.loadingIndicator = false;
-    }, 500);
-  });
-}
+
+  viewdata() {
+    this.fetch((data) => {
+      this.data = data;
+      // this.filteredData = data;
+      this.Business = data;
+      this.filteredData = data;
+      setTimeout(() => {
+        this.loadingIndicator = false;
+      }, 500);
+    });
+  }
   // fetch data
   fetch(cb) {
 
     this.request.fetchbusiness().subscribe((response) => {
-    //  console.log(response);
-     
-              cb(response);
-              this.loader=false;
+      //  console.log(response);
+
+      cb(response);
+      this.loader = false;
     }, (error) => {
       console.log(error);
     });
@@ -183,80 +183,81 @@ viewdata(){
     });
 
   }
-  back2(){
-    this.memberview=false;
-    this.tableview=true;
+  back2() {
+    this.memberview = false;
+    this.tableview = true;
   }
-  openkeymembers() { 
-    this.memberview=false;
-    this.tableview=false;
-    this.keytableview=true;
-    this.loader2=true;
-    
+  openkeymembers() {
+    this.memberview = false;
+    this.tableview = false;
+    this.keytableview = true;
+    this.loader2 = true;
+
     this.modalService.dismissAll();
   }
   // save add new record
   onAddRowSave(form: FormGroup) {
     // console.log(form.value);
-    this.keyword= form.value.keyword
-    this.request.getkeymembers(this.memb_id,this.keyword).subscribe((response:any) => {
-      this.KeyMembers=response;
-      this.loader2=false;
-      response.forEach(element =>{
+    this.keyword = form.value.keyword
+    this.request.getkeymembers(this.memb_id, this.keyword).subscribe((response: any) => {
+      this.KeyMembers = response;
+      this.loader2 = false;
+      response.forEach(element => {
         this.filteredData2.push(element);
       });
-      // console.log(this.KeyMembers);
-        }, (error) => {
-          console.log(error);
-        });
- 
+      // console.log(this.filteredData2);
+      //  console.log(this.KeyMembers);
+    }, (error) => {
+      console.log(error);
+    });
+
 
   }
-  
+
   openhistory(content) {
     this.modalService.open(content, {
       ariaLabelledBy: 'modal-basic-title',
       size: 'lg',
     });
   }
-  openprofile(row,content) {
+  openprofile(row, content) {
     this.modalService.open(content, {
       ariaLabelledBy: 'modal-basic-title',
       size: 'lg',
     });
-    this.memdtls=row;
+    this.memdtls = row;
     console.log(row);
-   
+
   }
 
-  back(){
-    this.memberview=false;
-    this.tableview=true;
+  back() {
+    this.memberview = false;
+    this.tableview = true;
   }
   openmembers(id) {
-    this.memberview=true;
-    this.tableview=false;
-    this.CatMembers="";
-    console.log("category id",id);
-   
-    this.loader1=true;
-    this.request.getbusinessmembers(this.memb_id,id).subscribe((response:any) => {
+    this.memberview = true;
+    this.tableview = false;
+    this.CatMembers = "";
+    console.log("category id", id);
+
+    this.loader1 = true;
+    this.request.getbusinessmembers(this.memb_id, id).subscribe((response: any) => {
       // console.log(response.data);
-      this.CatMembers=response;
-      this.loader1=false;
-      response.forEach(element =>{
+      this.CatMembers = response;
+      this.loader1 = false;
+      response.forEach(element => {
         this.filteredData1.push(element);
       });
-    //  this.filteredData1=response.data;
-      
-     console.log(this.CatMembers);
-   console.log(this.filteredData1);
-        }, (error) => {
-          console.log(error);
-        });
+      //  this.filteredData1=response.data;
+
+      console.log(this.CatMembers);
+      console.log(this.filteredData1);
+    }, (error) => {
+      console.log(error);
+    });
   }
 
-  
+
   pendinghistory(content) {
     this.modalService.open(content, {
       ariaLabelledBy: 'modal-basic-title',
@@ -265,23 +266,23 @@ viewdata(){
   }
 
   openbusinessprofile(rec, content) {
-    console.log("busmem",rec);
+    console.log("busmem", rec);
     this.modalService.open(content, {
       ariaLabelledBy: 'modal-basic-title',
       size: 'lg',
     });
-    this.Busmemb=rec;
-    console.log("busmem",this.Busmemb);
+    this.Busmemb = rec;
+    console.log("busmem", this.Busmemb);
   }
 
-  openkeyprofile(name,content) {
+  openkeyprofile(name, content) {
     // console.log(name);
     this.modalService.open(content, {
       ariaLabelledBy: 'modal-basic-title',
       size: 'lg',
     });
-     this.memdtls=name;
-     
+    this.memdtls = name;
+
   }
 
   arrayRemove(array, id) {
@@ -297,14 +298,14 @@ viewdata(){
     // get the amount of columns in the table
     const colsAmt = this.columns.length;
     // get the key names of each column in the dataset
-    const keys = Object.keys( this.filteredData[0]);
-    console.log("keys",""+keys);
+    const keys = Object.keys(this.filteredData[0]);
+    console.log("keys", "" + keys);
     // assign filtered matches to the active datatable
     this.Business = this.filteredData.filter(function (item) {
       // iterate through each row's column data
       for (let i = 0; i < 1; i++) {
-        console.log("itemkeys",item[keys[i]].toString().toLowerCase().indexOf(val));
-        console.log("keyindex",keys[i]);
+        console.log("itemkeys", item[keys[i]].toString().toLowerCase().indexOf(val));
+        console.log("keyindex", keys[i]);
         // check for a match
         if (
           item[keys[i]].toString().toLowerCase().indexOf(val) !== -1 ||
@@ -318,21 +319,21 @@ viewdata(){
     // this.table.offset = 0;
   }
 
-   // filter table data for category mebers
-   filterDatatable1(event) {
+  // filter table data for category mebers
+  filterDatatable1(event) {
     // get the value of the key pressed and make it lowercase
     const val = event.target.value.toLowerCase();
     // get the amount of columns in the table
     const colsAmt = this.columns.length;
     // get the key names of each column in the dataset
-    const keys = Object.keys( this.filteredData1[0]);
-    console.log("keys",""+keys);
+    const keys = Object.keys(this.filteredData1[0]);
+    console.log("keys", "" + keys);
     // assign filtered matches to the active datatable
     this.CatMembers = this.filteredData1.filter(function (item) {
       // iterate through each row's column data
       for (let i = 1; i < 2; i++) {
-        console.log("itemkeys",item[keys[i]].toString().toLowerCase().indexOf(val));
-        console.log("keyindex",keys[i]);
+        console.log("itemkeys", item[keys[i]].toString().toLowerCase().indexOf(val));
+        console.log("keyindex", keys[i]);
         // check for a match
         if (
           item[keys[i]].toString().toLowerCase().indexOf(val) !== -1 ||
@@ -346,21 +347,21 @@ viewdata(){
     // this.table.offset = 0;
   }
 
-   // filter table data for keymembers
-   filterDatatable2(event) {
+  // filter table data for keymembers
+  filterDatatable2(event) {
     // get the value of the key pressed and make it lowercase
     const val = event.target.value.toLowerCase();
     // get the amount of columns in the table
     const colsAmt = this.columns.length;
     // get the key names of each column in the dataset
-    const keys = Object.keys( this.filteredData2[0]);
-    console.log("keys",""+keys);
+    const keys = Object.keys(this.filteredData2[0]);
+    console.log("keys", "" + keys);
     // assign filtered matches to the active datatable
     this.KeyMembers = this.filteredData2.filter(function (item) {
       // iterate through each row's column data
       for (let i = 1; i < 2; i++) {
-        console.log("itemkeys",item[keys[i]].toString().toLowerCase().indexOf(val));
-        console.log("keyindex",keys[i]);
+        console.log("itemkeys", item[keys[i]].toString().toLowerCase().indexOf(val));
+        console.log("keyindex", keys[i]);
         // check for a match
         if (
           item[keys[i]].toString().toLowerCase().indexOf(val) !== -1 ||

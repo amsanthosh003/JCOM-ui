@@ -107,16 +107,17 @@
       <div class="col-12 col-md-8 col-lg-8">
         <div class="card">
           <div class="card-header">
-            <h4>ConnectGiven VS GNoteReceived</h4>
+            <h4>GNoteGiven VS GNoteReceived</h4>
           </div>
           <div class="card-body">
             <div style="text-align:center">
-              <apx-chart [series]="barChartOptions2.series" [chart]="barChartOptions2.chart"
-                [dataLabels]="barChartOptions2.dataLabels" [plotOptions]="barChartOptions2.plotOptions"
-                [grid]="barChartOptions2.grid" [yaxis]="barChartOptions2.yaxis" 
-                [fill]="barChartOptions2.fill" [stroke]="barChartOptions2.stroke" [tooltip]="barChartOptions2.tooltip"
-                [xaxis]="barChartOptions2.xaxis">
-              </apx-chart>
+              <apx-chart [series]="serviceChartOptions?.series" [chart]="serviceChartOptions?.chart"
+              [xaxis]="serviceChartOptions?.xaxis" [stroke]="serviceChartOptions?.stroke"
+              [tooltip]="serviceChartOptions?.tooltip" [dataLabels]="serviceChartOptions?.dataLabels"
+              [legend]="serviceChartOptions.legend" 
+              [grid]="serviceChartOptions?.grid" [yaxis]="serviceChartOptions?.yaxis"
+             ></apx-chart>
+            
             </div>
           </div>
         </div>
@@ -271,10 +272,10 @@
       <div class="col-md-12 col-lg-8 col-xl-8 ">
         <div class="card"> 
           <div class="card-header">
-            <h4>ConnectReceived VS GNoteGiven</h4>
+            <h4>ConnectGiven VS ConnectReceived</h4>
           </div>
           <div class="card-body">
-            <apx-chart [series]="lineChartOptions.series" [chart]="lineChartOptions.chart"
+            <apx-chart [series]="lineChartOptions?.series" [chart]="lineChartOptions.chart"
               [xaxis]="lineChartOptions.xaxis" [stroke]="lineChartOptions.stroke" [colors]="lineChartOptions.colors"
               [dataLabels]="lineChartOptions.dataLabels" [legend]="lineChartOptions.legend"
               [tooltip]="lineChartOptions.tooltip" [markers]="lineChartOptions.markers" [grid]="lineChartOptions.grid"
@@ -292,7 +293,7 @@
           </div>
           <div class="card-body">
             <div id="chart">
-              <apx-chart [series]="pieChartOptions.series2" [chart]="pieChartOptions.chart"
+              <apx-chart [series]="pieChartOptions?.series2" [chart]="pieChartOptions.chart"
                 [labels]="pieChartOptions.labels" [responsive]="pieChartOptions.responsive"
                 [colors]="pieChartOptions.colors" [dataLabels]="pieChartOptions.dataLabels"
                 [plotOptions]="pieChartOptions.plotOptions" [legend]="pieChartOptions.legend" class="apex-pie-center">
@@ -300,31 +301,36 @@
             </div>
             <div class="table-responsive m-t-15">
               <table class="table align-items-center">
-                <tbody>
+                <tbody *ngFor="let s of Status">
                   <tr class="tbl-row-border">
                     <td><i class="fa fa-circle col-blue msr-2"></i>Attendance</td>
-                    <td>18</td>
-                    <td class="col-green">+12%</td>
+                    <td>{{s.attendance_score}}</td>
+                   
                   </tr>
                   <tr class="tbl-row-border">
                     <td><i class="fa fa-circle col-cyan msr-2"></i>Connect</td>
-                    <td>22</td>
-                    <td class="col-orange">-12%</td>
+                    <td>{{s.connect_score}}</td>
+                    
                   </tr>
                   <tr class="tbl-row-border">
                     <td><i class="fa fa-circle col-orange msr-2"></i>GNote</td>
-                    <td>14</td>
-                    <td class="col-green">+3%</td>
+                    <td>{{s.gnote_score}}</td>
+                   
                   </tr>
                   <tr class="tbl-row-border">
-                    <td><i class="fa fa-circle col-orange msr-2"></i>YouAndMe</td>
-                    <td>14</td>
-                    <td class="col-green">+3%</td>
+                    <td><i class="fa fa-circle col-pink msr-2"></i>YouAndMe</td>
+                    <td>{{s.youandme_score}}</td>
+                   
                   </tr>
                   <tr class="tbl-row-border">
-                    <td><i class="fa fa-circle col-orange msr-2"></i>Guest</td>
-                    <td>14</td>
-                    <td class="col-green">+3%</td>
+                    <td><i class="fa fa-circle col-amber msr-2"></i>Guest</td>
+                    <td>{{s.guest_score}}</td>
+                    
+                  </tr>
+                  <tr class="tbl-row-border">
+                    <td><i class="fa fa-circle col-brown msr-2"></i>Balance</td>
+                    <td>{{s.balance}}</td>
+                    
                   </tr>
                   
                 </tbody>

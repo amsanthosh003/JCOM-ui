@@ -11,7 +11,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { RequestService } from "../../services/request.service"; 
+import { RequestService } from "../../services/request.service";
 
 import {
   ApexAxisChartSeries,
@@ -52,6 +52,8 @@ export type ChartOptions = {
 };
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { User } from '../../core/models/user';
+import { Data } from '@angular/router';
+
 
 export type smallBarChart = {
   series: ApexAxisChartSeries;
@@ -60,6 +62,22 @@ export type smallBarChart = {
   tooltip: ApexTooltip;
 };
 
+export type BarChartOptions = {
+  series: ApexAxisChartSeries;
+  chart: ApexChart;
+  dataLabels: ApexDataLabels;
+  plotOptions: ApexPlotOptions;
+  xaxis: ApexXAxis;
+  stroke: ApexStroke;
+  yaxis: ApexYAxis;
+  grid: ApexGrid;
+  title: ApexTitleSubtitle;
+  legend: ApexLegend;
+  tooltip: ApexTooltip;
+  markers: ApexMarkers;
+};
+
+
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -67,6 +85,7 @@ export type smallBarChart = {
   providers: [ToastrService],
 })
 export class MainComponent implements OnInit {
+  public serviceChartOptions: Partial<BarChartOptions>;
   public lineChartOptions: Partial<ChartOptions>;
   public barChartOptions: Partial<ChartOptions>;
   public stackBarChart: Partial<ChartOptions>;
@@ -99,18 +118,18 @@ export class MainComponent implements OnInit {
   Connects: any;
   filteredData: any;
   loadingIndicator: boolean;
- 
+  Statics: any = [];
   memberid: any;
   loader: boolean;
+  donutscore = [];
+  seraries:any=[]
   @ViewChild(DatatableComponent, { static: false }) table: DatatableComponent;
- 
+
   rows = [];
- 
- 
   newUserImg = 'assets/images/users/user-2.png';
   data1 = [];
   public Connectss: any;
-  
+
   editForm: FormGroup;
   register: FormGroup;
 
@@ -119,10 +138,10 @@ export class MainComponent implements OnInit {
   reorderable = true;
   editcustmergroup: any;
   public selected: any[] = [];
-  custmernamevalue:any;
-  custmerphonevalue:any;
-  custmeremailvalue:any;
-  custmerpasswordvalue:any;
+  custmernamevalue: any;
+  custmerphonevalue: any;
+  custmeremailvalue: any;
+  custmerpasswordvalue: any;
   isdisable: boolean;
   columns = [
     { name: 'username' },
@@ -130,32 +149,32 @@ export class MainComponent implements OnInit {
     { name: 'email' },
     { name: 'password' }
   ];
- 
+
   countries = [
     { id: '1', name: 'India' },
-   
+
   ];
   meetings = [
-   
+
     { id: '1', value: 'Live' },
     { id: '2', value: 'Virtual' },
     { id: '3', value: 'Virtual International' },
     { id: '4', value: 'Association' },
   ];
   connects = [
-   
+
     { id: '1', value: 'JCOM' },
     { id: '2', value: 'JCI' },
     { id: '3', value: 'Non-JCI' },
-   
+
   ];
   connectssts = [
-   
+
     { id: '1', value: 'Self Connect' },
     { id: '2', value: 'Within JCI-JCOM' },
 
   ];
- 
+
   @ViewChild(DatatableComponent, { static: false }) table2: DatatableComponent;
   error: string;
   IdValue: any;
@@ -175,7 +194,7 @@ export class MainComponent implements OnInit {
   memb_id: any;
   Connectdtls: any;
   pending: boolean;
-  history: boolean=true;
+  history: boolean = true;
   tblname: any;
   Gnotes: any;
   data2: any;
@@ -183,28 +202,34 @@ export class MainComponent implements OnInit {
   Meetings: Object;
   sts: any;
   OverallStatus: any;
-  barChartOptions2: { series: { name: string; data: number[]; }[]; chart: { type: string; height: number; foreColor: string; }; plotOptions: { bar: { horizontal: boolean; columnWidth: string; borderRadius: number; }; }; grid: { borderColor: string; }; dataLabels: { enabled: boolean; }; stroke: { show: boolean; width: number; colors: string[]; }; xaxis: { categories: string[]; labels: { style: { colors: string; }; }; }; yaxis: { title: { text: string; }; }; fill: { opacity: number; }; tooltip: { theme: string; marker: { show: boolean; }; x: { show: boolean; }; }; };
-  Statics: Object;
-  month1:[];
-  connectgiv: any;
-  gnoterec: any;
-  avggiven: any;
-  avgrec: any;
+  barChartOptions2: { series: { name: string; data: number[]; }[]; chart: { type: string; height: number; foreColor: string; }; plotOptions: { bar: { horizontal: boolean; columnWidth: string; borderRadius: number; }; }; grid: { borderColor: string; }; dataLabels: { enabled: boolean; }; stroke: { show: boolean; width: number; colors: string[]; }; xaxis: { categories: string[]; }; yaxis: { title: { text: string; }; }; fill: { opacity: number; }; tooltip: { theme: string; marker: { show: boolean; }; x: { show: boolean; }; }; };
+
+  month1: [];
+  connectgiv: [];
+  gnoterec: [];
+  avggiven: [];
+  avgrec: [];
+  Status: Object;
+  scoress: number[];
+  Month1: [];
+  Score1: any[];
+
+
 
 
   constructor(
     private fb: FormBuilder,
     private modalService: NgbModal,
     private toastr: ToastrService,
-    private request: RequestService){
+    private request: RequestService) {
     this.currentUserSubject = new BehaviorSubject<User>(
       JSON.parse(localStorage.getItem('currentUser'))
     );
     this.currentUser = this.currentUserSubject.asObservable();
     this.userstr = this.currentUserSubject.value[0]
-    this.memb_id=this.userstr.m_id;
-    console.log("user name",this.userstr.m_name);
-   
+    this.memb_id = this.userstr.m_id;
+    console.log("user name", this.userstr.m_name);
+
     window.onresize = () => {
       this.scrollBarHorizontal = window.innerWidth < 1200;
     };
@@ -212,127 +237,152 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.chart1();
+
     this.chart2();
     this.chart3();
-    this.chart4();
     this.welcomeSuccess();
-    this.viewdata();  
-     this.viewdata2();
-     this.meeting() ;
-     this.cardCharts() ;
-     this.piechart();
-     this.statics();
+    this.viewdata();
+    this.viewdata2();
+    this.meeting();
+    this.cardCharts();
+    // this.piechart();
+    // this.statics();
+    this.Score();
+    // this.chart4();
+    this.getstatics();
+    this.getstatics2()
 
   }
 
 
-  viewdata(){
+  viewdata() {
     this.fetch((data) => {
       this.data1 = data;
       // this.filteredData = data;
-      
-      console.log(" data",data); 
+
+      // console.log(" data",data); 
       var result = data.filter(obj => {
         return obj.type == 2
       });
-      this.Connectss=result.slice(0, 10);
-  
-      console.log("short",result);
-    //  this.shortt= this.data1.find({type:1});
-      
-     
+      this.Connectss = result.slice(0, 10);
+
+      // console.log("short",result);
+      //  this.shortt= this.data1.find({type:1});
+
+
       setTimeout(() => {
         this.loadingIndicator = false;
       }, 500);
     });
   }
-  
-    // fetch data
-    fetch(cb) {
-      this.request.fetchconnectById(this.userstr.m_id).subscribe((response) => {
+
+  // fetch data
+  fetch(cb) {
+    this.request.fetchconnectById(this.userstr.m_id).subscribe((response) => {
       //  console.log("fetch data",response);    
-                cb(response);
-                this.loader=false;
-      }, (error) => {
-        console.log(error);
-      });
-  
-    }
-
-    viewdata2() {
-      this.fetch2((data1) => {
-        this.data2 = data1;
-        // this.filteredData = data;
-        var result = data1.filter(obj => {
-          return obj.type == 2
-        });
-        this.Gnotes =result.slice(0, 10);
-        console.log(this.Gnotes);
-        // this.filteredData = data;
-        setTimeout(() => {
-          this.loadingIndicator = false;
-        }, 500);
-      });
-    }
-   
-    fetch2(cb) {
-      this.request.fetchgnoteById(this.userstr.m_id).subscribe((response) => {
-        console.log(response);
-        cb(response);
-        // this.loader = false;
-      }, (error) => {
-        console.log(error);
-      });
-  
-    }
-    meeting() {
-      this.request.fetchmeeting(this.userstr.m_id).subscribe((response) => {
-    this.Meetings=response;
-    this.OverallStatus=this.Meetings[0].overall_status;
-    this.avggiven=this.OverallStatus[0].avg_ref_value_given;
-    this.avgrec=this.OverallStatus[0].avg_ref_value_received;
-    console.log(this.avggiven);
-    console.log(this.OverallStatus);
-      }, (error) => {
-        console.log(error);
-      });
-    
-    }
-  welcomeSuccess() {
-    this.toastr.success('Welcome !!!  ' +this.userstr.m_name);
-  }
-
-  statics() {
-    this.request.fetchstatic(this.userstr.m_id).subscribe((response) => {
-  this.Statics=response;
-  this.month1=this.Statics[0].month;
-  this.connectgiv=this.Statics[0].connect_given;
-  this.gnoterec=this.Statics[0].gnote_received;
-  console.log(this.Statics);
-  console.log("mon",this.month1);
-  console.log("con given",this.connectgiv);
-  console.log("gnote rec",this.gnoterec);
-  
+      cb(response);
+      this.loader = false;
     }, (error) => {
       console.log(error);
     });
-  
+
   }
 
-  private chart4() {
-    this.barChartOptions2 = {
-      series: [
-        {
-          name: 'Connect Given',
-          data: [44, 55, 57, 56, 61, 58, 63, 60, 66],
-        },
-        {
-          name: 'Gnote Received',
-          data: [76, 85, 101, 98, 87, 105, 91, 114, 94],
-        },
-       
-      ],
+  viewdata2() {
+    this.fetch2((data1) => {
+      this.data2 = data1;
+      // this.filteredData = data;
+      var result = data1.filter(obj => {
+        return obj.type == 2
+      });
+      this.Gnotes = result.slice(0, 10);
+      // console.log(this.Gnotes);
+      // this.filteredData = data;
+      setTimeout(() => {
+        this.loadingIndicator = false;
+      }, 500);
+    });
+  }
+
+  fetch2(cb) {
+    this.request.fetchgnoteById(this.userstr.m_id).subscribe((response) => {
+      // console.log(response);
+      cb(response);
+      // this.loader = false;
+    }, (error) => {
+      console.log(error);
+    });
+
+  }
+  meeting() {
+    this.request.fetchmeeting(this.userstr.m_id).subscribe((response) => {
+      this.Meetings = response;
+      this.OverallStatus = this.Meetings[0].overall_status;
+      this.avggiven = this.OverallStatus[0].avg_ref_value_given;
+      this.avgrec = this.OverallStatus[0].avg_ref_value_received;
+      // console.log(this.avggiven);
+      // console.log(this.OverallStatus);
+    }, (error) => {
+      console.log(error);
+    });
+
+  }
+  welcomeSuccess() {
+    this.toastr.success('Welcome !!!  ' + this.userstr.m_name);
+  }
+
+
+  getstatics() {
+    this.request.fetchstatic(this.userstr.m_id).subscribe((response) => {
+      this.Statics = response;
+      this.chart4();
+      console.log('statics', this.Statics)
+      this.month1 = this.Statics[0].month;
+      this.connectgiv = this.Statics[0].connect_given;
+      this.gnoterec = this.Statics[0].gnote_received;
+      console.log('this.Statics', this.Statics);
+      console.log("mon", this.month1);
+      console.log("con given", this.connectgiv);
+      console.log("gnote rec", this.gnoterec);
+
+    }, (error) => {
+      console.log(error);
+    });
+
+  }
+  chart4() {
+    var _categories = []
+    var searies = [];
+
+    var month = this.Statics[0]?.month;
+    var connectgiv = [];
+    var connectrec = [];
+    var gnoterec = [];
+    var gnotegiv = [];
+
+    for (var i = 0; i < month?.length; i++) {
+      _categories.push(month[i]);
+      connectgiv.push(this.Statics[0]?.connect_given[i]);
+      connectrec.push(this.Statics[0]?.connect_received[i]);
+      gnoterec.push(this.Statics[0]?.gnote_received[i]);
+      gnotegiv.push(this.Statics[0]?.gnote_given[i]);
+
+    }
+    console.log("con given", connectgiv);
+    console.log("gnote rec", gnoterec);
+
+    searies.push({
+      name: "GNote Given",
+      data: gnotegiv
+    },
+      {
+        name: "GNote Received",
+        data: gnoterec
+      },
+    )
+
+    this.serviceChartOptions = {
+      series: searies,
       chart: {
         type: 'bar',
         height: 350,
@@ -342,14 +392,21 @@ export class MainComponent implements OnInit {
         bar: {
           horizontal: false,
           columnWidth: '50%',
-          borderRadius: 5,
+          dataLabels: {
+            position: "top"
+          }
         },
       },
       grid: {
         borderColor: '#9aa0ac',
       },
       dataLabels: {
-        enabled: false,
+        enabled: true,
+        offsetX: -6,
+        style: {
+          fontSize: "12px",
+          colors: ["#fff"]
+        }
       },
       stroke: {
         show: true,
@@ -357,48 +414,321 @@ export class MainComponent implements OnInit {
         colors: ['transparent'],
       },
       xaxis: {
-        categories:['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul']
-        ,
-        labels: {
-          style: {
-            colors: '#9aa0ac',
-          },
-        },
+        categories: _categories
       },
-     
       yaxis: {
         title: {
           text: '$ (thousands)',
         },
       },
-      fill: {
-        opacity: 1,
-      },
+
+
       tooltip: {
         theme: 'dark',
         marker: {
           show: true,
         },
-        x: {
-          show: true,
-        },
-      },
+        y: {
+          formatter: function (val) {
+            return "$ " + val + " thousands";
+          }
+        }
+      }
+
+
+
     };
+
+    this.serviceChartOptions = this.serviceChartOptions
   }
 
- 
-  private chart1() {
+
+  // statics() {
+  //   this.request.fetchstatic(this.userstr.m_id).subscribe((response) => { 
+  //     this.Statics = response;
+  //     console.log("lee", this.Statics);
+
+
+  //     var _categories = []
+  //     var searies = [];
+  //     var month = this.Statics;
+  //     console.log("mmmoo", month)
+  //     var connectgiv = [];
+  //     var gnoterec = []
+
+  //     for (var i = 0; i < month?.length; i++) {
+  //       _categories.push(month[i].month);
+  //       connectgiv.push(month[i].connect_given)
+  //       gnoterec.push(month[i].gnote_received)
+  //     }
+  //     console.log("le", _categories)
+
+  //     searies.push({
+  //       name: "Connection Given",
+  //       data: connectgiv
+  //     },
+  //       {
+  //         name: "Gnote Received",
+  //         data: gnoterec
+  //       }
+  //     );
+  //     console.log("le", searies);
+
+  //     this.barChartOptions2 = {
+  //       series: searies,
+  //       chart: {
+  //         type: 'bar',
+  //         height: 350,
+  //         foreColor: '#9aa0ac',
+  //       },
+  //       plotOptions: {
+  //         bar: {
+  //           horizontal: false,
+  //           columnWidth: '50%',
+  //           borderRadius: 5,
+  //         },
+  //       },
+  //       grid: {
+  //         borderColor: '#9aa0ac',
+  //       },
+  //       dataLabels: {
+  //         enabled: false,
+  //       },
+  //       stroke: {
+  //         show: true,
+  //         width: 2,
+  //         colors: ['transparent'],
+  //       },
+  //       xaxis: {
+  //         categories: _categories
+  //       },
+
+  //       yaxis: {
+  //         title: {
+  //           text: '$ (thousands)',
+  //         },
+  //       },
+  //       fill: {
+  //         opacity: 1,
+  //       },
+  //       tooltip: {
+  //         theme: 'dark',
+  //         marker: {
+  //           show: true,
+  //         },
+  //         x: {
+  //           show: true,
+  //         },
+  //       },
+  //     };
+  //     // console.log("le", series);
+
+  //     this.barChartOptions2 = this.barChartOptions2
+
+  //   }, (error) => {
+  //     console.log(error);
+  //   });
+
+  // }
+
+  //   statics() {
+  //     this.request.fetchstatic(this.userstr.m_id).subscribe((response) => {  
+  //       // console.log("response", response)
+  //       this.Statics = response; 
+  //       console.log("lee",this.Statics);    
+  //     }, (error) => {
+  //       console.log(error);
+  //     });
+  //      this.chart4();
+  //   }
+
+  //  chart4() {
+  //     var _categories= []
+  //     var searies=[];
+  //     var month=this.Statics;
+  //     console.log("mmmoo",month)
+  //     //var dataRate=this._currentPeroid?.billRate;
+  //     var connectgiv=[];
+  //     var gnoterec=[];
+
+  //     for(var i=0;i<month?.length;i++){
+  //       _categories.push(month[i].month);
+  //        connectgiv.push(month[i].connect_given)
+  //        gnoterec.push(month[i].gnote_received)
+  //     }
+  //     console.log("le",_categories)
+  //     // for(var property in month){
+  //     //   _categories.push(month[property]);
+  //     //   // connectgiv.push(property.connect_given)
+  //     //   //  gnoterec.push(property.gnote_received)
+  //     // }
+
+  //    /* for(var k=0;k<dataRate?.length;k++){ 
+  //       datRate.push(dataRate[k].totalAmount)
+  //     }*/
+
+
+  //  /*   searies.push({
+  //           name: "Rate",
+  //           data: datRate
+  //         },
+  //       )*/
+  //       searies.push({
+  //         name: "Connection Given",
+  //         data: connectgiv
+  //       },
+  //       {
+  //         name: "Gnote Received",
+  //         data: gnoterec
+  //       }
+  //       )
+
+  //       this.barChartOptions2 = {
+  //       series:searies,
+  //       chart: {
+  //         type: 'bar',
+  //         height: 350,
+  //         foreColor: '#9aa0ac',
+  //       },
+  //       plotOptions: {
+  //         bar: {
+  //           horizontal: false,
+  //           columnWidth: '50%',
+  //           borderRadius: 5,
+  //         },
+  //       },
+  //       grid: {
+  //         borderColor: '#9aa0ac',
+  //       },
+  //       dataLabels: {
+  //         enabled: false,
+  //       },
+  //       stroke: {
+  //         show: true,
+  //         width: 2,
+  //         colors: ['transparent'],
+  //       },
+  //       xaxis: {
+  //      categories: _categories
+  //       },
+
+  //       yaxis: {
+  //         title: {
+  //           text: '$ (thousands)',
+  //         },
+  //       },
+  //       fill: {
+  //         opacity: 1,
+  //       },
+  //       tooltip: {
+  //         theme: 'dark',
+  //         marker: {
+  //           show: true,
+  //         },
+  //         x: {
+  //           show: true,
+  //         },
+  //       },
+  //     };
+
+  //     this.barChartOptions2=this.barChartOptions2
+  //   }
+
+
+
+
+  //  private chart4(){
+  //     this.barChartOptions2 = {
+  //    series:searies,
+  //       chart: {
+  //         type: 'bar',
+  //         height: 350,
+  //         foreColor: '#9aa0ac',
+  //       },
+  //       plotOptions: {
+  //         bar: {
+  //           horizontal: false,
+  //           columnWidth: '50%',
+  //           borderRadius: 5,
+  //         },
+  //       },
+  //       grid: {
+  //         borderColor: '#9aa0ac',
+  //       },
+  //       dataLabels: {
+  //         enabled: false,
+  //       },
+  //       stroke: {
+  //         show: true,
+  //         width: 2,
+  //         colors: ['transparent'],
+  //       },
+  //       xaxis: {
+  //     categories:  _categories
+  //      },
+
+  //       yaxis: {
+  //         title: {
+  //           text: '$ (thousands)',
+  //         },
+  //       },
+  //       fill: {
+  //         opacity: 1,
+  //       },
+  //       tooltip: {
+  //         theme: 'dark',
+  //         marker: {
+  //           show: true,
+  //         },
+  //         x: {
+  //           show: true,
+  //         },
+  //       },
+  //     };
+  //   }
+
+  getstatics2() {
+    this.request.fetchstatic(this.userstr.m_id).subscribe((response) => {
+      this.Statics = response;
+      this.chart5();
+      console.log('statics', this.Statics)
+
+
+    }, (error) => {
+      console.log(error);
+    });
+
+  }
+  chart5() {
+    var _categories = []
+    var searies = [];
+
+    var month = this.Statics[0]?.month;
+    var connectrec = [];
+    var connectgiv = [];
+    var gnotegiv = [];
+    var gnoterec = [];
+    for (var i = 0; i < month?.length; i++) {
+      _categories.push(month[i]);
+      connectrec.push(this.Statics[0]?.connect_received[i]);
+      gnotegiv.push(this.Statics[0]?.gnote_given[i]);
+      gnoterec.push(this.Statics[0]?.gnote_received[i]);
+      connectgiv.push(this.Statics[0]?.connect_given[i]);
+    }
+    console.log("cr", connectrec);
+    console.log("gg", gnotegiv);
+    searies.push({
+      name: "Connect Given",
+      data: connectgiv
+    },
+      {
+        name: "Connect Received",
+        data: connectrec
+
+      },
+    )
     this.lineChartOptions = {
-      series: [
-        {
-          name: 'Data 1',
-          data: [80, 250, 30, 120, 260, 100, 180],
-        },
-        {
-          name: 'Data 2',
-          data: [85, 130, 85, 225, 80, 190, 120],
-        },
-      ],
+      series: searies,
       chart: {
         height: 350,
         type: 'line',
@@ -437,10 +767,10 @@ export class MainComponent implements OnInit {
         size: 3,
       },
       xaxis: {
-        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+        categories: _categories,
       },
       yaxis: {
-        // opposite: true,
+        //opposite: true,
       },
       legend: {
         position: 'top',
@@ -496,59 +826,145 @@ export class MainComponent implements OnInit {
       },
     };
   }
-  private piechart() {
-    this.pieChartOptions = {
-      series2: [18, 22, 14, 31, 15],
-      chart: {
-        type: 'donut',
-        width: 280,
-      },
-      legend: {
-        show: false,
-      },
-      dataLabels: {
-        enabled: false,
-      },
-      plotOptions: {
-        pie: {
-          donut: {
-            size: '65%',
-            background: 'transparent',
-            labels: {
-              show: true,
-              name: {
+
+  Score() {
+    // console.log("sec");
+    this.request.fetchscore(this.userstr.m_id).subscribe((response: any) => {
+      this.Status = response;
+
+      let result = response.map(x => {
+
+        return {
+          attendance_score: x.attendance_score,
+          connect_score: x.connect_score,
+          gnote_score: x.gnote_score,
+          guest_score: x.guest_score,
+          youandme_score: x.youandme_score,
+          balance: x.balance
+        };
+      });
+      var result1 = result[0];
+      console.log("x", result1);
+
+      var searies = [];
+      for (var property in result1) {
+        searies.push(result1[property]);
+      }
+      console.log("valu", searies);
+
+      this.pieChartOptions = {     
+       series2: searies,
+        chart: {
+          type: 'donut',
+          width: 280,
+        },
+        legend: { 
+          show: false,
+        },
+        dataLabels: {
+          enabled: false,
+        },
+        plotOptions: {
+          pie: {
+            donut: {
+              size: '65%',
+              background: 'transparent',
+              labels: {
                 show: true,
-                fontSize: '22px',
-                fontWeight: 600,
-              },
-              value: {
-                show: true,
-                fontSize: '16px',
-                fontWeight: 400,
-                color: '#9aa0ac',
-              },
-              total: {
-                show: true,
-                showAlways: false,
-                label: 'Total',
-                fontSize: '22px',
-                fontWeight: 600,
-                color: '#6777EF',
+                name: {
+                  show: true,
+                  fontSize: '22px',
+                  fontWeight: 600,
+                },
+                value: {
+                  show: true,
+                  fontSize: '16px',
+                  fontWeight: 400,
+                  color: '#9aa0ac',
+                },
+                total: {
+                  show: true,
+                  showAlways: false,
+                  label: 'Total',
+                  fontSize: '22px',
+                  fontWeight: 600,
+                  color: '#6777EF',
+                },
               },
             },
           },
         },
-      },
-      colors: ['#9A8BE7', '#2AC3CB', '#FFAA00', '#FA62BB', '#FFD000'],
-      labels: ['Project 1', 'Project 2', 'Project 3', 'Project 4', 'Project 5'],
-      responsive: [
-        {
-          breakpoint: 480,
-          options: {},
-        },
-      ],
-    };
+        colors: ['#9A8BE7', '#2AC3CB', '#FFAA00', '#FA62BB', '#FFD000','#5c081c'],
+        labels: ['Attendance', 'Connect', 'GNote', 'YouAndMe', 'Guest','Balance'],
+        responsive: [
+          {
+            breakpoint: 480,
+            options: {},
+          },
+        ],
+      };
+
+    }, (error) => {
+      console.log(error);
+    });
+
   }
+  //  piechart() {
+  //   console.log("values", this.donutscore);
+  //   this.pieChartOptions = {
+  //     series2: [18, 22, 14, 31, 15],
+  //     // series2: [18, 22, 14, 31, 15],
+
+  //     chart: {
+  //       type: 'donut',
+  //       width: 280,
+  //     },
+  //     legend: {
+  //       show: false,
+  //     },
+  //     dataLabels: {
+  //       enabled: false,
+  //     },
+  //     plotOptions: {
+  //       pie: {
+  //         donut: {
+  //           size: '65%',
+  //           background: 'transparent',
+  //           labels: {
+  //             show: true,
+  //             name: {
+  //               show: true,
+  //               fontSize: '22px',
+  //               fontWeight: 600,
+  //             },
+  //             value: {
+  //               show: true,
+  //               fontSize: '16px',
+  //               fontWeight: 400,
+  //               color: '#9aa0ac',
+  //             },
+  //             total: {
+  //               show: true,
+  //               showAlways: false,
+  //               label: 'Total',
+  //               fontSize: '22px',
+  //               fontWeight: 600,
+  //               color: '#6777EF',
+  //             },
+  //           },
+  //         },
+  //       },
+  //     },
+  //     colors: ['#9A8BE7', '#2AC3CB', '#FFAA00', '#FA62BB', '#FFD000'],
+  //     labels: ['Attendance', 'Connect', 'GNote', 'YouAndMe', 'Guest'],
+  //     responsive: [
+  //       {
+  //         breakpoint: 480,
+  //         options: {},
+  //       },
+  //     ],
+  //   };
+  // }
   private chart2() {
     this.barChartOptions = {
       series: [

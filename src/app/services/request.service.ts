@@ -239,6 +239,11 @@ public fetchstatic(id) {
   this.url = `${this.endPoint2}/get_statistics.php?m_id=` + id;
   return this.http.get(this.url);
 }
+//score
+public fetchscore(id) {
+  this.url = `${this.endPoint2}/get_member_score.php?m_id=` + id;
+  return this.http.get(this.url);
+}
   //customer
   public getcustomer() {
     this.url = `${this.endPoint1}/customer/`;
