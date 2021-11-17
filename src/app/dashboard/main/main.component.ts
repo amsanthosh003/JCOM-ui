@@ -60,7 +60,7 @@ export type ChartOptions1 = {
   series: ApexNonAxisChartSeries;
   chart: ApexChart;
   responsive: ApexResponsive[];
-  labels:string[];
+  labels:any;
   dataLabels: ApexDataLabels;
   plotOptions: ApexPlotOptions;
   legend: ApexLegend;
@@ -922,12 +922,26 @@ export class MainComponent implements OnInit {
           },
         },
         colors: ['#9A8BE7', '#2AC3CB', '#FFAA00', '#FA62BB', '#FFD000','#8a030e'],
-
+        tooltip: {
+          shared: false,
+          theme: 'dark',
+         
+          // y: {
+          //   formatter: function (val) {
+          //     return val.toString() + '%';
+          //   },
+          // },
+        },
        
         responsive: [
           {
             breakpoint: 480,
-            options: {},
+            options: {chart: {
+              width: 200
+            },
+            legend: {
+              position: "bottom"
+            }},
           },
         ],
       };
