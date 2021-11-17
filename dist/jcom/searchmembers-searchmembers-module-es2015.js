@@ -1375,7 +1375,8 @@ class SearchmembersComponent {
             response.forEach(element => {
                 this.filteredData2.push(element);
             });
-            // console.log(this.KeyMembers);
+            // console.log(this.filteredData2);
+            //  console.log(this.KeyMembers);
         }, (error) => {
             console.log(error);
         });

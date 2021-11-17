@@ -29,6 +29,7 @@ import {
   ApexFill,
   ApexPlotOptions,
   ApexResponsive,
+  ChartComponent
 } from 'ng-apexcharts';
 
 export type ChartOptions = {
@@ -56,9 +57,7 @@ import { Data } from '@angular/router';
 
 
 export type ChartOptions1 = {
-  // series: ApexAxisChartSeries;
-  series2: ApexNonAxisChartSeries;
-   series: any[];
+  series: ApexNonAxisChartSeries;
   chart: ApexChart;
   responsive: ApexResponsive[];
   labels:string[];
@@ -114,7 +113,7 @@ export class MainComponent implements OnInit {
   public lineChartOptions: Partial<ChartOptions>;
   public barChartOptions: Partial<ChartOptions>;
   public stackBarChart: Partial<ChartOptions>;
-  public pieChartOptions: Partial<ChartOptions1>;
+  // public pieChartOptions: Partial<ChartOptions1>;
   public smallBarChart: any;
   public sampleData = [
     31,
@@ -149,6 +148,10 @@ export class MainComponent implements OnInit {
   loader: boolean;
   donutscore = [];
   seraries: any = []
+
+   @ViewChild("chart") chart: ChartComponent;
+   public pieChartOptions: Partial<ChartOptions1>;
+
   @ViewChild(DatatableComponent, { static: false }) table: DatatableComponent;
 
   rows = [];
@@ -267,14 +270,14 @@ export class MainComponent implements OnInit {
     this.viewdata();
     this.viewdata2();
     this.meeting();
-    this.cardCharts();
+   
     // this.piechart();
     // this.statics();
     this.Score();
     // this.chart4();
     this.getstatics();
     this.getstatics2()
-
+    this.cardCharts();
   }
 
 
@@ -876,7 +879,7 @@ export class MainComponent implements OnInit {
       console.log("x", searies);
       this.pieChartOptions = {
          series: searies,
-       
+         labels:  ['Attendance', 'Connect', 'GNote', 'YouAndMe', 'Guest','Balance'],
         chart: {
           type: 'donut',
           width: 280,
@@ -887,20 +890,7 @@ export class MainComponent implements OnInit {
         dataLabels: {
           enabled: false,
         },
-        // tooltip: {
-        //   theme: 'dark',
-        //   marker: {
-        //     show: true,
-        //   },
-        //   // x: {
-        //   //   show: true,
-        //   // },
-        //   y: {
-        //     formatter: function (val) {
-        //       return "" + val + "";
-        //     }
-        //   }
-        // },
+     
         plotOptions: {
           pie: {
             donut: {
@@ -933,7 +923,7 @@ export class MainComponent implements OnInit {
         },
         colors: ['#9A8BE7', '#2AC3CB', '#FFAA00', '#FA62BB', '#FFD000','#8a030e'],
 
-        labels:  ['Attendance', 'Connect', 'GNote', 'YouAndMe', 'Guest','Balance'],
+       
         responsive: [
           {
             breakpoint: 480,

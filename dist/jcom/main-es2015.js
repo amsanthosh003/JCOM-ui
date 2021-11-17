@@ -1202,6 +1202,11 @@ class RequestService {
         this.url = `${this.endPoint2}/get_statistics.php?m_id=` + id;
         return this.http.get(this.url);
     }
+    //score
+    fetchscore(id) {
+        this.url = `${this.endPoint2}/get_member_score.php?m_id=` + id;
+        return this.http.get(this.url);
+    }
     //customer
     getcustomer() {
         this.url = `${this.endPoint1}/customer/`;

@@ -1956,6 +1956,13 @@
           value: function fetchstatic(id) {
             this.url = "".concat(this.endPoint2, "/get_statistics.php?m_id=") + id;
             return this.http.get(this.url);
+          } //score
+
+        }, {
+          key: "fetchscore",
+          value: function fetchscore(id) {
+            this.url = "".concat(this.endPoint2, "/get_member_score.php?m_id=") + id;
+            return this.http.get(this.url);
           } //customer
 
         }, {
