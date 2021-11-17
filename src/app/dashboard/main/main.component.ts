@@ -215,7 +215,6 @@ export class MainComponent implements OnInit {
   sts: any;
   OverallStatus: any;
   barChartOptions2: { series: { name: string; data: number[]; }[]; chart: { type: string; height: number; foreColor: string; }; plotOptions: { bar: { horizontal: boolean; columnWidth: string; borderRadius: number; }; }; grid: { borderColor: string; }; dataLabels: { enabled: boolean; }; stroke: { show: boolean; width: number; colors: string[]; }; xaxis: { categories: string[]; }; yaxis: { title: { text: string; }; }; fill: { opacity: number; }; tooltip: { theme: string; marker: { show: boolean; }; x: { show: boolean; }; }; };
-
   month1: [];
   connectgiv: [];
   gnoterec: [];
@@ -225,9 +224,6 @@ export class MainComponent implements OnInit {
   scoress: number[];
   Month1: [];
   Score1: any[];
-
-
-
 
   constructor(
     private fb: FormBuilder,
@@ -840,24 +836,22 @@ export class MainComponent implements OnInit {
   }
 
   Score() {
-    // console.log("sec");
     this.request.fetchscore(this.userstr.m_id).subscribe((response: any) => {
       this.Status = response;
 
       let result = response.map(x => {
-
         return {
           attendance_score: x.attendance_score,
           connect_score: x.connect_score,
           gnote_score: x.gnote_score,
           guest_score: x.guest_score,
           youandme_score: x.youandme_score,
-          balance: x.balance
+          balance:x.balance
         };
       });
+
       var result1 =result[0];
       console.log("x", result1);
-
       var searies = [];
       for (var property in result1) {
         searies.push(result1[property]);
@@ -866,6 +860,7 @@ export class MainComponent implements OnInit {
       console.log("x", searies);
 
       this.pieChartOptions = {
+        //  series: searies,
             series: [20,15,20,0,0,45],
             // series2: [18, 22, 14, 31, 15],
       
@@ -879,6 +874,8 @@ export class MainComponent implements OnInit {
             dataLabels: {
               enabled: false,
             },
+                colors: ['#9A8BE7', '#2AC3CB', '#FFAA00', '#FA62BB', '#FFD000','#591112'],
+            labels: ['Attendance', 'Connect', 'GNote', 'YouAndMe', 'Guest','Balance'],
             plotOptions: {
               pie: {
                 donut: {
@@ -909,8 +906,7 @@ export class MainComponent implements OnInit {
                 },
               },
             },
-            colors: ['#9A8BE7', '#2AC3CB', '#FFAA00', '#FA62BB', '#FFD000','#591112'],
-            labels: ['Attendance', 'Connect', 'GNote', 'YouAndMe', 'Guest','Balance'],
+          
             responsive: [
               {
                 breakpoint: 480,

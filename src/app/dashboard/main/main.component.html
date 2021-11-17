@@ -114,7 +114,7 @@
               <apx-chart [series]="serviceChartOptions?.series" [chart]="serviceChartOptions?.chart"
               [xaxis]="serviceChartOptions?.xaxis" [stroke]="serviceChartOptions?.stroke"
               [tooltip]="serviceChartOptions?.tooltip" [dataLabels]="serviceChartOptions?.dataLabels"
-              [legend]="serviceChartOptions.legend" 
+              [legend]="serviceChartOptions?.legend" 
               [grid]="serviceChartOptions?.grid" [yaxis]="serviceChartOptions?.yaxis"
              ></apx-chart>
             
@@ -275,11 +275,11 @@
             <h4>ConnectGiven VS ConnectReceived</h4>
           </div>
           <div class="card-body">
-            <apx-chart [series]="lineChartOptions?.series" [chart]="lineChartOptions.chart"
-              [xaxis]="lineChartOptions.xaxis" [stroke]="lineChartOptions.stroke" [colors]="lineChartOptions.colors"
-              [dataLabels]="lineChartOptions.dataLabels" [legend]="lineChartOptions.legend"
-              [tooltip]="lineChartOptions.tooltip" [markers]="lineChartOptions.markers" [grid]="lineChartOptions.grid"
-              [yaxis]="lineChartOptions.yaxis" [title]="lineChartOptions.title" [fill]="lineChartOptions.fill">
+            <apx-chart [series]="lineChartOptions?.series" [chart]="lineChartOptions?.chart"
+              [xaxis]="lineChartOptions?.xaxis" [stroke]="lineChartOptions?.stroke" [colors]="lineChartOptions?.colors"
+              [dataLabels]="lineChartOptions?.dataLabels" [legend]="lineChartOptions?.legend"
+              [tooltip]="lineChartOptions?.tooltip" [markers]="lineChartOptions?.markers" [grid]="lineChartOptions?.grid"
+              [yaxis]="lineChartOptions?.yaxis" [title]="lineChartOptions?.title" [fill]="lineChartOptions?.fill">
             </apx-chart>
             <br><br>
           </div>
@@ -293,10 +293,10 @@
           </div>
           <div class="card-body">
             <div id="chart">
-              <apx-chart [series]="pieChartOptions?.series" [chart]="pieChartOptions.chart"
-                [responsive]="pieChartOptions.responsive"
-                [colors]="pieChartOptions.colors" 
-                [plotOptions]="pieChartOptions.plotOptions" [legend]="pieChartOptions.legend" class="apex-pie-center">
+              <apx-chart [series]="pieChartOptions?.series" [chart]="pieChartOptions?.chart"
+                [responsive]="pieChartOptions?.responsive"
+                [colors]="pieChartOptions?.colors" 
+                [plotOptions]="pieChartOptions?.plotOptions" [legend]="pieChartOptions?.legend" class="apex-pie-center">
               </apx-chart>
             </div>
             <div class="table-responsive m-t-15">
