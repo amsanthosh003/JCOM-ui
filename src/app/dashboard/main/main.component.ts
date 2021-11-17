@@ -55,6 +55,17 @@ import { User } from '../../core/models/user';
 import { Data } from '@angular/router';
 
 
+export type ChartOptions1 = {
+  series: ApexNonAxisChartSeries;
+  chart: ApexChart;
+  responsive: ApexResponsive[];
+  labels: any;
+  dataLabels: ApexDataLabels;
+  plotOptions: ApexPlotOptions;
+  legend: ApexLegend;
+  colors: string[];
+};
+
 export type smallBarChart = {
   series: ApexAxisChartSeries;
   chart: ApexChart;
@@ -89,7 +100,7 @@ export class MainComponent implements OnInit {
   public lineChartOptions: Partial<ChartOptions>;
   public barChartOptions: Partial<ChartOptions>;
   public stackBarChart: Partial<ChartOptions>;
-  public pieChartOptions: Partial<ChartOptions>;
+  public pieChartOptions: Partial<ChartOptions1>;
   public smallBarChart: any;
   public sampleData = [
     31,
@@ -119,6 +130,7 @@ export class MainComponent implements OnInit {
   filteredData: any;
   loadingIndicator: boolean;
   Statics: any = [];
+  result:any=[];
   memberid: any;
   loader: boolean;
   donutscore = [];
@@ -843,66 +855,71 @@ export class MainComponent implements OnInit {
           balance: x.balance
         };
       });
-      var result1 = result[0];
+      var result1 =result[0];
       console.log("x", result1);
 
       var searies = [];
       for (var property in result1) {
         searies.push(result1[property]);
       }
-      console.log("valu", searies);
 
-      this.pieChartOptions = {     
-       series2: searies,
-        chart: {
-          type: 'donut',
-          width: 280,
-        },
-        legend: { 
-          show: false,
-        },
-        dataLabels: {
-          enabled: false,
-        },
-        plotOptions: {
-          pie: {
-            donut: {
-              size: '65%',
-              background: 'transparent',
-              labels: {
-                show: true,
-                name: {
-                  show: true,
-                  fontSize: '22px',
-                  fontWeight: 600,
-                },
-                value: {
-                  show: true,
-                  fontSize: '16px',
-                  fontWeight: 400,
-                  color: '#9aa0ac',
-                },
-                total: {
-                  show: true,
-                  showAlways: false,
-                  label: 'Total',
-                  fontSize: '22px',
-                  fontWeight: 600,
-                  color: '#6777EF',
+      console.log("x", searies);
+
+      this.pieChartOptions = {
+            series: [20,15,20,0,0,45],
+            // series2: [18, 22, 14, 31, 15],
+      
+            chart: {
+              type: 'donut',
+              width: 280,
+            },
+            legend: {
+              show: false,
+            },
+            dataLabels: {
+              enabled: false,
+            },
+            plotOptions: {
+              pie: {
+                donut: {
+                  size: '65%',
+                  background: 'transparent',
+                  labels: {
+                    show: true,
+                    name: {
+                      show: true,
+                      fontSize: '22px',
+                      fontWeight: 600,
+                    },
+                    value: {
+                      show: true,
+                      fontSize: '16px',
+                      fontWeight: 400,
+                      color: '#9aa0ac',
+                    },
+                    total: {
+                      show: true,
+                      showAlways: false,
+                      label: 'Total',
+                      fontSize: '22px',
+                      fontWeight: 600,
+                      color: '#6777EF',
+                    },
+                  },
                 },
               },
             },
-          },
-        },
-        colors: ['#9A8BE7', '#2AC3CB', '#FFAA00', '#FA62BB', '#FFD000','#5c081c'],
-        labels: ['Attendance', 'Connect', 'GNote', 'YouAndMe', 'Guest','Balance'],
-        responsive: [
-          {
-            breakpoint: 480,
-            options: {},
-          },
-        ],
-      };
+            colors: ['#9A8BE7', '#2AC3CB', '#FFAA00', '#FA62BB', '#FFD000','#591112'],
+            labels: ['Attendance', 'Connect', 'GNote', 'YouAndMe', 'Guest','Balance'],
+            responsive: [
+              {
+                breakpoint: 480,
+                options: {},
+              },
+            ],
+          };
+     
+      this.pieChartOptions = this.pieChartOptions
 
     }, (error) => {
       console.log(error);
