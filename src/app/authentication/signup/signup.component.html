@@ -20,6 +20,9 @@
                     <i-feather name="user" class="login-icons"></i-feather>
                     <input type="text" class="form-control pl-5" formControlName="fname" placeholder="First Name"
                       required>
+                      <small class="form-text text-danger"
+                      *ngIf="!registerForm.get('fname').valid && registerForm.get('fname').touched">
+                    *required</small>
                   </div>
                 </div>
                 <!-- <div class="col-md-6">
@@ -36,6 +39,9 @@
                     <label>Mobile No <span class="text-danger">*</span></label>
                     <i-feather name="phone" class="login-icons"></i-feather>
                     <input type="text" class="form-control pl-5" formControlName="Mobile" placeholder="Mobile No " required>
+                    <small class="form-text text-danger"
+                    *ngIf="!registerForm.get('Mobile').valid && registerForm.get('Mobile').touched">
+                  *required</small>
                   </div>
                 </div>
                 <div class="col-md-12">
@@ -43,7 +49,10 @@
                     <label> Email <span class="text-danger">*</span></label>
                     <i-feather name="mail" class="login-icons"></i-feather>
                     <input type="email" class="form-control pl-5" formControlName="email" placeholder="Email" required>
-                  </div>
+                 
+                    <small class="form-text text-danger"
+                    *ngIf="!registerForm.get('email').valid && registerForm.get('email').touched">
+                  *required</small> </div>
                 </div>
 
                 <div class="col-md-12">
@@ -52,6 +61,9 @@
                     <i-feather name="Lock" class="login-icons"></i-feather>
                     <input type="password" class="form-control pl-5" formControlName="password" placeholder="Password"
                       required>
+                      <small class="form-text text-danger"
+                      *ngIf="!registerForm.get('password').valid && registerForm.get('password').touched">
+                    *required</small> 
                   </div>
                 </div>
               
@@ -169,11 +181,7 @@
                     </select>
                   </div>
                 </div>
-                
-
-
-                
-                
+         
                 <div class="col-12">
                   <div class="form-check">
                     <input class="form-check-input" type="checkbox" id="gridCheck">

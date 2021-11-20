@@ -213,6 +213,9 @@
                         <ng-select formControlName="to_member_id" [items]="Members" bindLabel="name" bindValue="id"
                           required placeholder="please select">
                         </ng-select>
+                        <small class="form-text text-danger"
+                    *ngIf="!register.get('to_member_id').valid && register.get('to_member_id').touched">Please
+                    *Please fill</small>
                         <!-- <select class="form-control pl-5" formControlName="to_member_id" required>                 
                           <option value="" selected disabled>Please select</option>
                           <option *ngFor="let mem of Members" [value]="mem.id">
@@ -224,7 +227,7 @@
 
                     <div class="col-md-6">
                       <div class="form-group position-relative">
-                        <label>Connect Type</label>
+                        <label>Connect Type<span class="text-danger">*</span></label>
                         <i-feather name="airplay" class="login-icons" style="color: rgb(63, 89, 241);"></i-feather>
                         <select class="form-control pl-5" formControlName="connect_type" placeholder="please select" (change)="selectInput1($event)"
                           required>
@@ -233,6 +236,9 @@
                             {{connect.value}}
                           </option>
                         </select>
+                        <small class="form-text text-danger"
+                        *ngIf="!register.get('connect_type').valid && register.get('connect_type').touched">
+                        *Please fill</small>
                         <!-- <ng-select  [items]="connects" bindLabel="value" bindValue="id"  formControlName="connect_type" (change)="selectInput1($event)" placeholder="please select" required>
                         </ng-select> -->
                       </div>
@@ -254,7 +260,7 @@
                       <div class="form-group position-relative" *ngIf="isdisable">
                         <label>
                           Connect Status
-                        </label><br><br>
+                        </label><span class="text-danger">*</span><br><br>
                         <div class="form-check form-check-inline" (change)="selectInput2($event)">
                           <input class="form-check-input" type="radio" formControlName="connect_status"
                             id="inlineRadio1" value="0">
@@ -281,6 +287,9 @@
                         <ng-select [items]="Business" bindLabel="category" bindValue="id"
                           formControlName="business_category" placeholder="please select" required>
                         </ng-select>
+                        <small class="form-text text-danger"
+                        *ngIf="!register.get('business_category').valid && register.get('business_category').touched">
+                        *Please fill</small>
                       </div>
                     </div>
 
@@ -290,6 +299,9 @@
                         <i-feather name="smartphone" class="login-icons" style="color: rgb(63, 89, 241);"></i-feather>
                         <input type="text" class="form-control pl-5" formControlName="connect_name"
                           placeholder="connect name" [(ngModel)]="setname">
+                          <small class="form-text text-danger"
+                        *ngIf="!register.get('connect_name').valid && register.get('connect_name').touched">
+                        *Please fill</small>
 
                       </div>
                     </div>
@@ -300,6 +312,9 @@
                         <i-feather name="phone" class="login-icons" style="color: rgb(63, 89, 241);"></i-feather>
                         <input type="text" class="form-control pl-5" formControlName="mobile_no" placeholder="Mobile No"
                           [(ngModel)]="setmobile">
+                          <small class="form-text text-danger"
+                        *ngIf="!register.get('mobile_no').valid && register.get('mobile_no').touched">
+                        *Please fill</small>
                       </div>
                     </div>
 
@@ -309,6 +324,9 @@
                         <i-feather name="mail" class="login-icons" style="color: rgb(63, 89, 241);"></i-feather>
                         <input type="email" class="form-control pl-5" formControlName="email_id" placeholder="Email"
                           [(ngModel)]="setemail">
+                          <small class="form-text text-danger"
+                          *ngIf="!register.get('email_id').valid && (register.get('email_id').dirty || register.get('email_id').touched)">
+                          *Please fill</small>
                       </div>
                     </div>
 
@@ -332,7 +350,7 @@
 
                     <div class="col-md-12" style="text-align: center;">
                       <label>
-                        <h6>How About the Connect</h6>
+                        <h6>How About the Connect<span class="text-danger">*</span></h6>
                       </label> &nbsp;&nbsp;
                       <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" formControlName="about_connect" id="hot" value="1">
@@ -348,6 +366,9 @@
                           value="3">
                         <label class="form-check-label" for="cold">Cold</label>
                       </div>
+                      <small class="form-text text-danger"
+                      *ngIf="!register.get('about_connect').valid && register.get('about_connect').touched">
+                      *Please fill</small>
                     </div>
 
                     <div class="col-md-12" style="text-align: center;"><br>

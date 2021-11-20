@@ -63,6 +63,9 @@
           <div class="form-group">
             <label>New Password</label>
             <input type="password" formControlName="password" class="form-control" required>
+            <small class="form-text text-danger"
+            *ngIf="!editForm.get('password').valid && editForm.get('password').touched">
+            *Please fill</small>
             <!-- <div *ngIf="f.password.touched && f.password.invalid" class="alert alert-danger">
               <div *ngIf="f.password.errors.required">Password is required.</div>
             </div> -->
@@ -71,6 +74,9 @@
           <div class="form-group">
             <label>Confirm Password</label>
             <input type="password" class="form-control" formControlName="confirm_password" required>
+            <small class="form-text text-danger"
+            *ngIf="!editForm.get('confirm_password').valid && editForm.get('confirm_password').touched">
+            *Please fill</small>
             <!-- <div *ngIf="f.confirm_password.touched && f.confirm_password.invalid" class="alert alert-danger">
           <div *ngIf="f.confirm_password.errors.required">Password is required.</div>
           <div *ngIf="f.confirm_password.errors.confirmedValidator">Password and Confirm Password must be match.
@@ -79,7 +85,7 @@
           </div>
           <div *ngIf="error2" class="alert alert-danger mb-3 msl-3">{{error2}}</div>
           <div class="form-group">
-            <button class="btn btn-primary btn-lg btn-block" type="submit">
+            <button class="btn btn-primary btn-lg btn-block" type="submit"  >
               Reset Password
             </button>
           </div>

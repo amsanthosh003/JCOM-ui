@@ -129,6 +129,9 @@
                         <label>Name <span class="text-danger">*</span></label>
                         <i-feather name="user" class="login-icons" style="color: rgb(63, 89, 241);"></i-feather>
                         <input type="text" class="form-control pl-5" formControlName="guest_name" placeholder="Name" required>
+                        <small class="form-text text-danger"
+                        *ngIf="!register.get('guest_name').valid && register.get('guest_name').touched">
+                        *Please fill</small>
                       </div>
                     </div>
 
@@ -137,6 +140,9 @@
                         <label>Mobile No <span class="text-danger">*</span></label>
                         <i-feather name="phone" class="login-icons" style="color: rgb(63, 89, 241);"></i-feather>
                         <input type="text" class="form-control pl-5" formControlName="mobile_no" placeholder="Mobile No " required>
+                        <small class="form-text text-danger"
+                        *ngIf="!register.get('mobile_no').valid && register.get('mobile_no').touched">
+                        *Please fill</small>
                       </div>
                     </div>
 
@@ -145,6 +151,9 @@
                         <label> E-mail <span class="text-danger">*</span></label>
                         <i-feather name="mail" class="login-icons" style="color: rgb(63, 89, 241);"></i-feather>
                         <input type="email" class="form-control pl-5" formControlName="email_id" placeholder="Email" required>
+                        <small class="form-text text-danger"
+                        *ngIf="!register.get('email_id').valid && register.get('email_id').touched">
+                        *Please fill</small>
                       </div>
                     </div>
 
@@ -153,6 +162,9 @@
                         <label>City <span class="text-danger">*</span></label>
                         <i-feather name="map-pin" class="login-icons" style="color: rgb(63, 89, 241);"></i-feather>
                         <input type="text" class="form-control pl-5" formControlName="guest_city" placeholder="City" required>
+                        <small class="form-text text-danger"
+                        *ngIf="!register.get('guest_city').valid && register.get('guest_city').touched">
+                        *Please fill</small>
                       </div>
                     </div>
 
@@ -177,6 +189,9 @@
                         
                        <ng-select  [items]="designations" bindLabel="category" bindValue="id" formControlName="business_category" required>
                       </ng-select>
+                      <small class="form-text text-danger"
+                      *ngIf="!register.get('business_category').valid && register.get('business_category').touched">
+                      *Please fill</small>
                         
                       </div>
                     </div>
@@ -185,7 +200,7 @@
                     <div class="col-md-12">
                       <div id="df" style="height: 50px;">
                         <label>
-                          <h6>Type :</h6>
+                          <h6>Type :<span class="text-danger">*</span></h6>
                         </label> &nbsp;&nbsp;
                         <div class="form-check form-check-inline">
                           <input class="form-check-input" type="radio" formControlName="type" name="inlineRadioOptions" id="inlineRadio1"

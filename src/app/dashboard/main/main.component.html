@@ -9,8 +9,9 @@
     </li>
     <li class="breadcrumb-item">Dashboard</li>
   </ul>
-  <div class="section-body">
+  <div class="section-body" *ngIf='!loader' >
 
+    <!-- overall statu -->
     <div class="row " *ngFor="let m of OverallStatus ">
       <div class="col-xl-2 col-lg-6">
         <div class="card l-bg-green">
@@ -21,7 +22,7 @@
               <h6 class="font-20">{{m.connect_given}}</h6>
               <div class="mt-2">
                 <!-- <ngb-progressbar type="primary" [value]="51" height=".5rem"></ngb-progressbar> -->
-              </div>   
+              </div>
             </div>
           </div>
         </div>
@@ -36,7 +37,7 @@
               <div class="mt-2">
                 <!-- <ngb-progressbar type="orange" [value]="51" height=".5rem"></ngb-progressbar> -->
               </div>
-             
+
             </div>
           </div>
         </div>
@@ -51,7 +52,7 @@
               <div class="mt-2">
                 <!-- <ngb-progressbar type="danger" [value]="51" height=".5rem"></ngb-progressbar> -->
               </div>
-             
+
             </div>
           </div>
         </div>
@@ -66,7 +67,7 @@
               <div class="mt-2">
                 <!-- <ngb-progressbar type="success" [value]="51" height=".5rem"></ngb-progressbar> -->
               </div>
-            
+
             </div>
           </div>
         </div>
@@ -78,11 +79,11 @@
             <div class="card-content">
               <h4 class="card-title">You And Me &nbsp;</h4>
               <h6 class="font-20">{{m.youandme}}</h6>
-              
+
               <div class="mt-2">
 
                 <!-- <ngb-progressbar type="primary" [value]="51" height=".5rem"></ngb-progressbar> -->
-              </div>   
+              </div>
             </div>
           </div>
         </div>
@@ -92,181 +93,84 @@
           <div class="card-statistic-3">
             <div class="card-icon card-icon-large"><i class="fa fa-award"></i></div>
             <div class="card-content">
-              <h4 class="card-title"> Guest  &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp; </h4>
+              <h4 class="card-title"> Guest &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp; </h4>
               <h6 class="font-20">{{m.guest}}</h6>
               <div class="mt-2">
                 <!-- <ngb-progressbar type="primary" [value]="51" height=".5rem"></ngb-progressbar> -->
-              </div>   
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="row">
+<!-- connectgiven vs gnote received  & 2 div-->
+    <div class="row" *ngIf='!loader2'>
       <div class="col-12 col-md-8 col-lg-8">
-        <div class="card" style="padding-top: 6px;" >
+        <div class="card" style="padding-top: 6px;">
           <div class="card-header">
             <h4>ConnectGiven VS GNoteReceived</h4>
           </div>
-          <div class="card-body">        
-              <apx-chart [series]="serviceChartOptions?.series" [chart]="serviceChartOptions?.chart"
+          <div class="card-body">
+            <apx-chart [series]="serviceChartOptions?.series" [chart]="serviceChartOptions?.chart"
               [xaxis]="serviceChartOptions?.xaxis" [stroke]="serviceChartOptions?.stroke"
               [tooltip]="serviceChartOptions?.tooltip" [dataLabels]="serviceChartOptions?.dataLabels"
-              [legend]="serviceChartOptions?.legend"  [markers]="lineChartOptions.markers" 
-              [grid]="serviceChartOptions?.grid" [yaxis]="serviceChartOptions?.yaxis"
-             ></apx-chart>
+              [legend]="serviceChartOptions?.legend" [grid]="serviceChartOptions?.grid"
+              [yaxis]="serviceChartOptions?.yaxis"></apx-chart>
           </div>
-         
+
         </div>
       </div>
       <div class="col-12 col-md-4 col-lg-4">
-          <div class="card"  >
-            <div class="card-body">
-              <div class="row">
-                <div class="col">
-                  <h5 class="m-b-5">Average-Ref-Value-Given</h5>
-                  <h3 class="font-light col-green">{{avggiven}}</h3>
-                </div>
-                <div class="col-auto">
-                  <div class="bg-orange text-white icon-box-style">
-                    <i class="fas fa-shopping-bag"></i>
-                  </div>
-                </div>
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col">
+                <h5 class="m-b-5">Average-Ref-Value-Given</h5>
+                <h3 class="font-light col-green">{{avggiven}}</h3>
               </div>
-              <div class="apex-chart-center">
-                <apx-chart [series]="smallBarChart?.series" [chart]="smallBarChart.chart"
-                  [plotOptions]="smallBarChart.plotOptions" [tooltip]="smallBarChart.tooltip">
-                </apx-chart>
+              <div class="col-auto">
+                <div class="bg-orange text-white icon-box-style">
+                  <i class="fas fa-shopping-bag"></i>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="card" style="margin-top:0px;" >
-              <div class="card-body" >
-                <div class="row">
-                  <div class="col">
-                    <h5 class="m-b-5">Average-Ref-Value-Received</h5>
-                    <h3 class="font-light col-green"  >{{avgrec}}</h3>
-                  </div>
-                  <div class="col-auto">
-                    <div class="bg-orange text-white icon-box-style">
-                      <i class="fas fa-shopping-bag"></i>
-                    </div>
-                  </div>
-                </div>
-                <div class="apex-chart-center">
-                  <apx-chart [series]="smallBarChart?.series" [chart]="smallBarChart?.chart"
-                  [plotOptions]="smallBarChart?.plotOptions" [tooltip]="smallBarChart?.tooltip">
+            <div class="apex-chart-center">
+              <apx-chart [series]="smallBarChart?.series" [chart]="smallBarChart.chart"
+                [plotOptions]="smallBarChart.plotOptions" [tooltip]="smallBarChart.tooltip">
               </apx-chart>
+            </div>
+          </div>
+        </div>
+        <div class="card" style="margin-top:0px;">
+          <div class="card-body">
+            <div class="row">
+              <div class="col">
+                <h5 class="m-b-5">Average-Ref-Value-Received</h5>
+                <h3 class="font-light col-green">{{avgrec}}</h3>
+              </div>
+              <div class="col-auto">
+                <div class="bg-orange text-white icon-box-style">
+                  <i class="fas fa-shopping-bag"></i>
                 </div>
               </div>
-              
+            </div>
+            <div class="apex-chart-center">
+              <apx-chart [series]="smallBarChart?.series" [chart]="smallBarChart?.chart"
+                [plotOptions]="smallBarChart?.plotOptions" [tooltip]="smallBarChart?.tooltip">
+              </apx-chart>
+            </div>
           </div>
-        
-       
+
+        </div>
+
+
       </div>
     </div>
-    
-    <!-- <div class="row ">
-      <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
-        <div class="card">
-          <div class="card-statistic-4">
-            <div class="align-items-center justify-content-between">
-              <div class="row ">
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 left-grid-spacing">
-                  <div class="card-content">
-                    <h5 class="font-20">Connect Entry</h5>
-                    <h2 class="mb-3 font-18">25</h2>
-                    <p class="mb-0"><span class="col-green">42%</span></p>
-                  </div>
-                  <ngb-progressbar type="success" [value]="42" height=".3rem"></ngb-progressbar>
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 right-grid-spacing">
-                  <div class="banner-img">
-                    <img src="assets/images/banner/1.png" alt="">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
-        <div class="card">
-          <div class="card-statistic-4">
-            <div class="align-items-center justify-content-between">
-              <div class="row ">
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 left-grid-spacing">
-                  <div class="card-content">
-                    <h5 class="font-20"> Gnote Entry</h5>
-                    <h2 class="mb-3 font-18">12</h2>
-                    <p class="mb-0"><span class="col-orange">33%</span></p>
-                  </div>
-                  <ngb-progressbar type="warning" [value]="33" height=".3rem"></ngb-progressbar>
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 right-grid-spacing">
-                  <div class="banner-img">
-                    <img src="assets/images/banner/2.png" alt="">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
-        <div class="card">
-          <div class="card-statistic-4">
-            <div class="align-items-center justify-content-between">
-              <div class="row ">
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 left-grid-spacing">
-                  <div class="card-content">
-                    <h5 class="font-20">Show Case</h5>
-                    <h2 class="mb-3 font-18">128</h2>
-                    <p class="mb-0"><span class="col-blue">25%</span>
-                    </p>
-                  </div>
-                  <ngb-progressbar type="info" [value]="25" height=".3rem"></ngb-progressbar>
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 right-grid-spacing">
-                  <div class="banner-img">
-                    <img src="assets/images/banner/3.png" alt="">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
-        <div class="card">
-          <div class="card-statistic-4">
-            <div class="align-items-center justify-content-between">
-              <div class="row ">
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 left-grid-spacing">
-                  <div class="card-content">
-                    <h5 class="font-20">Revenue</h5>
-                    <h2 class="mb-3 font-18">$48,697</h2>
-                    <p class="mb-0"><span class="col-red">65%</span></p>
-                  </div>
-                  <ngb-progressbar type="danger" [value]="65" height=".3rem"></ngb-progressbar>
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 right-grid-spacing">
-                  <div class="banner-img">
-                    <img src="assets/images/banner/4.png" alt="">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
-
-    
-    <div class="row">
+<!-- connect received vu gnotegiven  $ piechart-->
+    <div class="row" *ngIf='!loader3'>
       <div class="col-md-12 col-lg-8 col-xl-8 ">
-        <div class="card"> 
+        <div class="card">
           <div class="card-header">
             <h4>ConnectReceived VS GNoteGiven</h4>
           </div>
@@ -274,8 +178,9 @@
             <apx-chart [series]="lineChartOptions?.series" [chart]="lineChartOptions?.chart"
               [xaxis]="lineChartOptions?.xaxis" [stroke]="lineChartOptions?.stroke" [colors]="lineChartOptions?.colors"
               [dataLabels]="lineChartOptions?.dataLabels" [legend]="lineChartOptions?.legend"
-              [tooltip]="lineChartOptions?.tooltip" [markers]="lineChartOptions?.markers" [grid]="lineChartOptions?.grid"
-              [yaxis]="lineChartOptions?.yaxis" [title]="lineChartOptions?.title" [fill]="lineChartOptions?.fill">
+              [tooltip]="lineChartOptions?.tooltip" [markers]="lineChartOptions?.markers"
+              [grid]="lineChartOptions?.grid" [yaxis]="lineChartOptions?.yaxis" [title]="lineChartOptions?.title"
+              [fill]="lineChartOptions?.fill">
             </apx-chart>
             <br><br>
           </div>
@@ -285,26 +190,26 @@
       <div class="col-md-12 col-lg-4 col-xl-4 ">
         <div class="card">
           <div class="card-header">
-            <h4>Your Score <span style="padding-top: 5px;">{{stsmonth}}</span></h4>  
+            <h4>Your Score <span style="padding-top: 5px;">{{stsmonth}}</span></h4>
           </div>
           <div class="card-body">
             <div id="chart">
               <apx-chart [series]="pieChartOptions?.series" [chart]="pieChartOptions?.chart"
-                 [dataLabels]="pieChartOptions?.dataLabels"[labels]="pieChartOptions?.labels"
-                [colors]="pieChartOptions?.colors"  [tooltip]="pieChartOptions?.tooltip"
+                [dataLabels]="pieChartOptions?.dataLabels" [labels]="pieChartOptions?.labels"
+                [colors]="pieChartOptions?.colors" [tooltip]="pieChartOptions?.tooltip"
                 [plotOptions]="pieChartOptions?.plotOptions" [legend]="pieChartOptions?.legend" class="apex-pie-center">
               </apx-chart>
             </div>
-            <div class="table-responsive m-t-15"  style="height:180px">
-              <table class="table align-items-center" >
-                <tbody *ngFor="let s of Status"  >
+            <div class="table-responsive m-t-15" style="height:180px">
+              <table class="table align-items-center">
+                <tbody *ngFor="let s of Status">
                   <tr class="tbl-row-border">
                     <td><i class="fa fa-circle col-blue msr-2"></i>Attendance</td>
                     <td>{{s.attendance_score}}</td>
                   </tr>
                   <tr class="tbl-row-border">
                     <td><i class="fa fa-circle col-cyan msr-2"></i>Connect</td>
-                    <td>{{s.connect_score}}</td>  
+                    <td>{{s.connect_score}}</td>
                   </tr>
                   <tr class="tbl-row-border">
                     <td><i class="fa fa-circle col-orange msr-2"></i>GNote</td>
@@ -316,13 +221,13 @@
                   </tr>
                   <tr class="tbl-row-border">
                     <td><i class="fa fa-circle col-amber msr-2"></i>Guest</td>
-                    <td>{{s.guest_score}}</td> 
+                    <td>{{s.guest_score}}</td>
                   </tr>
                   <tr class="tbl-row-border">
                     <td><i class="fa fa-circle col-brown msr-2"></i>Total</td>
                     <td>{{s.total_score}}</td>
                   </tr>
-                  
+
                 </tbody>
               </table>
             </div>
@@ -330,20 +235,21 @@
         </div>
       </div>
     </div>
-   
+
     <!-- recent connect received -->
-    <div class="row">
+    <div class="row" *ngIf='!loader3'>
       <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
         <div class="card">
           <div class="card-header">
             <h4>Recent Connect Received</h4>
-            <span  class="float-right"><button class="btn btn-icon icon-left btn-success" >
-              <i class="fas fa-eye"></i> <a routerLink="/connectentry" style="text-decoration: none; color: rgb(255, 255, 255);"> View All </a></button></span>
+            <span class="float-right"><button class="btn btn-icon icon-left btn-success">
+                <i class="fas fa-eye"></i> <a routerLink="/connectentry"
+                  style="text-decoration: none; color: rgb(255, 255, 255);"> View All </a></button></span>
           </div>
           <div class="card-body">
             <div class="table-responsive" style="position: relative; max-height: 450px;" [perfectScrollbar]>
-    
-          <table class="table table-striped" >
+
+              <table class="table table-striped">
                 <thead>
                   <tr>
                     <th>Connect Date</th>
@@ -358,22 +264,22 @@
                 <tr *ngFor="let a of Connectss">
                   <td>{{a.created_on}}</td>
                   <td>
-                    <h6 class="pb-0 mb-0 font-13">{{a.name}}</h6>     
-                  </td>
-                  
-                  <td class="text-truncate">
-                    <h6 class="pb-0 mb-0 font-13">{{a.to_name}}</h6>    
+                    <h6 class="pb-0 mb-0 font-13">{{a.name}}</h6>
                   </td>
 
                   <td class="text-truncate">
-                    <h6 class="pb-0 mb-0 font-13">{{a.connect_name}}</h6>    
+                    <h6 class="pb-0 mb-0 font-13">{{a.to_name}}</h6>
+                  </td>
+
+                  <td class="text-truncate">
+                    <h6 class="pb-0 mb-0 font-13">{{a.connect_name}}</h6>
                   </td>
 
                   <td>
-                    <div class="badge-outline col-red" *ngIf="a.connect_type=='JCOM'" >{{a.connect_type}}</div>
-                    <div class="badge-outline col-green" *ngIf="a.connect_type=='JCI'" >{{a.connect_type}}</div>
-                    <div class="badge-outline col-blue" *ngIf="a.connect_type=='Non-JCI'" >{{a.connect_type}}</div>
-                  </td> 
+                    <div class="badge-outline col-red" *ngIf="a.connect_type=='JCOM'">{{a.connect_type}}</div>
+                    <div class="badge-outline col-green" *ngIf="a.connect_type=='JCI'">{{a.connect_type}}</div>
+                    <div class="badge-outline col-blue" *ngIf="a.connect_type=='Non-JCI'">{{a.connect_type}}</div>
+                  </td>
 
                   <td>
                     <div *ngIf="a.connect_status=='Within JCOM'" class="badge-outline col-green">{{a.connect_status}}
@@ -389,71 +295,224 @@
                   </td>
 
                 </tr>
-              </table> 
+              </table>
             </div>
           </div>
         </div>
       </div>
-     
+
     </div>
     <br>
     <!-- recent gnote received -->
-    <div class="row">
+    <div class="row" *ngIf='!loader3'>
       <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
         <div class="card">
           <div class="card-header">
             <h4>Recent Gnote Received</h4>
-            <span  class="float-right"><button class="btn btn-icon icon-left btn-success" >
-              <i class="fas fa-eye"></i> <a routerLink="/gnoteentry" style="text-decoration: none; color: rgb(255, 255, 255);"> View All </a></button></span>
+            <span class="float-right"><button class="btn btn-icon icon-left btn-success">
+                <i class="fas fa-eye"></i> <a routerLink="/gnoteentry"
+                  style="text-decoration: none; color: rgb(255, 255, 255);"> View All </a></button></span>
           </div>
           <div class="card-body">
             <div class="table-responsive" style="position: relative; max-height: 450px;" [perfectScrollbar]>
-             
-            <table class="table table-striped" >
-              <thead>
-                <tr>
-                  <th>Gnote Date</th>
-                  <th>Name</th>  
-                  <th>Amount</th>
-                  <th>Business Category</th>
-                  <th>Connect Type</th>
-                  <th>Type</th>
+
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Gnote Date</th>
+                    <th>Name</th>
+                    <th>Amount</th>
+                    <th>Business Category</th>
+                    <th>Connect Type</th>
+                    <th>Type</th>
+                  </tr>
+                </thead>
+                <tr *ngFor="let a of Gnotes">
+                  <td>{{a.created_on}}</td>
+                  <td>
+                    <h6 class="pb-0 mb-0 font-13">{{a.name}}</h6>
+                  </td>
+
+                  <td class="text-truncate">
+                    <h6 class="pb-0 mb-0 font-13">{{a.amount}}</h6>
+                  </td>
+
+                  <td class="text-truncate">
+                    <h6 class="pb-0 mb-0 font-13">{{a.business_category}}</h6>
+                  </td>
+
+                  <td>
+                    <div class="badge-outline col-red" *ngIf="a.connect_type=='JCOM'">{{a.connect_type}}</div>
+                    <div class="badge-outline col-green" *ngIf="a.connect_type=='JCI'">{{a.connect_type}}</div>
+                    <div class="badge-outline col-blue" *ngIf="a.connect_type=='Non-JCI'">{{a.connect_type}}</div>
+                  </td>
+
+                  <td>
+                    <h6 *ngIf="a.type=='1'" style="color: rgb(245, 11, 11);"><i class="material-icons">call_made</i>
+                    </h6>
+                    <h6 *ngIf="a.type=='2'" style="color: rgb(3, 153, 15);"><i class="material-icons">call_received</i>
+                    </h6>
+                  </td>
+
                 </tr>
-              </thead>
-              <tr *ngFor="let a of Gnotes">
-                <td>{{a.created_on}}</td>
-                <td>
-                  <h6 class="pb-0 mb-0 font-13">{{a.name}}</h6>     
-                </td>
-                
-                <td class="text-truncate">
-                  <h6 class="pb-0 mb-0 font-13">{{a.amount}}</h6>    
-                </td>
-
-                <td class="text-truncate">
-                  <h6 class="pb-0 mb-0 font-13">{{a.business_category}}</h6>    
-                </td>
-
-                <td>
-                  <div class="badge-outline col-red" *ngIf="a.connect_type=='JCOM'" >{{a.connect_type}}</div>
-                  <div class="badge-outline col-green" *ngIf="a.connect_type=='JCI'" >{{a.connect_type}}</div>
-                  <div class="badge-outline col-blue" *ngIf="a.connect_type=='Non-JCI'" >{{a.connect_type}}</div>
-                </td> 
-
-                <td>
-                  <h6 *ngIf="a.type=='1'" style="color: rgb(245, 11, 11);"><i class="material-icons">call_made</i>
-                  </h6>
-                  <h6 *ngIf="a.type=='2'" style="color: rgb(3, 153, 15);"><i class="material-icons">call_received</i>
-                  </h6>
-                </td>
-
-              </tr>
-            </table> 
-          </div>
+              </table>
+            </div>
           </div>
         </div>
       </div>
+    </div>
+  
+  </div>
+
+  <!-- skleton -->
+  <div class="row">
+    <div class="col-12 "  *ngIf='loader'>
+      <div class="card">
+        <div class="padding-20">
+         
+          <div class=" row" style="  opacity: 1; margin-left: 5px;   margin-right: 10px;   height:100px;"
+         >
+
+          <div class="col-lg-2">
+              <ngx-skeleton-loader count="1" 
+                  [theme]="{  'border-radius': '5px',  height: '100%',  width:'100%', 'opacity':.6, 'background-color': '##b9b8b8',   border: '1px solid white' }">
+              </ngx-skeleton-loader>
+          </div>
+          <div class="col-lg-2">
+              <ngx-skeleton-loader count="1" 
+                  [theme]="{  'border-radius': '5px',  height: '100%',  width:'100%', 'opacity':.6,  'background-color': '##b9b8b8',   border: '1px solid white' }">
+              </ngx-skeleton-loader>
+          </div>
+          <div class="col-lg-2">
+            <ngx-skeleton-loader count="1" 
+                [theme]="{  'border-radius': '5px',  height: '100%',  width:'100%', 'opacity':.6,  'background-color': '##b9b8b8',   border: '1px solid white' }">
+            </ngx-skeleton-loader>
+        </div>
+        
+        <div class="col-lg-2">
+          <ngx-skeleton-loader count="1" 
+              [theme]="{  'border-radius': '5px',  height: '100%',  width:'100%', 'opacity':.6, 'background-color': '##b9b8b8',   border: '1px solid white' }">
+          </ngx-skeleton-loader>
+      </div>
+      <div class="col-lg-2">
+          <ngx-skeleton-loader count="1" 
+              [theme]="{  'border-radius': '5px',  height: '100%',  width:'100%', 'opacity':.6,  'background-color': '##b9b8b8',   border: '1px solid white' }">
+          </ngx-skeleton-loader>
+      </div>
+      <div class="col-lg-2">
+        <ngx-skeleton-loader count="1" 
+            [theme]="{  'border-radius': '5px',  height: '100%',  width:'100%', 'opacity':.6,  'background-color': '##b9b8b8',   border: '1px solid white' }">
+        </ngx-skeleton-loader>
+    </div>
+        
+      </div>
+      
+       
+          <div class="py-4" style="margin-left: 10px; margin-right: 10px;">
+
+            <div class="row" style="  opacity: 1;  height:350px;">
+              <div class="col-lg-8">
+                <ngx-skeleton-loader count="1"
+                  [theme]="{  'border-radius': '5px',  height: '100%',  width:'100%', 'opacity':.6, 'background-color': '##b9b8b8',   border: '1px solid white' }">
+                </ngx-skeleton-loader>
+    
+              </div>
+              <div class="col-lg-4">
+               
+                <ngx-skeleton-loader count="1"
+                  [theme]="{  'border-radius': '5px',  height: '45%',  width:'100%', 'opacity':.6,  'background-color': '##b9b8b8',   border: '1px solid white' }">
+                </ngx-skeleton-loader>
+              
+            <br>
+                  <ngx-skeleton-loader count="1"
+                  [theme]="{  'border-radius': '5px',  height: '45%',  width:'100%', 'opacity':.6,  'background-color': '##b9b8b8',   border: '1px solid white' }">
+                </ngx-skeleton-loader>
      
+              </div>            
+            </div>
+            <br><br>
+            <div class="row" style="  opacity: 1;  height:350px;">
+              <div class="col-lg-8">
+                <ngx-skeleton-loader count="1"
+                  [theme]="{  'border-radius': '5px',  height: '100%',  width:'100%', 'opacity':.6, 'background-color': '##b9b8b8',   border: '1px solid white' }">
+                </ngx-skeleton-loader>
+    
+              </div>
+              <div class="col-lg-4">
+                <ngx-skeleton-loader count="1"
+                  [theme]="{  'border-radius': '5px',  height: '100%',  width:'100%', 'opacity':.6,  'background-color': '##b9b8b8',   border: '1px solid white' }">
+                </ngx-skeleton-loader>
+    
+              </div>
+            
+            </div>
+         </div>
+     
+     
+          
+        </div>
+
+
+      </div>
     </div>
   </div>
+
+  <!-- skleton -->
+
+
+
+  <!-- <div class="section-body" *ngIf='loader'>
+
+    <div class=" row" style="  opacity: 1; margin-left: 5px;   margin-right: 10px;   height:500px;">
+
+      <div class=" col-md-2">
+        <ngx-skeleton-loader count="1" *ngIf="loader"
+          [theme]="{  'border-radius': '5px',  height: '25%',  width:'90%', 'opacity':.6,  'background-color': '##b9b8b8',   border: '1px solid white' }">
+        </ngx-skeleton-loader>
+      </div>
+
+      <div class=" col-md-2">
+        <ngx-skeleton-loader count="1" *ngIf="loader"
+          [theme]="{  'border-radius': '5px',  height: '25%',  width:'90%', 'opacity':.6,  'background-color': '##b9b8b8',   border: '1px solid white' }">
+        </ngx-skeleton-loader>
+      </div>
+      <div class=" col-md-2">
+        <ngx-skeleton-loader count="1" *ngIf="loader"
+          [theme]="{  'border-radius': '5px',  height: '25%',  width:'90%', 'opacity':.6,  'background-color': '##b9b8b8',   border: '1px solid white' }">
+        </ngx-skeleton-loader>
+      </div>
+
+      <div class=" col-md-2">
+        <ngx-skeleton-loader count="1" *ngIf="loader"
+          [theme]="{  'border-radius': '5px',  height: '25%',  width:'90%', 'opacity':.6,  'background-color': '##b9b8b8',   border: '1px solid white' }">
+        </ngx-skeleton-loader>
+      </div>
+
+      <div class=" col-md-2">
+        <ngx-skeleton-loader count="1" *ngIf="loader"
+          [theme]="{  'border-radius': '5px',  height: '25%',  width:'90%', 'opacity':.6,  'background-color': '##b9b8b8',   border: '1px solid white' }">
+        </ngx-skeleton-loader>
+      </div>
+      <div class=" col-md-2">
+        <ngx-skeleton-loader count="1" *ngIf="loader"
+          [theme]="{  'border-radius': '5px',  height: '25%',  width:'90%', 'opacity':.6,  'background-color': '##b9b8b8',   border: '1px solid white' }">
+        </ngx-skeleton-loader>
+      </div>
+      <div class=" col-md-8" >
+        <ngx-skeleton-loader count="1" *ngIf="loader"
+          [theme]="{  'border-radius': '5px',  height: '100%',  width:'90%', 'opacity':.6,  'background-color': '##b9b8b8',   border: '1px solid white' }">
+        </ngx-skeleton-loader>
+      </div>
+
+      <div class=" col-md-4">
+        <ngx-skeleton-loader count="1" *ngIf="loader"
+          [theme]="{  'border-radius': '5px',  height: '100%',  width:'90%', 'opacity':.6,  'background-color': '##b9b8b8',   border: '1px solid white' }">
+        </ngx-skeleton-loader>
+      </div>
+
+    </div>
+
+
+  </div> -->
+
 </section>

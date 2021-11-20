@@ -100,7 +100,7 @@ export class SignupComponent implements OnInit {
       this.State="";
       this.city="";
       this.registerForm = this.formBuilder.group({
-        fname: ['', Validators.required],
+        fname: ['', Validators.required], 
         lname: ['', Validators.required],
         email: [
           '',

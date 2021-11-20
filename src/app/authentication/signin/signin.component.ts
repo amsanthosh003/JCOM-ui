@@ -169,32 +169,40 @@ fetch(cb) {
 //   }
   onSubmit() {
     this.submitted = true;
-    this.disable=true;
+    //  this.disable=true;
     this.error2 = '';
     // console.log("submited");  
     if (this.loginForm.invalid) {
+      //  this.disable=false;
       this.error2 = 'Enter all Credential';
+     
       console.log("err2", this.error2);
       return;
+      
      
     } else {
+      this.disable=true;
       // current user by login is stored in local storage -see authservice
       this.authService
         .login(this.f.username.value,this.f.password.value,this.f.meeting_type.value)
         .subscribe(
           (res) => {          
             // console.log(res[0]);
+            
             if (res) {
               // console.log("res",""+res[0].message)
               if (res[0].message == "Invalid Login Credentials !!Please try again!!") {
+                this.disable=false;
                 console.log("something went wrong");
                 this.error2 = 'Invalid Login Credentials';
                 return;
               }
-              if (res[0].message == "Invalid Login Credentials !!Please try again!!") {   
+              if (res[0].message == "Invalid Login Credentials !!Please try again!!") { 
+                this.disable=false;  
                 this.error2 = 'Invalid Login';
               }
               if (res[0].message == "Welcome !!") {
+                  
                 this.router.navigate(['/dashboard/main']);
               }
             } else {

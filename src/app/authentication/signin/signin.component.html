@@ -21,6 +21,9 @@
                     <label>Mobile <span class="text-danger">*</span></label>
                     <i-feather name="phone" class="login-icons"></i-feather>
                     <input type="text" class="form-control pl-5" formControlName="username" placeholder="Enter your mobile number">
+                    <h6 class="form-text text-danger"
+                    *ngIf="!loginForm.get('username').valid && loginForm.get('username').touched">
+                  *Enter the mobile number</h6>
                   </div>
                    </div>
 
@@ -30,6 +33,9 @@
                     <i-feather name="key" class="login-icons"></i-feather>
                     <input type="password" class="form-control pl-5" formControlName="password"
                       placeholder="Enter your password">
+                      <h6 class="form-text text-danger"
+                      *ngIf="!loginForm.get('password').valid && loginForm.get('password').touched">
+                    *Enter the valid password</h6>
                   </div>
                 </div>
 
@@ -44,6 +50,9 @@
                         {{meet.meeting_type_name}}
                       </option>
                     </select>
+                    <p class="form-text text-danger"
+                    *ngIf="!loginForm.get('meeting_type').valid && loginForm.get('meeting_type').touched">
+                  *Select meeting Type</p>
                   </div>
                 </div>     
                 <!-- <div class="col-lg-12">
@@ -61,10 +70,12 @@
                         class="text-dark fw-bold">Forgot password ?</a></p>
                   </div>
                 </div> -->
-
-                <div *ngIf="error2" class="alert alert-danger mb-3 msl-3">{{error2}}</div>
+                <h6 class="form-text text-danger ml-3"
+                *ngIf="error2">
+                {{error2}}</h6>
+                <!-- <div *ngIf="error2" class="alert alert-danger mb-3 ml-3  col-6" style="text-align: center;">{{error2}}</div> -->
                 <div class="col-lg-12 mb-0">
-                  <button class="btn btn-primary auth-form-btn" [disabled]="disable">Sign in</button>
+                  <button class="btn btn-primary auth-form-btn" [disabled]="!loginForm.valid"  >Sign in</button>
                 </div>
                 <!-- <div class="col-lg-12 mt-4 text-center">
                   <h6>Or Login With</h6>

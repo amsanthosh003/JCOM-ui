@@ -145,7 +145,11 @@ export class MainComponent implements OnInit {
   Statics: any = [];
   result: any = [];
   memberid: any;
-  loader: boolean;
+  loader: boolean =true;
+  loader1: boolean=true;
+  loader2: boolean=true;
+  loader3: boolean=true;
+  loader4: boolean=true;
   donutscore = [];
   seraries: any = []
 
@@ -242,6 +246,7 @@ export class MainComponent implements OnInit {
   Month1: [];
   Score1: any[];
   stsmonth: any;
+  
 
   constructor(
     private fb: FormBuilder,
@@ -278,8 +283,9 @@ export class MainComponent implements OnInit {
     this.getstatics();
     this.getstatics2()
     this.cardCharts();
+// this.loading();
   }
-
+  
 
   viewdata() {
     this.fetch((data) => {
@@ -307,7 +313,7 @@ export class MainComponent implements OnInit {
     this.request.fetchconnectById(this.userstr.m_id).subscribe((response) => {
       //  console.log("fetch data",response);    
       cb(response);
-      this.loader = false;
+     this.loader = false;
     }, (error) => {
       console.log(error);
     });
@@ -334,7 +340,8 @@ export class MainComponent implements OnInit {
     this.request.fetchgnoteById(this.userstr.m_id).subscribe((response) => {
       // console.log(response);
       cb(response);
-      // this.loader = false;
+      
+      this.loader1= false;
     }, (error) => {
       console.log(error);
     });
@@ -357,11 +364,17 @@ export class MainComponent implements OnInit {
     this.toastr.success('Welcome !!!  ' + this.userstr.m_name);
   }
 
-
+// loading(){
+  
+//   if (this.loader1==false ) {
+//     this.loader=false
+//   }  
+// }
   getstatics() {
     this.request.fetchstatic(this.userstr.m_id).subscribe((response) => {
       this.Statics = response;
       this.chart4();
+     
       console.log('statics', this.Statics)
       this.month1 = this.Statics[0].month;
       this.connectgiv = this.Statics[0].connect_given;
@@ -462,7 +475,8 @@ export class MainComponent implements OnInit {
       }
     };
 
-    this.serviceChartOptions = this.serviceChartOptions
+    this.serviceChartOptions = this.serviceChartOptions;
+    this.loader2= false;
   }
 
 
@@ -714,6 +728,7 @@ export class MainComponent implements OnInit {
     this.request.fetchstatic(this.userstr.m_id).subscribe((response) => {
       this.Statics = response;
       this.chart5();
+      
       console.log('statics', this.Statics)
 
 
@@ -813,6 +828,7 @@ export class MainComponent implements OnInit {
         },
       },
     };
+    this.loader3= false;
   }
 
   private cardCharts() {
@@ -874,9 +890,8 @@ export class MainComponent implements OnInit {
       for (var property in result1) {
         searies.push(result1[property]);
       }
-
-
       console.log("x", searies);
+
       this.pieChartOptions = {
          series: searies,
          labels:  ['Attendance', 'Connect', 'GNote', 'YouAndMe', 'Guest','Balance'],
@@ -945,7 +960,7 @@ export class MainComponent implements OnInit {
           },
         ],
       };
-    
+    this.loader4= false;
 
       this.pieChartOptions = this.pieChartOptions
 

@@ -168,7 +168,7 @@
 
                     <div class="col-md-6">
                     <div class="form-group position-relative">
-                      <label>JCOM Tables <span class="text-danger">*</span></label>
+                      <label>JCOM Tables </label>
                       <i-feather name="Flag" class="login-icons" style="color: rgb(63, 89, 241);"></i-feather>
                       <ng-select (change)="ontableChange($event)"   placeholder="{{tblname}}">
                         <ng-option [value]="Mtable_id" selected disable >{{tblname}}</ng-option>
@@ -186,6 +186,9 @@
                         <i-feather name="user-plus" class="login-icons"  style="color: rgb(63, 89, 241);"></i-feather>
                         <ng-select formControlName="to_member_id" (change)="selectInput1($event)" [items]="Members" bindLabel="name" bindValue="id" required placeholder="please select">
                         </ng-select>
+                        <small class="form-text text-danger"
+                    *ngIf="!register.get('to_member_id').valid && register.get('to_member_id').touched">
+                    *Please fill</small>
                         <!-- <select class="form-control pl-5" formControlName="to_member_id" (change)="selectInput1($event)" required>
                           <option value="" selected disabled>Please select</option>
                           <option *ngFor="let mem of Members" [value]="mem.id">
@@ -200,6 +203,9 @@
                         <label>Amount<span class="text-danger">*</span></label>
                         <i-feather name="credit-card" class="login-icons" style="color: rgb(63, 89, 241);"></i-feather>
                         <input type="text" class="form-control pl-5" formControlName="amount" placeholder="Enter the amount " required>
+                        <small class="form-text text-danger"
+                    *ngIf="!register.get('amount').valid && register.get('amount').touched">
+                    *Please fill</small>
                       </div>
                     </div>
 
@@ -215,6 +221,9 @@
                               </span> &nbsp; <span >({{tab.created_on}})</span>
                           </ng-option>
                         </ng-select>
+                        <small class="form-text text-danger"
+                    *ngIf="!register.get('connect_id').valid && register.get('connect_id').touched">
+                    *Please fill</small>
 
                         <!-- <select class="form-control pl-5" formControlName="connect_id" required>        
                           <option value="" selected disabled>select</option>
@@ -233,6 +242,9 @@
                         <i-feather name="airplay" class="login-icons" style="color: rgb(63, 89, 241);"></i-feather>
                         <ng-select  [items]="connects" bindLabel="value" bindValue="id"  formControlName="connect_status"  placeholder="please select" required>
                         </ng-select>
+                        <small class="form-text text-danger"
+                    *ngIf="!register.get('connect_status').valid && register.get('connect_status').touched">
+                    *Please fill</small>
                         <!-- <select class="form-control pl-5" formControlName="connect_status"  placeholder="please select" required >       
                           <option *ngFor="let connect of connects" [value]="connect.id">
                             {{connect.value}}
@@ -248,6 +260,9 @@
                         <i-feather name="Briefcase" class="login-icons" style="color: rgb(63, 89, 241);"></i-feather>                  
                         <ng-select  [items]="Business" bindLabel="category" bindValue="id"  formControlName="business_category"  placeholder="please select" required>
                         </ng-select>
+                        <small class="form-text text-danger"
+                    *ngIf="!register.get('business_category').valid && register.get('business_category').touched">
+                    *Please fill</small>
                       </div>
                     </div>
 
